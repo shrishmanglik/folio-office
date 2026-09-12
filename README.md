@@ -89,3 +89,7 @@ Folio Office is an independent project by The AGI Studio. It is not affiliated w
 Start with [CONTRIBUTING.md](CONTRIBUTING.md), [the roadmap](docs/ROADMAP.md), and [open issues](https://github.com/shrishmanglik/folio-office/issues). Report vulnerabilities privately using [SECURITY.md](SECURITY.md).
 
 Pull requests describe the user-facing change and actual validation. Each merged pull request receives an automated summary with its merge commit and checks link. The initial source import is a commit, not a fabricated historical PR or merge.
+
+### Spreadsheet formatting and transfer
+
+The Formatting panel adds font family/size, underline, strike, wrap, vertical alignment, indent, rotation and border presets. Copy range to... supports calculated values, formulas, formatting, transposition and skip blanks across worksheets. Fill works in four directions; Find & replace edits literal text in the selection. All edits use shared local logic and support undo. These are bounded capabilities; full 165-family acceptance is tracked in [the execution register](docs/EXECUTION-STATE.json).

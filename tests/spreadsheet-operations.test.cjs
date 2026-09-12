@@ -65,3 +65,53 @@ test('referenced sheet cannot bypass deletion using the previous internal marker
  assert.throws(()=>applySpreadsheetCommand(data,{action:'sheetDelete',sheetId:'s'}),/referenced/);
  assert.equal(data.sheets.length,2);
 });
+
+
+test('fill up and left use bottom and right sources with atomic negative-reference refusal',async()=>{
+ const {applySpreadsheetCommand:edit}=await moduleReady;
+ const data={activeSheet:'s',sheets:[{id:'s',name:'Data',cells:[['','','=A3+$C$1'],[],['=B3+$C$1']],styles:{A3:{italic:true}}}]};
+ const up=edit(data,{action:'fill',range:'A1:A3',direction:'up'});
+ assert.equal(up.sheets[0].cells[0][0],'=B1+$C$1');assert.deepEqual(up.sheets[0].styles.A1,{italic:true});
+ data.sheets[0].cells[0][2]='=C3+$A$1';
+ const left=edit(data,{action:'fill',range:'A1:C1',direction:'left'});assert.equal(left.sheets[0].cells[0][0],'=A3+$A$1');
+ data.sheets[0].cells[0][2]='=A1';const before=structuredClone(data);
+ assert.throws(()=>edit(data,{action:'fill',range:'A1:C1',direction:'left'}),{code:'UNSUPPORTED_OPERATION'});assert.deepEqual(data,before);
+});
+test('replace is literal, bounded, case-selectable and preserves style and outside cells',async()=>{
+ const {applySpreadsheetCommand:edit}=await moduleReady;
+ const data={activeSheet:'s',sheets:[{id:'s',name:'Data',cells:[['A.b a.B','a.b','outside'],['A.B',42]],styles:{A1:{bold:true}}}]};
+ const out=edit(data,{action:'replace',range:'A1:B2',find:'a.b',replacement:'$&'});
+ assert.deepEqual(out.sheets[0].cells,[['$& $&','$&','outside'],['$&',42]]);assert.deepEqual(out.sheets[0].styles,data.sheets[0].styles);
+ const whole=edit(data,{action:'replace',range:'A1:B2',find:'a.b',replacement:'',wholeCell:true,matchCase:true});
+ assert.deepEqual(whole.sheets[0].cells,[['A.b a.B','','outside'],['A.B',42]]);
+ assert.throws(()=>edit(data,{action:'replace',range:'A1:B2',find:'',replacement:'x'}),{code:'INVALID_INPUT'});
+ for(const literal of ['[x]','a+b','(x)','^x$','a\\b','x?']) {data.sheets[0].cells[0][0]=literal;assert.equal(edit(data,{action:'replace',range:'A1',find:literal,replacement:'ok'}).sheets[0].cells[0][0],'ok');}
+});
+
+
+test('copy range snapshots overlaps, translates formulas and supports value freezing and format-only transfer',async()=>{
+ const {applySpreadsheetCommand:edit}=await moduleReady;
+ const data={activeSheet:'s',sheets:[{id:'s',name:'Data',cells:[['5','=A1*2'],['7','=A2*2']],styles:{B1:{bold:true}}},{id:'t',name:'Target',cells:[['99','old']],styles:{A1:{italic:true}}}]};
+ const overlap=edit(data,{action:'copyRange',range:'A1:B2',target:'B1',mode:'all'});
+ assert.deepEqual(overlap.sheets[0].cells,[['5','5','=B1*2'],['7','7','=B2*2']]);assert.deepEqual(overlap.sheets[0].styles.C1,{bold:true});
+ const values=edit(data,{action:'copyRange',range:'A1:B2',target:'A1',targetSheetId:'t',mode:'values',transpose:true});
+ assert.deepEqual(values.sheets[1].cells,[['5','7'],['10','14']]);assert.deepEqual(values.sheets[1].styles.A1,{italic:true});
+ const formats=edit(data,{action:'copyRange',range:'B1',target:'A1',targetSheetId:'t',mode:'formats'});assert.equal(formats.sheets[1].cells[0][0],'99');assert.deepEqual(formats.sheets[1].styles.A1,{bold:true});
+ assert.deepEqual(data.sheets[0].cells,[['5','=A1*2'],['7','=A2*2']]);
+});
+test('copy range skips blanks, validates destination bounds and rejects unsafe copies without mutation',async()=>{
+ const {applySpreadsheetCommand:edit}=await moduleReady;const data=workbook();data.sheets[0].cells=[['','keep'],['destination','before']];
+ const out=edit(data,{action:'copyRange',range:'A1:B1',target:'A2',mode:'all',skipBlanks:true});assert.deepEqual(out.sheets[0].cells[1],['destination','keep']);
+ assert.throws(()=>edit(data,{action:'copyRange',range:'A1:B1',target:'ALL10000',mode:'all'}));
+ data.sheets[0].cells[0][1]='=A1';const before=structuredClone(data);assert.throws(()=>edit(data,{action:'copyRange',range:'B1',target:'A1',mode:'all'}),{code:'UNSUPPORTED_OPERATION'});assert.deepEqual(data,before);
+});
+
+
+test('values-only copy preserves formula text results as text rather than executable formulas or coerced scalars',async()=>{
+ const {applySpreadsheetCommand:edit}=await moduleReady;const {FormulaEngine}=await import('../shared/formulas.mjs');
+ const strings=['=1+1','1.20','TRUE',"'hello",'#N/A'];
+ const data={sheets:[{id:'s',name:'Data',cells:strings.map(v=>['="'+v.replaceAll('"','""')+'"'])}]};
+ const out=edit(data,{action:'copyRange',sheetId:'s',range:'A1:A5',target:'B1',mode:'values'});
+ const calc=FormulaEngine.buildFromSheets({Data:out.sheets[0].cells});
+ try{strings.forEach((v,r)=>assert.equal(calc.getCellValue({sheet:0,row:r,col:1}),v));}finally{calc.destroy();}
+});

@@ -1,3 +1,5 @@
+import { FormulaEngine } from './formulas.mjs';
+import { formulaInput } from './cells.mjs';
 const MAX_ROWS = 10000, MAX_COLS = 1000, MAX_CELLS = 10000;
 function fail(message, code = 'INVALID_INPUT') { throw Object.assign(new Error(message), { code }); }
 function letters(c) { let out = ''; for (let n = c + 1; n; n = Math.floor((n - 1) / 26)) out = String.fromCharCode(65 + (n - 1) % 26) + out; return out; }
@@ -86,7 +88,33 @@ export function applySpreadsheetCommand(data, command) {
   const index = out.sheets.findIndex(s => s.id === id), sheet = out.sheets[index]; if (!sheet) fail('Sheet ID was not found.');
   out.activeSheet = id;
   const action = command.action;
-  if (action === 'sheetRename') {
+  if (action === 'copyRange') {
+    const {a,b}=rectangle(command.range), dest=point(command.target);
+    if (!['all','values','formulas','formats'].includes(command.mode)) fail('Choose all, values, formulas or formats.');
+    for (const key of ['transpose','skipBlanks']) if(command[key]!==undefined && typeof command[key]!=='boolean') fail(key+' must be a boolean.');
+    const target=out.sheets.find(s=>s.id===(command.targetSheetId??id)); if(!target) fail('Destination sheet was not found.');
+    const height=b.r-a.r+1,width=b.c-a.c+1,dh=command.transpose?width:height,dw=command.transpose?height:width;
+    if(dest.r+dh>MAX_ROWS||dest.c+dw>MAX_COLS) fail('Destination exceeds worksheet bounds.');
+    // Read the complete source before writing, so overlapping copies are deterministic.
+    const source=data.sheets[index], copied=[]; let calc;
+    try {
+      if(command.mode==='values' && source.cells.slice(a.r,b.r+1).some(row=>row.slice(a.c,b.c+1).some(formula))) calc=FormulaEngine.buildFromSheets(Object.fromEntries(data.sheets.map(s=>[s.name,s.cells.map(row=>row.map(formulaInput))])));
+      for(let r=a.r;r<=b.r;r++) for(let c=a.c;c<=b.c;c++) {
+        let value=source.cells[r]?.[c]??'';
+        const dr=dest.r+(command.transpose?c-a.c:r-a.r),dc=dest.c+(command.transpose?r-a.r:c-a.c);
+        if(command.skipBlanks && (value===''||value===null)) continue;
+        if(command.mode==='values' && formula(value)) {value=calc.getCellValue({sheet:calc.getSheetId(source.name),row:r,col:c});if(value&&typeof value==='object')value=value.value;else if(typeof value==='string')value="'"+value;value=value===null?'':String(value);}
+        else if(command.mode!=='formats') value=translateFormula(value,dr-r,dc-c);
+        copied.push({r:dr,c:dc,value,style:source.styles?.[address(r,c)]});
+      }
+    } finally {calc?.destroy();}
+    target.styles??={};
+    for(const item of copied) {
+      if(command.mode!=='formats')put(target,item.r,item.c,item.value);
+      if(['all','formats'].includes(command.mode)) {if(item.style)target.styles[address(item.r,item.c)]=structuredClone(item.style);else delete target.styles[address(item.r,item.c)];}
+    }
+    target.rows=Math.max(target.rows||1,dest.r+dh);target.cols=Math.max(target.cols||1,dest.c+dw);
+  } else if (action === 'sheetRename') {
     const name = validName(command.name, out.sheets, id);
     allFormulas(out, value => renameReferences(value, sheet.name, name)); sheet.name = name;
   } else if (action === 'sheetDuplicate') {
@@ -107,18 +135,28 @@ export function applySpreadsheetCommand(data, command) {
     if (out.sheets.length === 1) fail('Keep at least one sheet.');
     for (const other of out.sheets) if (other.id !== id) for (const row of other.cells) for (const value of row) if (renameReferences(value, sheet.name, sheet.name + '__reference_probe__') !== value) fail('This sheet is referenced by a formula. Remove those references before deleting it.', 'UNSUPPORTED_OPERATION');
     out.sheets.splice(index, 1); if (out.activeSheet === id) out.activeSheet = out.sheets[Math.min(index, out.sheets.length - 1)].id;
-  } else if (['clear', 'fill', 'sort'].includes(action)) {
+  } else if (['clear', 'fill', 'sort', 'replace'].includes(action)) {
     const { a, b } = rectangle(command.range); sheet.styles ??= {};
     if (action === 'clear') {
       if (!['contents','formats','all'].includes(command.mode)) fail('Choose contents, formats or all.');
       for (let r = a.r; r <= b.r; r++) for (let c = a.c; c <= b.c; c++) { if (command.mode !== 'formats') put(sheet, r, c, ''); if (command.mode !== 'contents') delete sheet.styles[address(r,c)]; }
     } else if (action === 'fill') {
-      if (!['down','right'].includes(command.direction)) fail('Fill direction must be down or right.');
+      if (!['down','right','up','left'].includes(command.direction)) fail('Fill direction must be down, right, up or left.');
       const source = data.sheets[index];
       for (let r = a.r; r <= b.r; r++) for (let c = a.c; c <= b.c; c++) {
-        const sr = command.direction === 'down' ? a.r : r, sc = command.direction === 'right' ? a.c : c;
+        const sr = command.direction === 'down' ? a.r : command.direction === 'up' ? b.r : r, sc = command.direction === 'right' ? a.c : command.direction === 'left' ? b.c : c;
         put(sheet, r, c, translateFormula(source.cells[sr]?.[sc] ?? '', r-sr, c-sc));
         const style = source.styles?.[address(sr,sc)]; if (style) sheet.styles[address(r,c)] = structuredClone(style); else delete sheet.styles[address(r,c)];
+      }
+    } else if (action === 'replace') {
+      if (typeof command.find !== 'string' || !command.find.length || command.find.length > 4096 || typeof command.replacement !== 'string' || command.replacement.length > 4096) fail('Find needs 1 to 4096 characters; replacement may be empty.');
+      if ((command.matchCase !== undefined && typeof command.matchCase !== 'boolean') || (command.wholeCell !== undefined && typeof command.wholeCell !== 'boolean')) fail('Match case and whole cell must be booleans.');
+      // Literal matching avoids regular-expression execution and treats replacement dollar signs as data.
+      const escaped = command.find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const matcher = new RegExp(command.wholeCell ? '^(?:' + escaped + ')$' : escaped, command.matchCase ? 'g' : 'gi');
+      for (let r = a.r; r <= b.r; r++) for (let c = a.c; c <= b.c; c++) {
+        const value = sheet.cells[r]?.[c];
+        if (typeof value === 'string') put(sheet, r, c, value.replace(matcher, () => command.replacement));
       }
     } else {
       if (!Number.isInteger(command.keyColumn) || command.keyColumn < a.c || command.keyColumn > b.c || !['asc','desc'].includes(command.direction) || typeof command.hasHeader !== 'boolean') fail('Sort requires a key column within the range, asc or desc, and hasHeader.');

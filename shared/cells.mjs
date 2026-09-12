@@ -1,6 +1,6 @@
 /**
- * Convert a raw cell to HyperFormula input without losing identifier text.
- * An existing leading apostrophe is HyperFormula's explicit text marker;
+ * Convert a raw cell to formula-engine input without losing identifier text.
+ * An existing leading apostrophe is the formula engine's explicit text marker;
  * leave it intact so exactly one marker is removed when the cell is evaluated.
  * Ordinary numbers, decimals, formulas and error values retain their semantics.
  * @param {unknown} value
@@ -13,4 +13,10 @@ export function formulaInput(value) {
   const integer = /^[+-]?(\d+)$/.exec(value);
   if (integer && ((integer[1].length > 1 && integer[1].startsWith('0')) || integer[1].length > 15)) return "'" + value;
   return value;
+}
+
+/** Preserve an XLSX string cell when its text would otherwise be reinterpreted. */
+export function importedText(value) {
+  if (typeof value !== 'string') return value;
+  return value.startsWith("'") || value.startsWith('=') || /^(TRUE|FALSE)$/i.test(value) || /^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(value.trim()) || /^#(?:DIV\/0!|N\/A|NAME\?|NULL!|NUM!|REF!|VALUE!|ERROR!)$/.test(value) ? "'" + value : value;
 }
