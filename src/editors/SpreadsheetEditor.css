@@ -53,3 +53,20 @@
 .sheet-formula select { max-width: 140px; border: 0; border-right: 1px solid #d7e2dc; padding: 8px; background: #f7faf8; }
 .sheet-selection-summary { font-size: 12px; color: #36634e; padding: 8px; white-space: nowrap; }
 @media(max-width:1000px){.sheet-selection-summary{max-width:45%;overflow:auto;}.sheet-status{display:none;}}
+
+.sheet-command-toolbar{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;padding:10px 16px;background:#f7faf8;border-bottom:1px solid #d7e2dc;}
+.sheet-command-group{display:flex;gap:6px;align-items:center;position:relative;padding-top:16px;}
+.sheet-command-group>.sheet-group-label{position:absolute;top:0;left:0;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#5c7268;}
+.sheet-command-group button,.sheet-command-group select{padding:6px 9px;border:1px solid #d6e1db;border-radius:5px;background:white;color:#244936;font-size:12px;}
+.sheet-command-group label{display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap;}
+.sheet-command-group select{max-width:190px;}
+.sheet-command-group button:hover{border-color:#2e8b61;background:#eef8f2;}
+.sheet-options{position:relative;align-self:center;flex-shrink:0;margin:0 8px;}
+.sheet-options>summary{display:flex;gap:6px;align-items:center;padding:7px 9px;border:1px solid #d6e1db;border-radius:5px;font-size:12px;cursor:pointer;list-style:none;}
+.sheet-options-panel{position:absolute;bottom:calc(100% + 10px);left:0;width:270px;padding:15px;display:grid;gap:12px;background:white;border:1px solid #d6e1db;box-shadow:0 12px 35px #102d2426;border-radius:10px;z-index:25;color:#244936;}
+.sheet-options-panel form{display:grid;gap:5px;}.sheet-options-panel form>div,.sheet-move-actions{display:flex;gap:6px;}.sheet-options-panel label{font-size:11px;}.sheet-options-panel input{min-width:0;width:100%;padding:7px;border:1px solid #bfd1c6;border-radius:5px;}.sheet-options-panel button{padding:7px;border:1px solid #d6e1db;background:#f7faf8;border-radius:5px;font-size:12px;}.sheet-move-actions button{flex:1}.sheet-options-panel button:disabled{opacity:.45}.sheet-options-panel .sheet-delete-action,.sheet-delete-confirm{color:#9f372d}.sheet-delete-confirm p{font-size:12px;margin:0 0 8px;}.sheet-delete-confirm button{margin-right:5px;}.sheet-options-panel button:hover:not(:disabled){background:#e9f4ed}.sheet-bottom{position:relative}.sheet-tabs{min-width:0}
+@media(max-width:1000px){.sheet-command-toolbar{gap:8px 14px;padding:9px 12px}.sheet-command-group{flex-wrap:wrap}.sheet-selection-summary{max-width:32%}.sheet-options-panel{left:auto;right:0}}
+
+.sheet-grid th>button{border:0;background:transparent;color:inherit;width:100%;height:100%;min-height:25px;padding:3px;font:inherit;cursor:pointer}.sheet-grid th>button:hover{background:#cee4d7}.sheet-grid th>button:focus-visible{outline:2px solid #168657;outline-offset:-2px}
+
+.sheet-bottom{overflow:visible;z-index:8;flex-shrink:0}

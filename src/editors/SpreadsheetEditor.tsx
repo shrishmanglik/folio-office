@@ -5,6 +5,7 @@ import { Download, Upload, Plus, Undo2, Redo2, ChevronDown } from 'lucide-react'
 import type { EditorProps } from '../types';
 import { downloadFile } from '../io';
 import { formulaInput } from '../../shared/cells.mjs';
+import { applySpreadsheetCommand } from '../../shared/spreadsheet-operations.mjs';
 import './SpreadsheetEditor.css';
 
 type CellStyle = { bold?: boolean; italic?: boolean; numberFormat?: string; fill?: string; color?: string; align?: 'left' | 'center' | 'right' };
@@ -54,6 +55,13 @@ export default function SpreadsheetEditor({ file, onChange }: EditorProps) {
   useEffect(() => { setRangeDraft(rangeAddress); }, [rangeAddress]);
   useEffect(() => { setRangeEnd(null); }, [sheet.id, file.id]);
   const selectedStyle = sheet.styles?.[address] || {};
+  const [sortHeader, setSortHeader] = useState(true);
+  const [sortColumn, setSortColumn] = useState(0);
+  const [sheetNameDraft, setSheetNameDraft] = useState(sheet.name);
+  const [confirmSheetDelete, setConfirmSheetDelete] = useState(false);
+  const sheetMenu = useRef<HTMLDetailsElement>(null);
+  useEffect(() => { setSheetNameDraft(sheet.name); setConfirmSheetDelete(false); }, [sheet.id, sheet.name]);
+  useEffect(() => { setSortColumn(bounds.left); }, [bounds.left, bounds.right]);
   const [busy, setBusy] = useState(false);
   const [historyVersion, setHistoryVersion] = useState(0);
   const history = useRef<{ past: SpreadsheetData[]; future: SpreadsheetData[] }>({ past: [], future: [] });
@@ -102,7 +110,16 @@ export default function SpreadsheetEditor({ file, onChange }: EditorProps) {
   function updateSheet(next: Sheet) { change({ ...data, activeSheet: next.id, sheets: data.sheets.map(s => s.id === next.id ? next : s) }); }
   function eachSelected(fn: (row: number, col: number) => void) { for (let r=bounds.top;r<=bounds.bottom;r++) for(let c=bounds.left;c<=bounds.right;c++) fn(r,c); }
   function formatCell(patch: Partial<CellStyle>) { const styles={...sheet.styles}; eachSelected((r,c)=>{ const a=`${colName(c)}${r+1}`; styles[a]={...styles[a],...patch}; }); updateSheet({...sheet,styles}); }
-  function clearFormatting() { const styles={...sheet.styles}; eachSelected((r,c)=>{delete styles[`${colName(c)}${r+1}`];}); updateSheet({...sheet,styles}); }
+  function editSelection(action: string, options: Record<string, unknown> = {}) {
+    try {
+      const next = applySpreadsheetCommand({ ...data, activeSheet: sheet.id }, { action, sheetId: sheet.id, range: rangeAddress, ...options });
+      change(next); setActiveId(next.activeSheet || sheet.id); setEditing(false); setConfirmSheetDelete(false);
+      setMessage(action.startsWith('sheet') ? 'Worksheet updated. Undo is available.' : `Updated ${rangeAddress}. Undo is available.`);
+      if(action.startsWith('sheet')) { sheetMenu.current?.removeAttribute('open'); setSelected({row:0,col:0}); setRangeEnd(null); }
+    } catch(error) { setMessage(error instanceof Error ? error.message : String(error)); }
+  }
+  function clearFormatting() { editSelection('clear', {mode:'formats'}); }
+
   function selectRange() {
     const match=/^([A-Z]+)([1-9]\d*)(?::([A-Z]+)([1-9]\d*))?$/i.exec(rangeDraft.trim());
     const column=(v:string)=>[...v.toUpperCase()].reduce((n,c)=>n*26+c.charCodeAt(0)-64,0)-1;
@@ -207,6 +224,11 @@ export default function SpreadsheetEditor({ file, onChange }: EditorProps) {
       <details ref={exportMenu} className="sheet-export" onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget as Node)) e.currentTarget.removeAttribute("open"); }}><summary><Download size={16}/>Export<ChevronDown size={13}/></summary><div><button disabled={busy} onClick={() => exportFile('xlsx')}>Excel workbook (.xlsx)</button><button disabled={busy} onClick={() => exportFile('csv')}>Current sheet (.csv)</button></div></details>
       <input ref={importer} hidden type="file" accept=".csv,.xlsx" onChange={e => { if (e.target.files?.[0]) void importFile(e.target.files[0]); }}/>
     </div>
+    <div className="sheet-command-toolbar" aria-label="Range editing commands">
+      <div className="sheet-command-group"><span className="sheet-group-label">Fill selection</span><button title="Copy the first row down, adjusting relative references" onClick={() => editSelection('fill', {direction:'down'})}>Fill down</button><button title="Copy the first column across, adjusting relative references" onClick={() => editSelection('fill', {direction:'right'})}>Fill right</button></div>
+      <div className="sheet-command-group"><span className="sheet-group-label">Clear</span><select aria-label="Clear selected range" value="" onChange={e=>{if(e.target.value)editSelection('clear',{mode:e.target.value});}}><option value="">Choose what to clear</option><option value="contents">Contents only</option><option value="formats">Formatting only</option><option value="all">Contents and formatting</option></select></div>
+      <div className="sheet-command-group sheet-sort-group"><span className="sheet-group-label">Sort selected records</span><select aria-label="Sort column" value={sortColumn} onChange={e=>setSortColumn(Number(e.target.value))}>{Array.from({length:bounds.right-bounds.left+1},(_,i)=>bounds.left+i).map(c=><option key={c} value={c}>{colName(c)}{sortHeader && sheet.cells[bounds.top]?.[c] ? ` · ${sheet.cells[bounds.top][c]}`:''}</option>)}</select><label><input type="checkbox" checked={sortHeader} onChange={e=>setSortHeader(e.target.checked)}/>Header row</label><button aria-label="Sort ascending" onClick={()=>editSelection('sort',{keyColumn:sortColumn,direction:'asc',hasHeader:sortHeader})}>A to Z</button><button aria-label="Sort descending" onClick={()=>editSelection('sort',{keyColumn:sortColumn,direction:'desc',hasHeader:sortHeader})}>Z to A</button></div>
+    </div>
     <div className="sheet-format-toolbar" aria-label="Cell formatting">
       <span className="sheet-format-label">Range <strong>{rangeAddress}</strong></span><div className="sheet-format-group" role="group" aria-label="Text style">
       <button aria-label="Bold cell" aria-pressed={!!selectedStyle.bold} onClick={() => formatCell({ bold: !selectedStyle.bold })}><strong>B</strong></button>
@@ -224,14 +246,15 @@ export default function SpreadsheetEditor({ file, onChange }: EditorProps) {
       if (editing) return;
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(e.shiftKey); return; }
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); undo(true); return; }
+      if ((e.ctrlKey || e.metaKey) && ['d','r'].includes(e.key.toLowerCase())) { e.preventDefault(); editSelection('fill',{direction:e.key.toLowerCase()==='d'?'down':'right'}); return; }
       const direction: Record<string, [number, number]> = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1], Tab: [0, e.shiftKey ? -1 : 1], Enter: [1, 0] };
       if (direction[e.key]) { e.preventDefault(); move(...direction[e.key], e.shiftKey && e.key.startsWith('Arrow')); }
-      else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); writeCells(Array.from({length:bounds.bottom-bounds.top+1},()=>Array(bounds.right-bounds.left+1).fill('')),bounds.top,bounds.left); }
+      else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); editSelection('clear',{mode:'contents'}); }
       else if (e.key === 'F2') { e.preventDefault(); setDraft(raw); setEditing(true); }
       else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); setDraft(e.key); setEditing(true); }
     }}>
-      <table className={`sheet-grid ${freezeFirstRow ? 'freeze-first-row' : ''}`} role="grid"><thead><tr><th className="sheet-corner"/>{Array.from({ length: colCount }, (_, c) => <th className={selected.col === c ? 'selected-heading' : ''} key={c}>{colName(c)}</th>)}</tr></thead>
-      <tbody>{visibleRows.map(r => <tr key={r} className={r === 0 ? 'first-data-row' : ''}><th className={selected.row === r ? 'selected-heading' : ''}>{r + 1}</th>{Array.from({ length: colCount }, (_, c) => {
+      <table className={`sheet-grid ${freezeFirstRow ? 'freeze-first-row' : ''}`} role="grid"><thead><tr><th className="sheet-corner"><button aria-label="Select entire worksheet" onClick={()=>{setSelected({row:0,col:0});setRangeEnd({row:rowCount-1,col:colCount-1});grid.current?.focus();}}>▦</button></th>{Array.from({ length: colCount }, (_, c) => <th className={selected.col === c ? 'selected-heading' : ''} key={c}><button aria-label={`Select column ${colName(c)}`} onClick={()=>{setSelected({row:0,col:c});setRangeEnd({row:rowCount-1,col:c});setEditing(false);grid.current?.focus();}}>{colName(c)}</button></th>)}</tr></thead>
+      <tbody>{visibleRows.map(r => <tr key={r} className={r === 0 ? 'first-data-row' : ''}><th className={selected.row === r ? 'selected-heading' : ''}><button aria-label={`Select row ${r+1}`} onClick={()=>{setSelected({row:r,col:0});setRangeEnd({row:r,col:colCount-1});setEditing(false);grid.current?.focus();}}>{r + 1}</button></th>{Array.from({ length: colCount }, (_, c) => {
         const active = selected.row === r && selected.col === c; const value = computed.values[sheet.id]?.[r]?.[c] ?? sheet.cells[r]?.[c] ?? '';
         const style = sheet.styles?.[`${colName(c)}${r + 1}`] || {};
         const display = computed.numeric[sheet.id]?.[r]?.[c] ? displayValue(value, style.numberFormat) : value;
@@ -240,7 +263,7 @@ export default function SpreadsheetEditor({ file, onChange }: EditorProps) {
         </td>;
       })}</tr>)}</tbody></table>{filter && !visibleRows.length && <div className="sheet-empty-filter"><strong>No matching rows</strong><span>Try another value or clear the filter to see your worksheet.</span><button onClick={() => setFilter('')}>Clear filter</button></div>}
     </div>
-    <div className="sheet-bottom"><button className="sheet-add" title="Add worksheet" onClick={addSheet}><Plus size={18}/></button><div className="sheet-tabs">{data.sheets.map(s => <button className={s.id === sheet.id ? 'current' : ''} key={s.id} onClick={() => { setActiveId(s.id); setSelected({ row: 0, col: 0 }); setEditing(false); }}>{s.name}</button>)}</div><span className="sheet-selection-summary" aria-live="polite">Count {selectionCount}{selectionValues.length>0 && <> · Sum {Number(selectionSum.toPrecision(12))} · Average {Number((selectionSum/selectionValues.length).toPrecision(12))}</>}</span><span className="sheet-status">{busy ? 'Working…' : raw.startsWith('=') ? `${colName(selected.col)}${selected.row + 1} = ${computed.values[sheet.id]?.[selected.row]?.[selected.col] || ''}` : 'Ready'}<span> · </span>{data.sheets.length} sheet{data.sheets.length === 1 ? '' : 's'}</span></div>
+    <div className="sheet-bottom"><button className="sheet-add" title="Add worksheet" onClick={addSheet}><Plus size={18}/></button><div className="sheet-tabs">{data.sheets.map(s => <button className={s.id === sheet.id ? 'current' : ''} key={s.id} onClick={() => { setActiveId(s.id); setSelected({ row: 0, col: 0 }); setEditing(false); }}>{s.name}</button>)}</div><details ref={sheetMenu} className="sheet-options" onKeyDown={e=>{if(e.key==='Escape'){e.currentTarget.removeAttribute('open');setConfirmSheetDelete(false);e.currentTarget.querySelector('summary')?.focus();}}}><summary>Sheet options<ChevronDown size={13}/></summary><div className="sheet-options-panel"><strong>{sheet.name}</strong><form onSubmit={e=>{e.preventDefault();editSelection('sheetRename',{name:sheetNameDraft});}}><label htmlFor="worksheet-name">Worksheet name</label><div><input id="worksheet-name" value={sheetNameDraft} maxLength={31} onChange={e=>setSheetNameDraft(e.target.value)}/><button type="submit">Rename</button></div></form><button onClick={()=>editSelection('sheetDuplicate')}>Duplicate worksheet</button><div className="sheet-move-actions"><button disabled={data.sheets.findIndex(s=>s.id===sheet.id)===0} onClick={()=>editSelection('sheetMove',{toIndex:data.sheets.findIndex(s=>s.id===sheet.id)-1})}>Move left</button><button disabled={data.sheets.findIndex(s=>s.id===sheet.id)===data.sheets.length-1} onClick={()=>editSelection('sheetMove',{toIndex:data.sheets.findIndex(s=>s.id===sheet.id)+1})}>Move right</button></div>{confirmSheetDelete?<div className="sheet-delete-confirm"><p>Delete {sheet.name}? You can restore it with Undo.</p><button onClick={()=>editSelection('sheetDelete')}>Confirm delete worksheet</button><button onClick={()=>setConfirmSheetDelete(false)}>Cancel</button></div>:<button className="sheet-delete-action" disabled={data.sheets.length===1} onClick={()=>setConfirmSheetDelete(true)}>Delete worksheet</button>}</div></details><span className="sheet-selection-summary" aria-live="polite">Count {selectionCount}{selectionValues.length>0 && <> · Sum {Number(selectionSum.toPrecision(12))} · Average {Number((selectionSum/selectionValues.length).toPrecision(12))}</>}</span><span className="sheet-status">{busy ? 'Working…' : raw.startsWith('=') ? `${colName(selected.col)}${selected.row + 1} = ${computed.values[sheet.id]?.[selected.row]?.[selected.col] || ''}` : 'Ready'}<span> · </span>{data.sheets.length} sheet{data.sheets.length === 1 ? '' : 's'}</span></div>
   </div>;
 }
 

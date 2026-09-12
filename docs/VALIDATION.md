@@ -23,3 +23,13 @@ Local Excel 16.0.20326.20132 was opened. The Windows helper returned an Excel ac
 Advanced spreadsheet tools, assistive-technology testing, large-workbook stress, full Office fidelity, an independent release review and clean-machine installer acceptance remain open. Existing document, presentation, notebook, storage, conversion and agent tests do not amount to testing from every possible user viewpoint.
 
 The source no longer depends on HyperFormula. The MIT replacement has bounded compatibility fixtures, not exhaustive equivalence. `buffers@0.1.1` licensing remains unresolved; no public binary release is provided.
+
+## 0.7.0 Home increment
+
+43 local automated tests passed on Windows, including a synthetic Windows lock-contention control. Source Electron acceptance passed seven workflow groups: reference-aware fill with formatting, record sort, selective clear and undo, sheet management, row selection, agent readback, and saved-file reopening through the shared engine. No renderer exceptions were observed. Run `node scripts/native-home-workflows.cjs` for this fixture.
+
+Independent bounded review found and rechecked fixes for quoted sheet identifiers and a deletion-reference sentinel collision. It did not approve the entire release. Native inspection also caught a worksheet menu clipped behind the grid; the footer stacking and overflow were corrected and the workflow rerun passed.
+
+![Home workflow controls with synthetic data](assets/home-v7.png)
+
+Unsupported formula sorts/reference forms remain explicit failures. The full165-entry campaign is tracked in EXECUTION-STATE.json. No full Office parity, independent whole-release approval or public binary clearance is claimed.

@@ -61,6 +61,9 @@ For MCP, run the same entry point with `mcp` instead of `capabilities`. The desk
 
 ## Spreadsheet workflow
 
+Version 0.7 adds Fill down/right, selective clearing, record sorting and worksheet rename, duplicate, reorder and deletion. These operations share their implementation with the `spreadsheet.edit` agent command. Formula-containing sorts and unsupported reference forms return clear errors. The [execution state](docs/EXECUTION-STATE.json) tracks the remaining catalog scope.
+
+
 Enter a range such as `B2:C4` in the name box or Shift-click its corners. Apply formatting to the selection, copy or clear the range, inspect count/sum/average, or insert a summary formula below it. Shift+Arrow extends the selection. Formula insertion refuses to overwrite an occupied destination.
 
 ![Range formatting and selection totals in the native desktop app](docs/assets/spreadsheet.png)

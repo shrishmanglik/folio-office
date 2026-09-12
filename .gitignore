@@ -17,3 +17,4 @@ evidence/
 .env
 .env.*
 !.env.example
+release-v7/

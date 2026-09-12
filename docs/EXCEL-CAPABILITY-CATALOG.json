@@ -1,0 +1,1282 @@
+{
+  "schema_version": "1.0",
+  "title": "Excel capability distillation for Folio Office",
+  "date": "2026-09-12",
+  "scope": "Expanded Home ribbon plus broader spreadsheet capability inventory. Not an exhaustive inventory of every Excel build, add-in, function signature or hidden menu.",
+  "evidence_policy": {
+    "visible": "The control is visible in the supplied screenshot.",
+    "visible_with_documented_expansion": "The group/control is visible; variants are expanded from official references or prior local inspection.",
+    "broader_suite_inventory": "A product capability family outside the open Home ribbon. Tab presence is visible, some families have prior local inspection, and finer variants are proposed requirements pending version-specific acceptance."
+  },
+  "agent_contract_status": "All family names below are proposed design vocabulary, not claims of installed MCP tools. Current source separately defines spreadsheet.read, spreadsheet.write and spreadsheet.format.",
+  "feature_count": 165,
+  "sources": {
+    "screenshot": {
+      "title": "User-supplied Excel Home ribbon screenshot",
+      "url": null,
+      "scope": "Visible controls only; closed menus and other tab contents are not visible."
+    },
+    "local": {
+      "title": "Previously inspected local Excel 16.0.20326.20132 Home, Insert and Data ribbons",
+      "url": null,
+      "scope": "Observed command labels; not exhaustive behavior tests."
+    },
+    "paste": {
+      "title": "Microsoft: Paste options",
+      "url": "https://support.microsoft.com/en-us/excel/paste-options"
+    },
+    "format": {
+      "title": "Microsoft: Format Cells settings",
+      "url": "https://learn.microsoft.com/en-us/troubleshoot/microsoft-365-apps/excel/format-cells-settings"
+    },
+    "conditional": {
+      "title": "Microsoft: Conditional formatting API",
+      "url": "https://learn.microsoft.com/en-us/office/dev/add-ins/excel/excel-add-ins-conditional-formatting"
+    },
+    "tables": {
+      "title": "Microsoft: Structured references with tables",
+      "url": "https://support.microsoft.com/en-us/excel/using-structured-references-with-excel-tables"
+    },
+    "find": {
+      "title": "Microsoft: Find and select cells by conditions",
+      "url": "https://support.microsoft.com/en-us/office/find-and-select-cells-that-meet-specific-conditions-in-excel-2d686424-6150-4015-a8e4-a5990f4d7e3a"
+    },
+    "functions": {
+      "title": "Microsoft: Versioned alphabetical function catalog",
+      "url": "https://support.microsoft.com/en-us/excel/excel-functions-alphabetical"
+    },
+    "formulas": {
+      "title": "Microsoft: Formula concepts",
+      "url": "https://support.microsoft.com/en-us/excel/get-started/overview-of-formulas-in-excel"
+    },
+    "keyboard": {
+      "title": "Microsoft: Excel keyboard shortcuts",
+      "url": "https://support.microsoft.com/en-us/office/keyboard-shortcuts-in-excel-1798d9d5-842a-42b8-9c99-9b7213f0040f"
+    },
+    "navigation": {
+      "title": "Microsoft: Explore Excel with a screen reader",
+      "url": "https://support.microsoft.com/en-gb/office/use-a-screen-reader-to-explore-and-navigate-excel-cbf024e8-2abd-4764-b639-f24eed659a53"
+    },
+    "font": {
+      "title": "Microsoft: Format text in cells",
+      "url": "https://support.microsoft.com/en-US/Excel/format-text-in-cells"
+    }
+  },
+  "groups": [
+    {
+      "area": "Workspace and command access",
+      "scope": "visible",
+      "sources": "screenshot keyboard",
+      "proposed_agent_family": "workspace",
+      "features": [
+        {
+          "name": "Quick access",
+          "variants": "Save, undo, redo, customize frequently used commands",
+          "id": "XL-01-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Ribbon navigation",
+          "variants": "File, Home, Insert, Draw, Page Layout, Formulas, Data, Review, View, Help",
+          "id": "XL-01-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Command search",
+          "variants": "Find a command by intent or name and invoke it with explicit arguments",
+          "id": "XL-01-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Name box",
+          "variants": "Read the active address, jump to a cell or range, select a named range",
+          "id": "XL-01-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Formula bar",
+          "variants": "Inspect raw content, edit formula/value, confirm, cancel, insert a function",
+          "id": "XL-01-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Grid navigation",
+          "variants": "Cell, range, row, column, whole-sheet and disjoint selection; keyboard extension",
+          "id": "XL-01-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Workbook identity",
+          "variants": "Title, file name, dirty/saved/conflict state and current workspace",
+          "id": "XL-01-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Window controls",
+          "variants": "Minimize, maximize, restore, close and ribbon visibility",
+          "id": "XL-01-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Sharing entry point",
+          "variants": "Inspect sharing options; online delivery is an optional integration",
+          "id": "XL-01-09",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Add-ins entry point",
+          "variants": "Discover installed extensions and their declared capabilities",
+          "id": "XL-01-10",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Keyboard focus remains visible; editing Escape restores the previous value; close waits for a save or exposes recovery. Shared commands never require an agent to click a ribbon."
+    },
+    {
+      "area": "Home / Clipboard",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot paste",
+      "proposed_agent_family": "range.transfer",
+      "features": [
+        {
+          "name": "Cut and copy",
+          "variants": "Move or duplicate a cell range",
+          "id": "XL-02-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Paste",
+          "variants": "Apply selected source content to an explicit destination",
+          "id": "XL-02-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Paste values or formulas",
+          "variants": "Choose computed values versus formula expressions",
+          "id": "XL-02-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Paste formats",
+          "variants": "Apply cell appearance separately from content",
+          "id": "XL-02-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Other paste modes",
+          "variants": "Number formats, validation, comments/notes, widths and transposition where supported",
+          "id": "XL-02-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Paste Special arithmetic",
+          "variants": "Add, subtract, multiply or divide destination values by source values",
+          "id": "XL-02-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Blank handling and links",
+          "variants": "Skip source blanks; explicit linked paste rather than accidental external dependencies",
+          "id": "XL-02-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Format Painter",
+          "variants": "Reuse appearance on a different selection",
+          "id": "XL-02-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Copy B2 formula =A2*$F$1 down one row and obtain =A3*$F$1. Paste-values freezes the result. A multi-cell operation is atomic and undoable; overlapping moves cannot erase source data before it is read."
+    },
+    {
+      "area": "Home / Font and borders",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot font format",
+      "proposed_agent_family": "range.format",
+      "features": [
+        {
+          "name": "Typeface and size",
+          "variants": "Font family, size, increase/decrease",
+          "id": "XL-03-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Emphasis",
+          "variants": "Bold, italic, underline and its variants",
+          "id": "XL-03-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Font effects",
+          "variants": "Strike, superscript and subscript via detailed formatting",
+          "id": "XL-03-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Foreground and fill",
+          "variants": "Text and background colors, automatic/theme/custom colors",
+          "id": "XL-03-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Border formatting",
+          "variants": "Selected sides, inside/outside, style, weight and color",
+          "id": "XL-03-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Detailed cell formatting",
+          "variants": "Inspect and modify compatible properties in a single dialog",
+          "id": "XL-03-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Range formatting changes only specified properties, retains formulas and exports/reimports supported appearance. Mixed selections show mixed state. Font availability is reported when an offline machine lacks a requested typeface."
+    },
+    {
+      "area": "Home / Alignment",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot format",
+      "proposed_agent_family": "range.align",
+      "features": [
+        {
+          "name": "Horizontal alignment",
+          "variants": "Left, center and right; additional alignment modes in detailed settings",
+          "id": "XL-04-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Vertical alignment",
+          "variants": "Top, middle and bottom",
+          "id": "XL-04-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Text orientation",
+          "variants": "Rotate or orient content vertically",
+          "id": "XL-04-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Indentation",
+          "variants": "Increase/decrease text indentation",
+          "id": "XL-04-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Wrap",
+          "variants": "Wrap text within the cell width",
+          "id": "XL-04-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Shrink to fit",
+          "variants": "Fit display text without changing its stored content",
+          "id": "XL-04-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Merge variants",
+          "variants": "Merge-and-center, merge across, merge cells, unmerge",
+          "id": "XL-04-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Reading direction",
+          "variants": "Support left-to-right and right-to-left content",
+          "id": "XL-04-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Merging a range containing several values first exposes the loss and a recoverable choice. Unmerge restores cell geometry. Wrapped row heights and rotation survive XLSX conversion where supported."
+    },
+    {
+      "area": "Home / Number formats",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot format",
+      "proposed_agent_family": "range.numberFormat",
+      "features": [
+        {
+          "name": "General and numeric",
+          "variants": "General display, decimal precision, grouping and negative-number styles",
+          "id": "XL-05-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Currency and accounting",
+          "variants": "Currency symbols; accounting alignment of amounts",
+          "id": "XL-05-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Percentages",
+          "variants": "Percentage presentation with configurable precision",
+          "id": "XL-05-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Dates and times",
+          "variants": "Short/long dates, time-of-day and elapsed-time formats",
+          "id": "XL-05-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Fraction and scientific",
+          "variants": "Fractional and exponential display",
+          "id": "XL-05-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Text and special formats",
+          "variants": "Preserve identifiers and locale-specific patterns",
+          "id": "XL-05-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Decimal controls",
+          "variants": "Increase or decrease displayed decimal places",
+          "id": "XL-05-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Custom formats",
+          "variants": "Positive/negative/zero/text sections, literals, conditions and colors",
+          "id": "XL-05-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "A stored 0.125 becomes 12.5% without changing the value. Leading-zero identifiers remain text. Display precision cannot silently round saved calculations. Date interpretation and locale must be explicit."
+    },
+    {
+      "area": "Home / Conditional formatting",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot conditional",
+      "proposed_agent_family": "conditionalRules",
+      "features": [
+        {
+          "name": "Value and text rules",
+          "variants": "Comparison, text matching and date-based conditions",
+          "id": "XL-06-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Ranking rules",
+          "variants": "Top/bottom, above/below average and duplicates/uniques",
+          "id": "XL-06-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Visual indicators",
+          "variants": "Data bars, color scales and icon sets",
+          "id": "XL-06-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Formula rules",
+          "variants": "Evaluate a condition relative to each target cell",
+          "id": "XL-06-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Rule management",
+          "variants": "Create, inspect, edit, order, clear and scope rules",
+          "id": "XL-06-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Conflicts and priority",
+          "variants": "Resolve overlapping rules predictably and expose supported stop behavior",
+          "id": "XL-06-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Changing an input recalculates the relevant visual rule. The saved rule is readable by agents and survives reopening; colors alone are not the only accessible explanation."
+    },
+    {
+      "area": "Home / Tables and cell styles",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot tables",
+      "proposed_agent_family": "tables",
+      "features": [
+        {
+          "name": "Create table",
+          "variants": "Explicit range, table name and header interpretation",
+          "id": "XL-07-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Table presentation",
+          "variants": "Banded rows/columns, header and totals presentation",
+          "id": "XL-07-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Structured references",
+          "variants": "Use persistent table and column names in formulas",
+          "id": "XL-07-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Calculated columns",
+          "variants": "Apply a column calculation as the table grows",
+          "id": "XL-07-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Table operations",
+          "variants": "Resize, rename and convert to a plain range",
+          "id": "XL-07-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Reusable styles",
+          "variants": "Apply named styles; inspect, create and modify style definitions",
+          "id": "XL-07-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Adding a record extends the table and its column formulas. Renaming a column updates valid references. A table is stored as a semantic object, not inferred from colored cells."
+    },
+    {
+      "area": "Home / Cells and sheets",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot local",
+      "proposed_agent_family": "sheet.structure",
+      "features": [
+        {
+          "name": "Insert cells",
+          "variants": "Shift neighboring cells right or down",
+          "id": "XL-08-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Delete cells",
+          "variants": "Shift remaining cells left or up",
+          "id": "XL-08-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Row operations",
+          "variants": "Insert/delete selected rows and preserve record alignment",
+          "id": "XL-08-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Column operations",
+          "variants": "Insert/delete selected columns",
+          "id": "XL-08-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Dimensions",
+          "variants": "Set row height and column width; autofit",
+          "id": "XL-08-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Visibility",
+          "variants": "Hide/unhide rows, columns and worksheets",
+          "id": "XL-08-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Sheet creation and deletion",
+          "variants": "Add, duplicate and remove sheets with recovery",
+          "id": "XL-08-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Sheet organization",
+          "variants": "Rename, reorder, move/copy sheets and set tab colors",
+          "id": "XL-08-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Cell protection attributes",
+          "variants": "Set locked/hidden attributes independently of workbook encryption",
+          "id": "XL-08-09",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Sheet protection",
+          "variants": "Enforce configured restrictions in both UI and agent operations",
+          "id": "XL-08-10",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Inserting a row updates dependent references, tables, styles and ranges together. Deleting a referenced cell yields an explicit error or documented transformation. Undo restores structure as well as values."
+    },
+    {
+      "area": "Home / Fill, clear and summaries",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot local keyboard",
+      "proposed_agent_family": "range.edit",
+      "features": [
+        {
+          "name": "AutoSum family",
+          "variants": "Sum, average, count numbers, minimum and maximum; open further function selection",
+          "id": "XL-09-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Directional fill",
+          "variants": "Fill down, right, up or left",
+          "id": "XL-09-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Series fill",
+          "variants": "Numbers, dates and explicit steps/stops",
+          "id": "XL-09-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Pattern fill",
+          "variants": "Infer a pattern with a preview and a way to reject it",
+          "id": "XL-09-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Clear contents",
+          "variants": "Remove values/formulas while retaining other cell properties",
+          "id": "XL-09-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Selective clearing",
+          "variants": "Clear formats, comments/notes, hyperlinks or all selected content",
+          "id": "XL-09-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Undo and redo",
+          "variants": "Restore a complete logical operation",
+          "id": "XL-09-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Fill distinguishes relative, absolute and mixed references. AutoSum identifies or accepts the intended range and refuses a silent overwrite. Clear-contents leaves formatting intact; Clear-all is a separate operation."
+    },
+    {
+      "area": "Home / Sort and filter",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot local",
+      "proposed_agent_family": "range.sortFilter",
+      "features": [
+        {
+          "name": "Simple sorting",
+          "variants": "Ascending/descending text, numeric or date ordering",
+          "id": "XL-10-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Custom sorting",
+          "variants": "Multiple keys, headers, custom order, colors/icons when supported",
+          "id": "XL-10-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Filtering",
+          "variants": "Value lists, text/number/date conditions and blanks",
+          "id": "XL-10-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Filter management",
+          "variants": "Clear, reapply and inspect active criteria",
+          "id": "XL-10-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Selection scope",
+          "variants": "Distinguish visible records from all records",
+          "id": "XL-10-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Sort keeps complete records together and shows the actual affected range. Filter state is inspectable and does not delete data. Hidden-row copy, fill and summary semantics are explicit."
+    },
+    {
+      "area": "Home / Find and select",
+      "scope": "visible_with_documented_expansion",
+      "sources": "screenshot find",
+      "proposed_agent_family": "range.find",
+      "features": [
+        {
+          "name": "Find",
+          "variants": "Search within selection, sheet or workbook with explicit match settings",
+          "id": "XL-11-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Replace",
+          "variants": "Preview matches, replace one or all, and retain recovery",
+          "id": "XL-11-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Go To",
+          "variants": "Navigate directly to addresses or named ranges",
+          "id": "XL-11-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Go To Special",
+          "variants": "Select formulas, constants, blanks, comments, regions, arrays, objects or row/column differences",
+          "id": "XL-11-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Object selection",
+          "variants": "Select and inspect drawing/chart objects independently of cells",
+          "id": "XL-11-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "A find result returns stable sheet identity and cell/object location. Replace reports affected cells before a bulk write. Search in formulas and displayed values are distinct modes."
+    },
+    {
+      "area": "Insert / Analysis objects",
+      "scope": "broader_suite_inventory",
+      "sources": "local navigation tables",
+      "proposed_agent_family": "objects.analysis",
+      "features": [
+        {
+          "name": "Pivot tables",
+          "variants": "Source data, field placement, aggregation, grouping, filters and refresh",
+          "id": "XL-12-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Pivot charts",
+          "variants": "Chart a pivot result with the related field/filter state",
+          "id": "XL-12-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Charts",
+          "variants": "Column/bar, line/area, pie/doughnut, scatter/bubble, statistical, hierarchy, waterfall and combo families",
+          "id": "XL-12-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Chart editing",
+          "variants": "Series, axes, titles, legends, labels, units and data-source changes",
+          "id": "XL-12-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Sparklines",
+          "variants": "Compact line, column and win/loss visualizations",
+          "id": "XL-12-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Slicers and timelines",
+          "variants": "Interactive filtering controls linked to supported data objects",
+          "id": "XL-12-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Objects reference structured source data; their calculations and chart series are readable without screenshots. Stale pivots are marked until refreshed. Offline maps must declare their local data requirements."
+    },
+    {
+      "area": "Insert / Content objects",
+      "scope": "broader_suite_inventory",
+      "sources": "local navigation",
+      "proposed_agent_family": "objects.content",
+      "features": [
+        {
+          "name": "Images",
+          "variants": "Embed, crop, resize, position and supply alternative text",
+          "id": "XL-13-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Shapes and diagrams",
+          "variants": "Shapes, connectors, icons and grouped objects",
+          "id": "XL-13-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Rich visual assets",
+          "variants": "Diagram templates, screenshots and supported 3D assets",
+          "id": "XL-13-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Text elements",
+          "variants": "Text boxes, decorative text and symbols/equations",
+          "id": "XL-13-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Links and embedded objects",
+          "variants": "Explicit destinations, local references and supported attachments",
+          "id": "XL-13-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Object layout",
+          "variants": "Select, reorder layers, align, distribute, group and lock",
+          "id": "XL-13-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Every object has a stable ID, geometry, reading order and semantic content. Local assets remain available offline; unsupported external or embedded content is identified rather than executed implicitly."
+    },
+    {
+      "area": "Draw",
+      "scope": "broader_suite_inventory",
+      "sources": "navigation",
+      "proposed_agent_family": "ink",
+      "features": [
+        {
+          "name": "Pen tools",
+          "variants": "Pen/highlighter, color and thickness",
+          "id": "XL-14-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Ink editing",
+          "variants": "Erase, select and move ink strokes",
+          "id": "XL-14-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Ink interpretation",
+          "variants": "Optional shape/math conversion and replay where available",
+          "id": "XL-14-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Store editable strokes and accessible descriptions; optional recognition must declare model availability and its confidence. Do not claim a cloud recognition service works offline."
+    },
+    {
+      "area": "Page Layout and printing",
+      "scope": "broader_suite_inventory",
+      "sources": "navigation keyboard",
+      "proposed_agent_family": "print",
+      "features": [
+        {
+          "name": "Themes",
+          "variants": "Coordinated colors, fonts and effects",
+          "id": "XL-15-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Paper setup",
+          "variants": "Margins, orientation, paper size and page order",
+          "id": "XL-15-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Print scope",
+          "variants": "Print area, selected ranges and repeated title rows/columns",
+          "id": "XL-15-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Pagination",
+          "variants": "Page breaks and fit-to-page scaling",
+          "id": "XL-15-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Page content",
+          "variants": "Headers, footers, page numbers and background behavior",
+          "id": "XL-15-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Print visibility",
+          "variants": "Gridlines, row/column headings and hidden content policy",
+          "id": "XL-15-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Output",
+          "variants": "Preview, printer selection and local PDF generation",
+          "id": "XL-15-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Preview and exported/printed pages use the same layout calculation. A ten-page sheet cannot silently lose its final rows. Agents can request pagination metadata and a PDF without opening a printer dialog."
+    },
+    {
+      "area": "Formulas / Calculation model",
+      "scope": "broader_suite_inventory",
+      "sources": "formulas functions",
+      "proposed_agent_family": "calculation",
+      "features": [
+        {
+          "name": "Operators and precedence",
+          "variants": "Arithmetic, comparison, concatenation and reference operators",
+          "id": "XL-16-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Reference types",
+          "variants": "Relative, absolute, mixed, cross-sheet and structured references",
+          "id": "XL-16-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Defined names",
+          "variants": "Workbook/sheet scope, creation, inspection, rename and deletion",
+          "id": "XL-16-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Array behavior",
+          "variants": "Array formulas, dynamic spills and explicit spill conflicts",
+          "id": "XL-16-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Recalculation",
+          "variants": "Automatic/manual mode, dirty dependencies and targeted/full recalculation",
+          "id": "XL-16-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Errors and cycles",
+          "variants": "Typed errors, traceable causes and defined circular-reference behavior",
+          "id": "XL-16-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Dates, locale and precision",
+          "variants": "Date systems, numeric limits and locale-aware input/output",
+          "id": "XL-16-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Function availability",
+          "variants": "Versioned function catalog with explicit support status for each function",
+          "id": "XL-16-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Function existence is not proof of compatibility. Test coercion, blanks, errors, arrays and edge cases per function. Unsupported functions return a precise diagnostic without rewriting the workbook."
+    },
+    {
+      "area": "Formulas / Function families",
+      "scope": "broader_suite_inventory",
+      "sources": "functions",
+      "proposed_agent_family": "functions",
+      "features": [
+        {
+          "name": "Arithmetic and aggregation",
+          "variants": "SUM/SUMIFS, PRODUCT, rounding, conditional counts and sums",
+          "id": "XL-17-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Logical and errors",
+          "variants": "IF/IFS, AND/OR/NOT, SWITCH, IFERROR/IFNA",
+          "id": "XL-17-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Lookup and reference",
+          "variants": "Lookup families, INDEX/MATCH and reference construction",
+          "id": "XL-17-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Text",
+          "variants": "Parsing, joining, searching, replacement, case and character handling",
+          "id": "XL-17-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Date and time",
+          "variants": "Calendar arithmetic, business-day and elapsed-time calculations",
+          "id": "XL-17-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Financial",
+          "variants": "Cashflow, interest, depreciation and valuation functions",
+          "id": "XL-17-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Statistics",
+          "variants": "Distributions, descriptive statistics, regression and testing",
+          "id": "XL-17-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Specialized families",
+          "variants": "Engineering, complex numbers, database criteria, information and compatibility functions",
+          "id": "XL-17-08",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Modern formula composition",
+          "variants": "Dynamic-array transformation, LET/LAMBDA and helper functions where supported",
+          "id": "XL-17-09",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "External function classes",
+          "variants": "Cube, web, real-time and extension functions require explicit integrations",
+          "id": "XL-17-10",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Use the official alphabetical catalog as the versioned index. Maintain one support/test row per function and variant in implementation work; this feature-family list is not a claim that every function is implemented."
+    },
+    {
+      "area": "Formulas / Inspection and audit",
+      "scope": "broader_suite_inventory",
+      "sources": "keyboard",
+      "proposed_agent_family": "formula.audit",
+      "features": [
+        {
+          "name": "Function help",
+          "variants": "Search functions, inspect signatures and enter arguments",
+          "id": "XL-18-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Reference picking",
+          "variants": "Select referenced cells/ranges while editing a formula",
+          "id": "XL-18-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Formula display",
+          "variants": "Toggle formulas versus calculated results",
+          "id": "XL-18-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Dependency inspection",
+          "variants": "Trace precedents/dependents and navigate errors",
+          "id": "XL-18-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Evaluation tools",
+          "variants": "Inspect intermediate evaluation and watch selected values",
+          "id": "XL-18-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Return an agent-readable dependency graph and evaluation explanation. UI tracing uses the same engine data; stale cached values are labeled."
+    },
+    {
+      "area": "Data / Import and transformation",
+      "scope": "broader_suite_inventory",
+      "sources": "local navigation",
+      "proposed_agent_family": "data.query",
+      "features": [
+        {
+          "name": "Local import",
+          "variants": "Text/CSV, workbook and structured local-file sources",
+          "id": "XL-19-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Import controls",
+          "variants": "Encoding, delimiters, headers and column data types",
+          "id": "XL-19-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Query definitions",
+          "variants": "Reusable transformation steps and inspectable dependencies",
+          "id": "XL-19-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Table transformations",
+          "variants": "Select/filter, change types, split, merge, join, append, group and pivot/unpivot",
+          "id": "XL-19-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Connections and refresh",
+          "variants": "List, refresh, cancel and inspect source status",
+          "id": "XL-19-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "External sources",
+          "variants": "Web/database connectors are optional, separately configured integrations",
+          "id": "XL-19-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Preview inferred types before committing. A refresh is transactional. Offline operation succeeds for available local sources and reports unavailable external sources without freezing the app."
+    },
+    {
+      "area": "Data / Quality and modeling",
+      "scope": "broader_suite_inventory",
+      "sources": "local",
+      "proposed_agent_family": "data.quality",
+      "features": [
+        {
+          "name": "Text to columns",
+          "variants": "Delimiter/fixed-width splitting with destination preview",
+          "id": "XL-20-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Duplicate handling",
+          "variants": "Identify and remove duplicates by explicit keys",
+          "id": "XL-20-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Validation",
+          "variants": "Type/range/list/custom rules with input messages and error behavior",
+          "id": "XL-20-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Data consolidation",
+          "variants": "Combine compatible ranges using explicit keys/aggregations",
+          "id": "XL-20-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Relational model",
+          "variants": "Relationships, keys, measures and supported model refresh",
+          "id": "XL-20-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Data cleanup",
+          "variants": "Trim/normalize/convert with an affected-value preview",
+          "id": "XL-20-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Agents cannot bypass validation that constrains human writes. A duplicate-removal receipt records the chosen keys and removed rows. Preserve numeric-looking identifiers during import and cleanup."
+    },
+    {
+      "area": "Data / Forecast and outline",
+      "scope": "broader_suite_inventory",
+      "sources": "local",
+      "proposed_agent_family": "analysis",
+      "features": [
+        {
+          "name": "What-if analysis",
+          "variants": "Goal seek, scenarios and one-/two-input data tables",
+          "id": "XL-21-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Forecasting",
+          "variants": "Forecast series with visible assumptions and uncertainty",
+          "id": "XL-21-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Optimization",
+          "variants": "Solver-style objectives, constraints and local solver capabilities",
+          "id": "XL-21-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Outline",
+          "variants": "Group/ungroup rows or columns and show/hide detail",
+          "id": "XL-21-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Subtotals",
+          "variants": "Grouped aggregation with clear behavior under filtering",
+          "id": "XL-21-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Analysis reports assumptions, convergence and errors. A forecast is labeled as a model output. Scenario changes have deterministic restoration and an agent-readable result."
+    },
+    {
+      "area": "Review",
+      "scope": "broader_suite_inventory",
+      "sources": "navigation",
+      "proposed_agent_family": "review",
+      "features": [
+        {
+          "name": "Language tools",
+          "variants": "Spelling, thesaurus and optional translation",
+          "id": "XL-22-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Comments and notes",
+          "variants": "Create, inspect, navigate, resolve and distinguish threaded discussion from notes",
+          "id": "XL-22-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Accessibility",
+          "variants": "Inspect names, contrast, reading order and object alternatives",
+          "id": "XL-22-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Workbook protection",
+          "variants": "Sheet restrictions, workbook structure and file-level protection are separate",
+          "id": "XL-22-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Review history",
+          "variants": "Inspect supported change history and compare versions",
+          "id": "XL-22-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Local review works without an account. Translation/cloud comments are optional integrations. Protection capabilities and cryptographic limits must be described precisely."
+    },
+    {
+      "area": "View",
+      "scope": "broader_suite_inventory",
+      "sources": "local navigation keyboard",
+      "proposed_agent_family": "view",
+      "features": [
+        {
+          "name": "View modes",
+          "variants": "Normal, page layout and page-break preview",
+          "id": "XL-23-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Visibility",
+          "variants": "Gridlines, headings, formula bar and other workspace elements",
+          "id": "XL-23-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Zoom",
+          "variants": "Continuous zoom, presets and selection-based zoom",
+          "id": "XL-23-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Freeze and split",
+          "variants": "Freeze configured rows/columns, split panes and unfreeze",
+          "id": "XL-23-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Multiple windows",
+          "variants": "Arrange, compare side by side and supported synchronized navigation",
+          "id": "XL-23-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Saved views",
+          "variants": "Persist useful filters, layout and view configuration",
+          "id": "XL-23-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Status summaries",
+          "variants": "Count, numeric count, sum, average, minimum and maximum for a selection",
+          "id": "XL-23-07",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "View changes do not modify cell values. Expose visible bounds, filters and frozen ranges to agents so human context can be understood without taking a screenshot."
+    },
+    {
+      "area": "File, recovery and interoperability",
+      "scope": "broader_suite_inventory",
+      "sources": "navigation",
+      "proposed_agent_family": "files",
+      "features": [
+        {
+          "name": "File lifecycle",
+          "variants": "New, templates, open, recent, save, save-as and close",
+          "id": "XL-24-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Formats",
+          "variants": "XLSX and supported CSV/text/ODS/PDF/legacy or macro formats with explicit fidelity levels",
+          "id": "XL-24-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Metadata",
+          "variants": "Properties, authoring metadata and document inspection",
+          "id": "XL-24-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Recovery",
+          "variants": "Autosave, version history, crash recovery and conflict handling",
+          "id": "XL-24-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Options",
+          "variants": "Locale, defaults, calculation settings and accessibility preferences",
+          "id": "XL-24-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Sharing/export",
+          "variants": "Local copies and optional configured collaboration providers",
+          "id": "XL-24-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Round-trip fixtures cover data, formulas, types, formats, objects and metadata independently. Unsupported content yields a loss report. Recovery restores a complete consistent document rather than only visible values."
+    },
+    {
+      "area": "Extensions and automation",
+      "scope": "broader_suite_inventory",
+      "sources": "screenshot navigation",
+      "proposed_agent_family": "extensions",
+      "features": [
+        {
+          "name": "Local agent API",
+          "variants": "Schema discovery, commands, event subscriptions and structured results",
+          "id": "XL-25-01",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Macros/scripts",
+          "variants": "Record or execute supported automation in a bounded local environment",
+          "id": "XL-25-02",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Custom functions",
+          "variants": "Register names, signatures, permissions and calculation behavior",
+          "id": "XL-25-03",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Extension management",
+          "variants": "Inspect, enable, disable, update and remove extensions",
+          "id": "XL-25-04",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Developer workflows",
+          "variants": "Debugging, script logs, diagnostics and reproducible automation",
+          "id": "XL-25-05",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        },
+        {
+          "name": "Optional services",
+          "variants": "Cloud AI, online sharing and remote connectors are separate from the offline core",
+          "id": "XL-25-06",
+          "implementation_status": "NOT_ASSESSED_BY_THIS_INVENTORY"
+        }
+      ],
+      "acceptance": "Never interpret imported macros as authorization to run code. Extension installation and execution declare permissions. The offline core must remain usable with every optional service disconnected."
+    }
+  ]
+}

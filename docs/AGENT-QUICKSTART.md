@@ -57,3 +57,13 @@ node --test tests/agent-transport.test.cjs
 `document.replaceText` takes find/replacement and an optional nodePath; matches stay within individual text nodes and preserve their marks. `document.format` takes nodePath (child-index array relative to data.content), marks (sets bold/italic/underline/strike/code), alignment and heading0..6. `spreadsheet.format` takes an A1 range and style fields bold/italic/numberFormat/fill/color/align. `notebook.updatePage` and `notebook.deletePage` address pageId, protecting the final page. All require current expectedRevision/requestId and support dryRun. Discover exact validated schemas through capabilities.
 
 Human document/spreadsheet import/export now calls the same local conversion module. Semantic HTML/DOCX structure and embedded PNG/JPEG DOCX images are supported; advanced layout remains approximate. XLSX uses sheet.styles[A1] for the same basic formatting the UI and agents edit.
+
+## Shared Home operations in 0.7
+
+`spreadsheet.edit` provides `clear`, `fill`, `sort`, `sheetRename`, `sheetDuplicate`, `sheetMove` and `sheetDelete`. It uses the same pure operation module as the editor and the engine's existing revision, dry-run and idempotency protection. Discover the exact schema through `capabilities` or MCP `tools/list`.
+
+```json
+{"operation":"spreadsheet.edit","fileId":"FILE_ID_FROM_READ","sheetId":"SHEET_ID_FROM_READ","expectedRevision":"CURRENT_REVISION","requestId":"fill-example-001","action":"fill","range":"B2:B10","direction":"down","dryRun":true}
+```
+
+Ranges are bounded to 10000 cells. Sort requires `keyColumn` as a zero-based absolute column index, `direction` asc/desc and `hasHeader`. It rejects formula-containing regions. Fill supports down/right with A1 relative, absolute and mixed references; unsupported external, 3D and whole-axis references are rejected. Sheet deletion rejects references from other sheets. Sheet identity operations reject INDIRECT and unsupported qualifier syntax. These limits prevent silent reference corruption; they are pending compatibility work, not full Excel behavior.

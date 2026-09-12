@@ -2,7 +2,7 @@
   "appId": "local.office.workspace",
   "productName": "Office Workspace",
   "directories": {
-    "output": "release-v6"
+    "output": "release-v7"
   },
   "files": [
     "dist/**/*",
@@ -22,6 +22,6 @@
     "signAndEditExecutable": false
   },
   "portable": {
-    "artifactName": "Folio-Office-0.6.0.exe"
+    "artifactName": "Folio-Office-0.7.0.exe"
   }
 }
