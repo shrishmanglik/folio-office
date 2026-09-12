@@ -1,0 +1,27 @@
+{
+  "appId": "local.office.workspace",
+  "productName": "Office Workspace",
+  "directories": {
+    "output": "release-v6"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "core/**/*",
+    "agent/**/*",
+    "docs/**/*",
+    "package.json",
+    "shared/**/*",
+    "LICENSE",
+    "NOTICE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "asar": true,
+  "win": {
+    "target": "portable",
+    "signAndEditExecutable": false
+  },
+  "portable": {
+    "artifactName": "Folio-Office-0.6.0.exe"
+  }
+}

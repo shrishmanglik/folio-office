@@ -1,0 +1,33 @@
+name: Merge summary
+on:
+  pull_request_target:
+    types: [closed]
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  summarize:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        with:
+          script: |
+            // No checkout or execution of pull-request code. Payload text stays data.
+            const pr = context.payload.pull_request;
+            const marker = '<!-- folio-merge-summary-v1 -->';
+            const {owner, repo} = context.repo;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number: pr.number, per_page: 100
+            });
+            if (comments.some(c => c.user?.type === 'Bot' && c.body?.includes(marker))) return;
+            const clean = value => String(value || '').replace(/@/g, '@\u200b').replace(/<!--/g, '&lt;!--');
+            const body = [marker, '## Merged', '',
+              `**${clean(pr.title)}**`, '',
+              `Merge commit: [${pr.merge_commit_sha.slice(0, 12)}](https://github.com/${owner}/${repo}/commit/${pr.merge_commit_sha})`,
+              `Contribution by ${clean(pr.user.login)}; merged by ${clean(pr.merged_by?.login)}.`, '',
+              '### Change and validation reported in the PR', '',
+              clean(pr.body).slice(0, 12000) || 'No PR description was provided.', '',
+              `[Inspect actual check results](${pr.html_url}/checks). This comment does not certify that checks passed.`
+            ].join('\n');
+            await github.rest.issues.createComment({owner, repo, issue_number: pr.number, body});
