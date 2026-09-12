@@ -59,6 +59,14 @@ The CLI exposes typed discovery, dry-run previews, semantic edits, import/export
 
 For MCP, run the same entry point with `mcp` instead of `capabilities`. The desktop's **Agent tools** panel provides a configuration with your actual local paths. See [agent setup and examples](docs/AGENT-QUICKSTART.md).
 
+## Spreadsheet workflow
+
+Enter a range such as `B2:C4` in the name box or Shift-click its corners. Apply formatting to the selection, copy or clear the range, inspect count/sum/average, or insert a summary formula below it. Shift+Arrow extends the selection. Formula insertion refuses to overwrite an occupied destination.
+
+![Range formatting and selection totals in the native desktop app](docs/assets/spreadsheet.png)
+
+See the [validation record](docs/VALIDATION.md) for tested workflows and remaining coverage.
+
 ## File safety and compatibility
 
 Workspace data is plaintext JSON stored locally, including embedded images. Open **Open workspace folder** in the app to find it. History is bounded to 30 versions per file within a shared 20 MB budget; keep separate backups for important work.
