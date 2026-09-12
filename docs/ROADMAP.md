@@ -10,3 +10,5 @@ Statuses describe current coverage, not promised dates.
 6. **Release readiness:** larger native role-based acceptance, accessibility testing, clean-machine installation, dependency/security review and signed distributions.
 
 An Excel feature inventory is a compatibility target, not evidence that those features already work here. Preserve data and disclose unsupported conversions.
+
+Detailed spreadsheet specification: [Excel capability distillation](EXCEL-CAPABILITY-DISTILLATION.md), with 165 catalog entries and a [machine-readable catalog](EXCEL-CAPABILITY-CATALOG.json). These entries define required behavior and paired human/agent acceptance; they are not implementation-completion claims.
