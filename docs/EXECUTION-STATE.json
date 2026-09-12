@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "catalog": "EXCEL-CAPABILITY-CATALOG.json",
-  "scope": "All165 catalog entries remain the campaign scope. This first increment implements bounded Home operations; no full catalog entry is declared complete without all its variants.",
-  "current_version": "0.7.0",
-  "increment": 1,
+  "scope": "All 165 catalog entries remain the campaign scope. Implemented actions are tracked separately from full catalog acceptance.",
+  "current_version": "0.8.0",
+  "increment": 2,
   "implemented_actions": [
     "clear contents",
     "clear formats",
@@ -14,16 +14,42 @@
     "rename sheet",
     "duplicate sheet",
     "reorder sheet",
-    "delete unreferenced sheet"
+    "delete unreferenced sheet",
+    "fill up",
+    "fill left",
+    "literal selected-range replace with case and whole-cell options",
+    "copy range with formula translation",
+    "paste calculated values",
+    "paste formulas and contents",
+    "paste formatting",
+    "transpose range copy",
+    "skip blanks when copying",
+    "font family and size",
+    "font size increase and decrease",
+    "underline",
+    "strikethrough",
+    "vertical alignment",
+    "text wrapping",
+    "indentation",
+    "text rotation",
+    "all/outside/bottom/no borders and border colors",
+    "header/total/note formatting presets",
+    "extended numeric/percentage/grouping/scientific/date/text display presets",
+    "shared human and agent formatting with XLSX style conversion"
   ],
-  "agent_operation": "spreadsheet.edit",
+  "agent_operation": [
+    "spreadsheet.edit",
+    "spreadsheet.format"
+  ],
   "remaining_actions": "See each catalog entry and its acceptance criteria. Whole-function, chart/pivot, table, print, query, review and accessibility work remains unfinished.",
   "limitations": [
-    "Sort rejects formula-containing regions.",
-    "Fill supports down/right and ordinary A1 references; external,3D and whole-axis references are rejected.",
-    "Referenced sheet deletion is rejected.",
-    "Sheet identity edits reject INDIRECT and unsupported qualifier syntax.",
-    "Operations target at most10000 cells."
+    "Sorting formula-containing regions remains unsupported.",
+    "Fill and copy support ordinary A1 references; external, 3D and whole-axis references are rejected.",
+    "Cut with reference remapping and operating-system rich clipboard interoperability remain unfinished.",
+    "Date-styled XLSX cells currently reimport as ISO text, not serial values.",
+    "Rotated long text can clip within fixed-width cells. Row/column geometry and merge variants remain unfinished.",
+    "Font availability detection, double/accounting underline, superscript/subscript, arbitrary border weights and custom number-format authoring remain unfinished.",
+    "Operations affect at most 10000 cells; full workbook limits and all 165 acceptance families remain pending."
   ],
   "catalog_status": {
     "XL-01-01": "PENDING_ACCEPTANCE",
@@ -193,10 +219,16 @@
     "XL-25-06": "PENDING_ACCEPTANCE"
   },
   "next_increments": [
-    "Extended formatting, borders, alignment and safe row/column structural edits",
-    "Clipboard/paste modes and remaining fill/search/sort semantics",
+    "Reference-safe row/column insertion, deletion, sizing, hiding and merge geometry",
+    "Clipboard cut/paste semantics, function/search/sort completion and explicit scalar type roundtrip",
     "Semantic tables, validation and conditional rules",
-    "Charts/pivots/query transformations and printing",
-    "Function compatibility, review/accessibility/automation and remaining catalog acceptance"
-  ]
+    "Charts, pivots, query transformations and printing",
+    "Formula compatibility, review, accessibility, automation and remaining catalog acceptance"
+  ],
+  "acceptance_evidence": {
+    "unit_tests": "npm test",
+    "native_test": "node scripts/native-formatting-workflows.cjs",
+    "regression_test": "node scripts/native-home-workflows.cjs",
+    "xlsx_test": "tests/cell-styles-xlsx.test.cjs"
+  }
 }

@@ -67,3 +67,12 @@ Human document/spreadsheet import/export now calls the same local conversion mod
 ```
 
 Ranges are bounded to 10000 cells. Sort requires `keyColumn` as a zero-based absolute column index, `direction` asc/desc and `hasHeader`. It rejects formula-containing regions. Fill supports down/right with A1 relative, absolute and mixed references; unsupported external, 3D and whole-axis references are rejected. Sheet deletion rejects references from other sheets. Sheet identity operations reject INDIRECT and unsupported qualifier syntax. These limits prevent silent reference corruption; they are pending compatibility work, not full Excel behavior.
+
+
+### Range copying and expanded formatting
+
+`spreadsheet.edit` now accepts `copyRange` with source `sheetId` / `range`, destination `target` / optional `targetSheetId`, `mode` (`all`, `values`, `formulas`, `formats`), `transpose`, and `skipBlanks`. Overlapping source/destination uses a snapshot. Calculated text results stay text. The usual expectedRevision/requestId/dryRun contract applies.
+
+Fill direction also accepts `up` and `left`. Action `replace` accepts `find`, `replacement`, `matchCase` and `wholeCell`; it searches raw stored cell content including formula text within the explicit range. No regex execution or wildcard interpretation occurs.
+
+`spreadsheet.format` uses the same validator as the desktop. Discover supported style keys and bounds through capabilities. Border presets expand to stored physical edges, and unspecified scalar properties remain unchanged. XLSX retains supported font and alignment styles; date cells still reimport as ISO text. No full Excel compatibility claim is made.

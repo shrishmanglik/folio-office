@@ -33,3 +33,14 @@ Independent bounded review found and rechecked fixes for quoted sheet identifier
 ![Home workflow controls with synthetic data](assets/home-v7.png)
 
 Unsupported formula sorts/reference forms remain explicit failures. The full165-entry campaign is tracked in EXECUTION-STATE.json. No full Office parity, independent whole-release approval or public binary clearance is claimed.
+
+
+## 0.8.0 Formatting and transfer increment
+
+Run `node scripts/native-formatting-workflows.cjs` for six synthetic native Electron workflow groups: rendered formatting, fill up, calculated/transposed range copy between sheets, literal replacement with undo/redo, agent readback, and a real desktop restart after an agent formatting edit. The previous seven-group Home regression also remains required. `tests/cell-styles-xlsx.test.cjs` reads an actual XLSX file back to check styles on populated and blank cells.
+
+Independent bounded review found calculated text being reinterpreted during values-only copy. Regression controls now preserve formula-like text, decimal text, booleans-as-text, apostrophes, error-like text, long identifiers and empty strings. The review covered these code paths, not the whole 165-family catalog or final release.
+
+![Formatting controls with synthetic data](assets/formatting-v8.png)
+
+Known limitations include formula-containing sorts, rich system clipboard/cut semantics, font availability detection, full border variants, custom format authoring, date serial preservation on XLSX reimport, large-workbook performance, and accessibility acceptance. These remain tracked in EXECUTION-STATE.json. Dependency audit and binary licensing findings remain unresolved.

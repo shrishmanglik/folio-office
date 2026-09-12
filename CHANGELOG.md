@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0
+
+- Shared desktop and agent formatting: fonts, underline/strike, wrapping, vertical alignment, indent, rotation and physical cell borders, retained by XLSX style conversion.
+- Copy ranges with translated formulas, calculated values, formatting, transpose and skip-blank modes. Copying calculated text retains its text type.
+- Fill in all four directions and replace literal text within a selected range.
+- Compact formatting controls, mixed-format notice and undoable copy/replace operations.
+- Full catalog acceptance remains pending; see docs/EXECUTION-STATE.json for precise limitations.
+
 ## 0.7.0 Home workflow increment
 
 - Shared UI/agent fill, selective clear, record sort and worksheet rename/duplicate/reorder/delete.
