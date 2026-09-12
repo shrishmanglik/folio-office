@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 Home workflow increment
+
+- Shared UI/agent fill, selective clear, record sort and worksheet rename/duplicate/reorder/delete.
+- Row, column and whole-grid header selection.
+- Quote-aware formula reference translation and referenced-sheet deletion safeguards.
+- Bounded recovery from Windows delete-pending workspace lock errors.
+- Full 165-entry scope remains tracked in docs/EXECUTION-STATE.json; advanced and unsupported variants remain open.
+
 ## 0.6.0 source preview
 
 First public source snapshot of the existing local desktop application. Earlier work was local development, not GitHub releases.
