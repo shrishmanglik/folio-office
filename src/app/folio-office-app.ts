@@ -101,7 +101,7 @@ export async function copyClientDeliverableManifest(presetId: string): Promise<s
 
 export async function copyLocalOllamaBootstrapCommand(tierId: string): Promise<string> {
   const tier = getFolioLocalLlmHardwareTierById(tierId);
-  const command = `${tier.ollamaCommand} # Loopback: ${tier.loopbackEndpoint} (< 3 KB Fact Sheet)`;
+  const command = tier.ollamaCommands.join('\n');
   try {
     if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(command);

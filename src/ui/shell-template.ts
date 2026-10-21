@@ -27,20 +27,18 @@ export interface FolioOwnershipModelOption {
 }
 
 export interface FolioDesktopInstallerTarget {
-  id: 'windows' | 'macos' | 'linux';
+  id: 'windows' | 'macos';
   osLabel: string;
-  formatBadge: string;
-  architectureNote: string;
-  installerFilename: string;
-  sha256Preview: string;
+  status: 'in-preparation';
+  runtime: string;
+  releaseNote: string;
 }
 
 export interface FolioLocalLlmHardwareTier {
   id: string;
   hardwareTier: string;
   modelTag: string;
-  vramBudget: string;
-  ollamaCommand: string;
+  ollamaCommands: string[];
   loopbackEndpoint: string;
   recommendedUseCase: string;
 }
@@ -49,125 +47,113 @@ export interface FolioOfflineParityRow {
   capability: string;
   offlineDesktopStatus: string;
   cloudWebStatus: string;
+  needsInternet: 'No' | 'Yes';
 }
 
 export const FOLIO_OWNERSHIP_MODEL_OPTIONS: FolioOwnershipModelOption[] = [
   {
     id: 'one-time-offline-desktop',
-    label: 'One-Time Offline Desktop Purchase ($0/mo Forever)',
-    headline: 'Buy once, own forever on your machine with unlimited free local open-source AI.',
-    priceBadge: '$0/mo Recurring · One-Time License',
+    label: 'One-Time Offline Desktop Purchase (Unlimited Free Local AI)',
+    headline: 'Proposed ownership model: execution on the buyer hardware removes monthly local caps forever for the owned major version.',
+    priceBadge: 'Perpetual major version · No monthly local cap',
     aiEngineSummary:
-      'Unlimited free local LLM drafting (Llama 3.2 / Qwen) over loopback 127.0.0.1:11434 with < 3 KB deterministic fact sheets and $0 API token bills.',
+      'The proposed local AI adapter uses loopback 127.0.0.1:11434 and receives strictly less than 3 KB of deterministic JSON. It is not shipped in the current Electron build.',
     storageAndPrivacySummary:
-      '100% air-gapped local vault (.docx, .xlsx, .pptx, .md) on your SSD with zero outbound telemetry.',
+      'The owned major version is designed for local documents, spreadsheets, decks, and export manifests on the buyer computer.',
     bestForSummary:
-      'Solo founders, boutique agencies, legal/M&A practices, and teams eliminating monthly per-seat SaaS rent.',
+      'Hardware, electricity, storage, and model downloads remain the buyer responsibility.',
   },
   {
     id: 'monthly-cloud-subscription',
-    label: 'Monthly Cloud Subscription (Managed Browser Workspace)',
-    headline: 'Zero-install browser access with identical deterministic OOXML and formula audit parity.',
-    priceBadge: '$22/mo Cloud Seat · Cancel Anytime',
+    label: 'Monthly Cloud Subscription (Hosted Web & Cloud AI)',
+    headline: 'The planned hosted model covers web servers, cloud sync, and managed AI, subject to hosted entitlement and allowance verification.',
+    priceBadge: 'Proposed hosted subscription · Plan allowance applies',
     aiEngineSummary:
-      'Managed cloud inference or local loopback bridge fed by the exact same < 3 KB deterministic fact sheet.',
+      'Hosted inference remains a proposed service until provider, entitlement, and allowance proof exists.',
     storageAndPrivacySummary:
-      'Instant browser workspace with optional encrypted export to local .docx, .xlsx, and .pptx packages.',
+      'Cloud team sync needs the internet and follows the verified online plan allowance.',
     bestForSummary:
-      'Distributed operators who want instant multi-device browser access without installing a local runtime.',
+      'The current product source does not prove a released hosted subscription.',
   },
 ];
 
 export const FOLIO_DESKTOP_INSTALLER_TARGETS: FolioDesktopInstallerTarget[] = [
   {
     id: 'windows',
-    osLabel: 'Windows 11 / 10 Desktop',
-    formatBadge: '.exe / .msi Installer',
-    architectureNote: 'x64 & ARM64 Native Shared-Brain Package',
-    installerFilename: 'Folio-Office-Setup-1.4.0-x64.msi',
-    sha256Preview: 'sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    osLabel: 'Windows desktop',
+    status: 'in-preparation',
+    runtime: 'Electron source present; Tauri v2 installer and key ring pending',
+    releaseNote: 'No signed customer installer or checksum is published.',
   },
   {
     id: 'macos',
-    osLabel: 'macOS Apple Silicon & Intel',
-    formatBadge: '.dmg Universal Disk Image',
-    architectureNote: 'Universal Binary (M1 / M2 / M3 / M4 + Intel)',
-    installerFilename: 'Folio-Office-1.4.0-universal.dmg',
-    sha256Preview: 'sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4',
-  },
-  {
-    id: 'linux',
-    osLabel: 'Linux Workstation',
-    formatBadge: '.AppImage / .deb Package',
-    architectureNote: 'x86_64 & ARM64 Air-Gapped Desktop Build',
-    installerFilename: 'Folio-Office-1.4.0-x86_64.AppImage',
-    sha256Preview: 'sha256:2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae',
+    osLabel: 'macOS desktop',
+    status: 'in-preparation',
+    runtime: 'Tauri v2 platform build pending',
+    releaseNote: 'No signed or notarized customer release is published.',
   },
 ];
 
 export const FOLIO_LOCAL_LLM_HARDWARE_TIERS: FolioLocalLlmHardwareTier[] = [
   {
-    id: 'ram-8gb-light',
-    hardwareTier: '8 GB RAM Ultrabook',
-    modelTag: 'llama3.2:1b',
-    vramBudget: '1.3 GB RAM / VRAM',
-    ollamaCommand: 'ollama run llama3.2:1b',
-    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
-    recommendedUseCase:
-      'Instant offline contract clause summaries, executive brief polishing, and slide speaker notes.',
-  },
-  {
-    id: 'ram-16gb-balanced',
-    hardwareTier: '8-16 GB RAM Standard Laptop',
+    id: '4-8gb',
+    hardwareTier: '4-8 GB RAM',
     modelTag: 'llama3.2:3b',
-    vramBudget: '2.2 GB RAM / VRAM',
-    ollamaCommand: 'ollama run llama3.2:3b',
-    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    ollamaCommands: ['ollama run llama3.2:3b'],
+    loopbackEndpoint: 'http://127.0.0.1:11434',
     recommendedUseCase:
-      'Full multi-section M&A memo drafting, board deck narratives, and redline commentary at $0 token cost.',
+      'Guidance for compact local interpretation. Actual speed depends on the buyer hardware.',
   },
   {
-    id: 'ram-16gb-plus-workstation',
-    hardwareTier: '16 GB+ Pro Workstation',
+    id: '16gb',
+    hardwareTier: '16 GB RAM',
     modelTag: 'qwen2.5:7b',
-    vramBudget: '4.7 GB RAM / VRAM',
-    ollamaCommand: 'ollama run qwen2.5:7b',
-    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    ollamaCommands: ['ollama run qwen2.5:7b'],
+    loopbackEndpoint: 'http://127.0.0.1:11434',
     recommendedUseCase:
-      'Deep financial waterfall narrative synthesis and multi-document legal dossier drafting.',
+      'Guidance for longer local interpretation. Actual speed depends on the buyer hardware.',
   },
   {
-    id: 'ram-24gb-studio',
-    hardwareTier: '24 GB+ Studio Rig',
-    modelTag: 'qwen3:8b',
-    vramBudget: '5.2 GB RAM / VRAM',
-    ollamaCommand: 'ollama run qwen3:8b',
-    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    id: '32gb-plus',
+    hardwareTier: '32+ GB RAM',
+    modelTag: 'qwen2.5:14b / deepseek-r1:8b',
+    ollamaCommands: ['ollama run qwen2.5:14b', 'ollama run deepseek-r1:8b'],
+    loopbackEndpoint: 'http://127.0.0.1:11434',
     recommendedUseCase:
-      'Maximum local reasoning for complex regulatory filings and clean-room IP audit reports.',
+      'Guidance for larger local models. Actual speed depends on the buyer hardware.',
   },
 ];
 
 export const FOLIO_OFFLINE_PARITY_ROWS: FolioOfflineParityRow[] = [
   {
-    capability: 'OOXML Document (.docx), Spreadsheet (.xlsx), & Deck (.pptx) Engine',
-    offlineDesktopStatus: '100% Local on Your Machine (Zero Network Calls)',
-    cloudWebStatus: '100% Shared-Brain Engine in Browser',
+    capability: 'Documents',
+    offlineDesktopStatus: 'Unlimited',
+    cloudWebStatus: 'Within plan allowance',
+    needsInternet: 'No',
   },
   {
-    capability: 'Deterministic Formula & Schema Audit (0 #REF!, 0 #DIV/0!, 0 #NAME?)',
-    offlineDesktopStatus: '100% Deterministic Local Verification',
-    cloudWebStatus: '100% Deterministic Browser Verification',
+    capability: 'Deterministic financial spreadsheets',
+    offlineDesktopStatus: 'Unlimited',
+    cloudWebStatus: 'Within plan allowance',
+    needsInternet: 'No',
   },
   {
-    capability: 'AI Executive Narrative Drafting (< 3 KB Fact Sheet Guardrail)',
-    offlineDesktopStatus: 'Unlimited Free Open-Source Local LLM (Ollama 127.0.0.1:11434)',
-    cloudWebStatus: 'Managed Cloud AI or Local Loopback Bridge',
+    capability: 'Executive decks',
+    offlineDesktopStatus: 'Unlimited',
+    cloudWebStatus: 'Within plan allowance',
+    needsInternet: 'No',
   },
   {
-    capability: 'Ongoing Running Cost & Seat Tax',
-    offlineDesktopStatus: 'One-Time Purchase · $0/mo Forever',
-    cloudWebStatus: 'Optional Monthly Cloud Subscription',
+    capability: 'SHA-256 export manifests',
+    offlineDesktopStatus: 'Unlimited',
+    cloudWebStatus: 'Within plan allowance',
+    needsInternet: 'No',
+  },
+  {
+    capability: 'Cloud team sync',
+    offlineDesktopStatus: 'Not available offline',
+    cloudWebStatus: 'Within plan allowance',
+    needsInternet: 'Yes',
   },
 ];
 
@@ -285,21 +271,23 @@ export function renderFolioOwnershipHubShell(
 
   return [
     `<section data-testid="ownership-model-switcher" aria-label="One-Time Offline Desktop Ownership vs Monthly Cloud Subscription Switcher">`,
-    `<h3>${model.label}</h3>`,
-    `<p>${model.headline}</p>`,
+    ...FOLIO_OWNERSHIP_MODEL_OPTIONS.map((option) => `<button type="button" aria-pressed="${option.id === model.id}">${option.label}</button>`),
+    `<p class="ownership-model-copy">${model.headline}</p>`,
     `</section>`,
-    `<section data-testid="desktop-download-hub" aria-label="Offline Desktop Installer Download Hub">`,
+    `<section data-testid="desktop-download-hub" data-release-status="in-preparation" aria-label="Desktop release status">`,
     ...FOLIO_DESKTOP_INSTALLER_TARGETS.map(
-      (target) => `<div data-installer-os="${target.id}">${target.osLabel} (${target.formatBadge}): ${target.installerFilename}</div>`,
+      (target) => `<div data-installer-os="${target.id}">${target.osLabel}: ${target.runtime}. ${target.releaseNote}</div>`,
     ),
     `</section>`,
     `<section data-testid="local-llm-hardware-selector" aria-label="Free Open-Source Local LLM Hardware Selector">`,
-    `<p>${tier.hardwareTier} · ${tier.modelTag} · ${tier.ollamaCommand} · ${tier.loopbackEndpoint}</p>`,
+    `<select aria-label="Computer memory guidance">${FOLIO_LOCAL_LLM_HARDWARE_TIERS.map((option) => `<option value="${option.id}"${option.id === tier.id ? ' selected' : ''}>${option.hardwareTier}</option>`).join('')}</select>`,
+    `<p>${tier.hardwareTier} · ${tier.modelTag} · ${tier.loopbackEndpoint}</p>`,
+    ...tier.ollamaCommands.map((command) => `<code>${command}</code>`),
     `</section>`,
-    `<section data-testid="offline-parity-table" aria-label="Offline Desktop vs Cloud Web 100% Feature Parity Table">`,
-    ...FOLIO_OFFLINE_PARITY_ROWS.map(
-      (row) => `<div>${row.capability}: ${row.offlineDesktopStatus} | ${row.cloudWebStatus}</div>`,
-    ),
-    `</section>`,
+    `<table data-testid="offline-parity-table" aria-label="Offline and cloud capability comparison">`,
+    `<caption>Proposed desktop and local AI capabilities compared with the proposed hosted subscription model</caption>`,
+    `<thead><tr><th>Workflow</th><th>On this computer · No monthly limit</th><th>Online plan allowance</th><th>Needs the internet</th></tr></thead>`,
+    `<tbody>${FOLIO_OFFLINE_PARITY_ROWS.map((row) => `<tr><th>${row.capability}</th><td>${row.offlineDesktopStatus}</td><td>${row.cloudWebStatus}</td><td>${row.needsInternet}</td></tr>`).join('')}</tbody>`,
+    `</table>`,
   ].join('\n');
 }

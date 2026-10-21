@@ -1,0 +1,19 @@
+✔ Folio Office includes 44x44px top-right icon-only 4-theme switcher and 4 reading atmospheres (25.0523ms)
+✔ all four themes tokenise calculator, continuation, and library surfaces with interactive states (2.0838ms)
+✔ all four theme palettes keep workspace text pairs at WCAG AA contrast (1.1877ms)
+✔ Folio Office includes interactive 5-Year SaaS Subscription vs Sovereign Local Office Calculator (1.5941ms)
+✔ Folio Office includes 3-Second Cloud Docs Telemetry vs Air-Gapped Local Vault Privacy Comparator and 1-Click Copy Sovereign Office Verification Receipt (0.9701ms)
+✔ Folio Office exposes the native preset and sovereign command workspace contracts (8.1205ms)
+✔ native presets create complete editor data and calculated receipts in every workspace (534.5371ms)
+✔ sovereign command suite uses semantic theme tokens and phone-contained horizontal tabs (7.0071ms)
+✔ Folio Office includes 3-Second Multi-Format Sovereign Export & Formula Audit Verifier and 1-Click Copy Client Deliverable Manifest (1.0117ms)
+✔ Zero em dashes anywhere in Folio Office UI source (32.4544ms)
+✔ Folio Office ownership hub is interactive and stays inside the source-only release boundary (28.2136ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 848.3679

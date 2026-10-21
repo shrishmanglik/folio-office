@@ -1,0 +1,16 @@
+{
+  "base_head": "8b9feca3dbaa6cc67b6c9d4a56538c1fc83495ba",
+  "status": "source_checks_and_browser_passed",
+  "files": {
+    "desktop/distribution-contract.json": "72e8e6e5cd17e184363cd38ca17821dd1d9bd029ec3bb6741d03ed0f0fed5236",
+    "src/SovereignOfficeSavingsCalculator.tsx": "46ccd0f9de9968ea1f30c95ac3dd08255f172cc1a2df1b276a8c84a391b734cd",
+    "src/Theme.css": "b75d12099d6bd8adfbe1c8a53ad9160bc3478519b1ce4f0831cfb96381c5abc5",
+    "src/app/folio-office-app.ts": "5a288755d3deecac6b30506e0f170035e5a55c00a075dfd66e464f0c69bf930f",
+    "src/ui/shell-template.ts": "1cbfeb1e0bf1fcc87b56f10e651e10ae814ae243c82ff1f65f02deb4338e7068",
+    "tests/theme-switcher-and-sovereign-copy.test.cjs": "533d3f18cf05f82eb1e971856a5686f10484eb370d1324fb26cbf0eb72516a5e"
+  },
+  "pre_fix_head": "91e90402ec33146da61cefb38d61fedd33013af5",
+  "base_tree": "90d43d5f842fb1231799c6aa27632a23979959ff",
+  "verification_harness_sha256": "baab7dc560e5adf150b143d3b91755690692b4b5e1fdffb2889ae6563e26f3f3",
+  "hash_basis": "UTF-8 source with CRLF normalized to LF"
+}

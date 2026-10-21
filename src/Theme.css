@@ -392,3 +392,35 @@
   .folio-command-suite { min-width: 0; }
   .folio-tri-surface > strong { padding-right: 56px; }
 }
+
+/* Sovereign ownership surfaces */
+.ownership-surface { display: grid; gap: 18px; color: var(--ink); }
+.ownership-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+.ownership-heading h2 { margin: 8px 0 0; color: var(--ink); font: 400 22px Georgia, serif; }
+.ownership-model-switcher { display: flex; gap: 8px; flex-wrap: wrap; max-width: 760px; }
+.ownership-model-switcher button,
+.ownership-heading .sovereign-calculator-presets button { min-height: 44px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font-size: 12px; text-align: left; }
+.ownership-heading .sovereign-calculator-presets button[aria-pressed="true"] { border-color: var(--accent); background: var(--ink); color: var(--canvas); }
+.ownership-model-copy { margin: 0; padding: 12px; border: 1px solid var(--line); background: var(--canvas); color: var(--ink); font-size: 12px; line-height: 1.6; }
+.desktop-download-hub,
+.local-llm-card { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--canvas); color: var(--ink); }
+.desktop-download-hub h3 { margin: 8px 0; color: var(--ink); font: 400 18px Georgia, serif; }
+.desktop-download-hub p,
+.ownership-note { color: var(--muted); font-size: 12px; line-height: 1.55; }
+.ownership-state { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+.local-llm-card { display: grid; gap: 10px; }
+.local-llm-card select { min-height: 44px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); padding: 8px; font-size: 12px; }
+.local-llm-card select:focus-visible,
+.offline-parity-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.local-llm-card code { display: block; color: var(--accent); font: inherit; }
+.offline-parity-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+.offline-parity-wrap table { width: 100%; min-width: 720px; border-collapse: collapse; color: var(--ink); font-size: 12px; }
+.offline-parity-wrap caption { padding: 12px; color: var(--muted); text-align: left; }
+.offline-parity-wrap th,
+.offline-parity-wrap td { padding: 11px 12px; border-top: 1px solid var(--line); text-align: left; }
+.offline-parity-wrap thead th { background: var(--canvas); color: var(--ink); }
+.offline-parity-wrap tbody th { color: var(--ink); font-weight: 650; }
+.offline-parity-wrap tbody td { color: var(--muted); }
+@media (max-width: 800px) {
+  .ownership-heading .sovereign-calculator-presets { flex-direction: column; width: 100%; }
+}

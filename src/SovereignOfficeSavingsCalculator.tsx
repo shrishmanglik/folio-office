@@ -7,20 +7,15 @@ import {
   Copy,
   Check,
   FileCheck2,
-  Download,
-  Cpu,
-  Layers,
 } from 'lucide-react';
 import {
   FOLIO_PRIVACY_COMPARATOR_PRESETS,
   FOLIO_EXPORT_VERIFIER_PRESETS,
   FOLIO_OWNERSHIP_MODEL_OPTIONS,
-  FOLIO_DESKTOP_INSTALLER_TARGETS,
   FOLIO_LOCAL_LLM_HARDWARE_TIERS,
   FOLIO_OFFLINE_PARITY_ROWS,
   copySovereignOfficeVerificationReceipt,
   copyClientDeliverableManifest,
-  copyLocalOllamaBootstrapCommand,
   type FolioOwnershipModelOption,
 } from './app/folio-office-app';
 
@@ -95,7 +90,6 @@ export default function SovereignOfficeSavingsCalculator() {
   const [selectedHardwareTierId, setSelectedHardwareTierId] = useState<string>(
     FOLIO_LOCAL_LLM_HARDWARE_TIERS[1].id,
   );
-  const [copiedOllamaTierId, setCopiedOllamaTierId] = useState<string | null>(null);
 
   const activePreset =
     SOVEREIGN_OFFICE_SEAT_PRESETS.find((preset) => preset.id === selectedId) ??
@@ -125,11 +119,6 @@ export default function SovereignOfficeSavingsCalculator() {
   const handleCopyManifest = async () => {
     await copyClientDeliverableManifest(activeExportPreset.id);
     setCopiedExportPresetId(activeExportPreset.id);
-  };
-
-  const handleCopyOllamaCommand = async () => {
-    await copyLocalOllamaBootstrapCommand(activeHardwareTier.id);
-    setCopiedOllamaTierId(activeHardwareTier.id);
   };
 
   return (
@@ -196,21 +185,18 @@ export default function SovereignOfficeSavingsCalculator() {
         </div>
       </div>
 
-      <div
-        className="sovereign-privacy-comparator"
-        data-testid="ownership-model-switcher"
-        aria-label="One-Time Offline Desktop Ownership vs Monthly Cloud Subscription Switcher"
-      >
-        <div className="sovereign-calculator-header">
+      <div className="ownership-surface">
+        <div className="ownership-heading">
           <div>
             <span className="workspace-eyebrow">
-              <HardDrive size={12} /> DUAL COMMERCIAL OWNERSHIP · ONE-TIME OFFLINE DESKTOP OR MONTHLY CLOUD
+              <HardDrive size={12} /> OWN YOUR LOCAL WORKFLOW
             </span>
-            <h3>Choose One-Time Offline Desktop Ownership ($0/mo Forever) or Monthly Cloud Subscription.</h3>
+            <h2>Choose where Folio Office runs.</h2>
           </div>
           <div
             className="sovereign-calculator-presets"
-            role="tablist"
+            data-testid="ownership-model-switcher"
+            role="group"
             aria-label="Ownership model options"
           >
             {FOLIO_OWNERSHIP_MODEL_OPTIONS.map((option) => {
@@ -219,8 +205,7 @@ export default function SovereignOfficeSavingsCalculator() {
                 <button
                   key={option.id}
                   type="button"
-                  role="tab"
-                  aria-selected={selected}
+                  aria-pressed={selectedOwnershipModelId === option.id}
                   data-testid={`ownership-model-tab-${option.id}`}
                   className={selected ? 'selected' : ''}
                   onClick={() => setSelectedOwnershipModelId(option.id)}
@@ -232,6 +217,8 @@ export default function SovereignOfficeSavingsCalculator() {
           </div>
         </div>
 
+        <p className="ownership-model-copy" aria-live="polite">{activeOwnershipModel.headline}</p>
+
         <div className="sovereign-calculator-grid">
           <div className="sovereign-calc-card folio-local-card">
             <span className="calc-card-kicker">{activeOwnershipModel.priceBadge}</span>
@@ -241,7 +228,7 @@ export default function SovereignOfficeSavingsCalculator() {
 
           <div className="sovereign-calc-card folio-local-card">
             <span className="calc-card-kicker">
-              <Cpu size={13} /> Local Open-Source AI & Deterministic Engine
+              <HardDrive size={13} /> Local AI and deterministic engine
             </span>
             <p>{activeOwnershipModel.aiEngineSummary}</p>
           </div>
@@ -254,76 +241,34 @@ export default function SovereignOfficeSavingsCalculator() {
             <p>{activeOwnershipModel.bestForSummary}</p>
           </div>
         </div>
-      </div>
 
-      <div
-        className="sovereign-privacy-comparator"
+      <article
+        className="desktop-download-hub"
         data-testid="desktop-download-hub"
-        aria-label="Offline Desktop Installer Download Hub"
+        data-release-status="in-preparation"
       >
+        <span className="ownership-state">IN PREPARATION</span>
+        <h3>Signed desktop ownership release</h3>
+        <p>Folio Office currently has Electron desktop source. The Tauri v2 installer signing and offline license key ring are pending.</p>
+        <p>No customer download is published from this source contract.</p>
+      </article>
+
+      <article className="local-llm-card" aria-label="Free Open-Source Local LLM Hardware Selector">
         <div className="sovereign-calculator-header">
           <div>
             <span className="workspace-eyebrow">
-              <Download size={12} /> OFFLINE DESKTOP DOWNLOAD HUB · WINDOWS, MACOS & LINUX
+              <HardDrive size={12} /> LOCAL AI HARDWARE GUIDANCE · LOOPBACK 127.0.0.1:11434
             </span>
-            <h3>Install the Shared-Brain Offline Desktop App on Windows, macOS, or Linux.</h3>
+            <h3>Choose a proposed local model for the buyer computer.</h3>
           </div>
-        </div>
-
-        <div className="sovereign-calculator-grid">
-          {FOLIO_DESKTOP_INSTALLER_TARGETS.map((target) => (
-            <div
-              key={target.id}
-              className="sovereign-calc-card folio-local-card"
-              data-testid={`desktop-installer-card-${target.id}`}
-            >
-              <span className="calc-card-kicker">
-                <Download size={13} /> {target.osLabel} · {target.formatBadge}
-              </span>
-              <strong className="calc-card-figure">{target.formatBadge}</strong>
-              <p>{target.architectureNote}</p>
-              <p className="sovereign-receipt-preview">
-                {target.installerFilename} | {target.sha256Preview}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div
-        className="sovereign-privacy-comparator"
-        data-testid="local-llm-hardware-selector"
-        aria-label="Free Open-Source Local LLM Hardware Selector"
-      >
-        <div className="sovereign-calculator-header">
-          <div>
-            <span className="workspace-eyebrow">
-              <Cpu size={12} /> FREE OPEN-SOURCE LOCAL LLM HARDWARE SELECTOR · LOOPBACK 127.0.0.1:11434
-            </span>
-            <h3>Run unlimited free local open-source AI (Llama 3.2 / Qwen) on your own hardware at $0 token cost.</h3>
-          </div>
-          <div
-            className="sovereign-calculator-presets"
-            role="tablist"
-            aria-label="Local LLM hardware tiers"
+          <select
+            data-testid="local-llm-hardware-selector"
+            aria-label="Computer memory guidance"
+            value={selectedHardwareTierId}
+            onChange={(event) => setSelectedHardwareTierId(event.target.value)}
           >
-            {FOLIO_LOCAL_LLM_HARDWARE_TIERS.map((tier) => {
-              const selected = tier.id === activeHardwareTier.id;
-              return (
-                <button
-                  key={tier.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  data-testid={`local-llm-tier-${tier.id}`}
-                  className={selected ? 'selected' : ''}
-                  onClick={() => setSelectedHardwareTierId(tier.id)}
-                >
-                  {tier.hardwareTier} ({tier.modelTag})
-                </button>
-              );
-            })}
-          </div>
+            {FOLIO_LOCAL_LLM_HARDWARE_TIERS.map((tier) => <option key={tier.id} value={tier.id}>{tier.hardwareTier}</option>)}
+          </select>
         </div>
 
         <div className="sovereign-calculator-grid">
@@ -331,7 +276,7 @@ export default function SovereignOfficeSavingsCalculator() {
             <span className="calc-card-kicker">Recommended Open-Source Model</span>
             <strong className="calc-card-figure">{activeHardwareTier.modelTag}</strong>
             <p>
-              Hardware Tier: {activeHardwareTier.hardwareTier} ({activeHardwareTier.vramBudget})
+              Hardware tier: {activeHardwareTier.hardwareTier}
             </p>
           </div>
 
@@ -341,62 +286,43 @@ export default function SovereignOfficeSavingsCalculator() {
             </span>
             <p>{activeHardwareTier.recommendedUseCase}</p>
             <p className="sovereign-receipt-preview">
-              Loopback Bridge: {activeHardwareTier.loopbackEndpoint} | API Token Cost: $0.00
+              Loopback: {activeHardwareTier.loopbackEndpoint} | Studio server and API cost: $0.00 / 1,000 runs
             </p>
           </div>
 
           <div className="sovereign-calc-card net-savings-card">
             <span className="calc-card-kicker">
-              <Cpu size={13} /> 1-Click Local Ollama Bootstrap
+              <HardDrive size={13} /> Exact local Ollama command
             </span>
-            <p className="sovereign-receipt-preview">{activeHardwareTier.ollamaCommand}</p>
-            <button
-              type="button"
-              data-testid="copy-local-ollama-cmd-btn"
-              className="copy-sovereign-receipt-button"
-              onClick={handleCopyOllamaCommand}
-            >
-              {copiedOllamaTierId === activeHardwareTier.id ? (
-                <>
-                  <Check size={14} /> Copied {activeHardwareTier.ollamaCommand}
-                </>
-              ) : (
-                <>
-                  <Copy size={14} /> 1-Click Copy {activeHardwareTier.ollamaCommand}
-                </>
-              )}
-            </button>
+            <p className="sovereign-receipt-preview">{activeHardwareTier.ollamaCommands.map((command) => <code key={command}>{command}</code>)}</p>
           </div>
         </div>
-      </div>
+        <p className="ownership-note">The proposed local AI adapter is not shipped in the current Electron build. The $0.00 figure covers studio server and API-token costs only. The buyer provides hardware, electricity, model downloads, and storage. Hardware tiers are guidance, not a performance guarantee.</p>
+      </article>
 
       <div
-        className="sovereign-privacy-comparator"
-        data-testid="offline-parity-table"
-        aria-label="Offline Desktop vs Cloud Web 100% Feature Parity Table"
+        className="offline-parity-wrap"
+        tabIndex={0}
+        role="region"
+        aria-label="Offline and cloud capability comparison"
       >
         <div className="sovereign-calculator-header">
           <div>
             <span className="workspace-eyebrow">
-              <Layers size={12} /> 100% SHARED-BRAIN PARITY · OFFLINE DESKTOP VS CLOUD WEB
+              <HardDrive size={12} /> OFFLINE AND CLOUD CAPABILITY COMPARISON
             </span>
-            <h3>Identical OOXML document, financial formula, and slide engine across Offline Desktop and Cloud Web.</h3>
+            <h3>See what stays local and what needs the proposed hosted plan.</h3>
           </div>
         </div>
 
-        <div className="sovereign-calculator-grid">
-          {FOLIO_OFFLINE_PARITY_ROWS.map((row) => (
-            <div key={row.capability} className="sovereign-calc-card folio-local-card">
-              <span className="calc-card-kicker">{row.capability}</span>
-              <p>
-                <strong>Offline Desktop:</strong> {row.offlineDesktopStatus}
-              </p>
-              <p>
-                <strong>Cloud Web:</strong> {row.cloudWebStatus}
-              </p>
-            </div>
-          ))}
-        </div>
+        <table data-testid="offline-parity-table">
+          <caption>Proposed desktop and local AI capabilities compared with the proposed hosted subscription model</caption>
+          <thead><tr><th scope="col">Workflow</th><th scope="col">On this computer · No monthly limit</th><th scope="col">Online plan allowance</th><th scope="col">Needs the internet</th></tr></thead>
+          <tbody>{FOLIO_OFFLINE_PARITY_ROWS.map((row) => <tr key={row.capability}><th scope="row">{row.capability}</th><td>{row.offlineDesktopStatus}</td><td>{row.cloudWebStatus}</td><td>{row.needsInternet}</td></tr>)}</tbody>
+        </table>
+      </div>
+
+      <p className="ownership-note">One-time license pricing and terms are not published. The five-year comparison on this page covers recurring subscriptions only. It excludes any future one-time license price and the buyer&apos;s hardware and electricity costs.</p>
       </div>
 
       <div
