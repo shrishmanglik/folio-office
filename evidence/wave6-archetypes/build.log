@@ -1,0 +1,27 @@
+
+> folio-office@0.8.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 2122 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                      0.59 kB │ gzip:   0.37 kB
+dist/assets/index-DH4Weg-i.css                      98.09 kB │ gzip:  19.80 kB
+dist/assets/__vite-browser-external-BIHI7g3E.js      0.03 kB │ gzip:   0.05 kB
+dist/assets/pptxgen.es-9kQ7ZT1A.js                 275.40 kB │ gzip:  96.44 kB
+dist/assets/index-BISwYE7q.js                    2,976.83 kB │ gzip: 867.04 kB
+npm.cmd :
+At line:2 char:1201
++ ... ke.log}else{npm.cmd run build *> evidence/wave6-archetypes/build.log} ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking:
+https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 13.63s

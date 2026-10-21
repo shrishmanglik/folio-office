@@ -1,0 +1,8 @@
+{
+  "src/FolioSovereignCommandSuite.tsx": "c0f3cb3d0832b06bb8980159763a913affc255a915e8d33ab2518d89f522a9b5",
+  "src/Workspace.tsx": "2e39b1c0ec77d3334b6f7989484ae2324ffa212f70bed5e5eb773c96c59f7774",
+  "src/Workspace.css": "85196b8839375ed7960e94da117475ec85f05d4c0c9f3a7652850da54f00edde",
+  "src/Theme.css": "57f2e2c0cb85dcd9b26294ca019207a3585a134b48c11e60fa0b9d833053c8b7",
+  "src/app/folio-office-app.ts": "70e910691d805aa10fae67656f5c4b62449e2e548e91166f2f9ba5a92cdc8ef4",
+  "tests/theme-switcher-and-sovereign-copy.test.cjs": "4482adfa9dc609caa7de3e8835b45aad40abbb5d8c791adeb6d7ce088a3a95f8"
+}

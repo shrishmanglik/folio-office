@@ -1,0 +1,298 @@
+{
+  "width": 390,
+  "theme": "void",
+  "metrics": {
+    "width": 300,
+    "pageWidth": 418,
+    "viewport": 390,
+    "background": "rgb(18, 19, 26)",
+    "color": "rgb(245, 242, 235)",
+    "cardBackgrounds": [
+      "rgb(10, 10, 14)",
+      "rgb(10, 10, 14)",
+      "rgb(10, 10, 14)"
+    ]
+  },
+  "offenders": [
+    {
+      "tag": "DIV",
+      "className": "library-tools",
+      "x": 155.421875,
+      "width": 240.09375,
+      "right": 395.515625,
+      "minWidth": "auto",
+      "display": "flex",
+      "grid": "none"
+    },
+    {
+      "tag": "DIV",
+      "className": "view-toggle",
+      "x": 334.515625,
+      "width": 61,
+      "right": 395.515625,
+      "minWidth": "auto",
+      "display": "flex",
+      "grid": "none"
+    },
+    {
+      "tag": "BUTTON",
+      "className": "",
+      "x": 365.515625,
+      "width": 26,
+      "right": 391.515625,
+      "minWidth": "auto",
+      "display": "flex",
+      "grid": "none"
+    },
+    {
+      "tag": "SPAN",
+      "className": "",
+      "x": 385,
+      "width": 25,
+      "right": 410,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "DIV",
+      "className": "file-menu-wrap",
+      "x": 385,
+      "width": 25,
+      "right": 410,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "BUTTON",
+      "className": "icon-button",
+      "x": 385,
+      "width": 33,
+      "right": 418,
+      "minWidth": "0px",
+      "display": "inline-flex",
+      "grid": "none"
+    },
+    {
+      "tag": "svg",
+      "className": {},
+      "x": 392,
+      "width": 19,
+      "right": 411,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 400.7083435058594,
+      "width": 1.58331298828125,
+      "right": 402.2916564941406,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 406.25,
+      "width": 1.583343505859375,
+      "right": 407.8333435058594,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 395.1666564941406,
+      "width": 1.583343505859375,
+      "right": 396.75,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "DIV",
+      "className": "file-menu-wrap",
+      "x": 385,
+      "width": 25,
+      "right": 410,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "BUTTON",
+      "className": "icon-button",
+      "x": 385,
+      "width": 33,
+      "right": 418,
+      "minWidth": "0px",
+      "display": "inline-flex",
+      "grid": "none"
+    },
+    {
+      "tag": "svg",
+      "className": {},
+      "x": 392,
+      "width": 19,
+      "right": 411,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 400.7083435058594,
+      "width": 1.58331298828125,
+      "right": 402.2916564941406,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 406.25,
+      "width": 1.583343505859375,
+      "right": 407.8333435058594,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 395.1666564941406,
+      "width": 1.583343505859375,
+      "right": 396.75,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "DIV",
+      "className": "file-menu-wrap",
+      "x": 385,
+      "width": 25,
+      "right": 410,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "BUTTON",
+      "className": "icon-button",
+      "x": 385,
+      "width": 33,
+      "right": 418,
+      "minWidth": "0px",
+      "display": "inline-flex",
+      "grid": "none"
+    },
+    {
+      "tag": "svg",
+      "className": {},
+      "x": 392,
+      "width": 19,
+      "right": 411,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 400.7083435058594,
+      "width": 1.58331298828125,
+      "right": 402.2916564941406,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 406.25,
+      "width": 1.583343505859375,
+      "right": 407.8333435058594,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "circle",
+      "className": {},
+      "x": 395.1666564941406,
+      "width": 1.583343505859375,
+      "right": 396.75,
+      "minWidth": "0px",
+      "display": "inline",
+      "grid": "none"
+    },
+    {
+      "tag": "DIV",
+      "className": "file-menu-wrap",
+      "x": 385,
+      "width": 25,
+      "right": 410,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    },
+    {
+      "tag": "BUTTON",
+      "className": "icon-button",
+      "x": 385,
+      "width": 33,
+      "right": 418,
+      "minWidth": "0px",
+      "display": "inline-flex",
+      "grid": "none"
+    },
+    {
+      "tag": "svg",
+      "className": {},
+      "x": 392,
+      "width": 19,
+      "right": 411,
+      "minWidth": "auto",
+      "display": "block",
+      "grid": "none"
+    }
+  ],
+  "textOffenders": [
+    {
+      "text": "Clean-Room IP & SHA-256 Dossier",
+      "parent": "",
+      "right": 452.484375,
+      "whiteSpace": "nowrap"
+    },
+    {
+      "text": "2. Deterministic Financial Grid & Formula Auditor",
+      "parent": "",
+      "right": 501.875,
+      "whiteSpace": "normal"
+    },
+    {
+      "text": "3. Executive Deck & Board Brief Builder",
+      "parent": "",
+      "right": 724.734375,
+      "whiteSpace": "normal"
+    },
+    {
+      "text": "4. Air-Gapped Vault & Multi-Format Cryptographic Export",
+      "parent": "",
+      "right": 975.5,
+      "whiteSpace": "normal"
+    }
+  ],
+  "containmentControl": {
+    "before": 418,
+    "after": 418
+  }
+}

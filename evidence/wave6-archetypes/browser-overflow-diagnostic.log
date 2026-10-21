@@ -1,0 +1,15 @@
+node : AssertionError [ERR_ASSERTION]: page overflow at 1280/void: 1333
+At line:10 char:16
++ ... | python -; node evidence/wave6-archetypes/browser-smoke.mjs *> evide ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...1280/void: 1333:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+    at file:///C:/AGI/products/folio-office/evidence/wave6-archetypes/browser-smoke.mjs:82:16 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
