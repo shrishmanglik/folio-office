@@ -1,0 +1,9 @@
+{
+  "base": "b181721a64bfb9d5da54e338446122bb21dabed1",
+  "files": {
+    "src/Theme.css": "c95316a88f6d2a7e8f8f3aaa23c6d9dfbfe72fe77526ec117f676a1efe18833d",
+    "src/Workspace.css": "3e063479ef44dee30e43058603d55319d4e6cc615f0d9dc1d699ae5d4c7d827a",
+    "src/SovereignOfficeSavingsCalculator.tsx": "89bf389050c1598735f92786006ddab52c1688aa6fbee0bfc52d2d82b463dea7",
+    "tests/theme-switcher-and-sovereign-copy.test.cjs": "5c36c4dd264cf7869a125c5547e1ed86b09ceb58a56d3f36b00882a3d6a947b3"
+  }
+}

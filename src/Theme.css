@@ -209,3 +209,148 @@
 .office-app .editor-header {
   padding-right: 76px;
 }
+
+/* Four-theme workspace parity */
+.sovereign-calculator-section {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.sovereign-calculator-header h2,
+.sovereign-privacy-comparator h3,
+.calc-card-figure {
+  color: var(--ink);
+}
+.sovereign-calculator-header p,
+.sovereign-calc-card p,
+.calc-card-kicker {
+  color: var(--muted);
+}
+.sovereign-calculator-header .workspace-eyebrow {
+  color: var(--muted);
+}
+.sovereign-calc-card {
+  background: var(--canvas);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.sovereign-privacy-comparator {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.sovereign-receipt-preview {
+  background: var(--canvas);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.cloud-tax-card .calc-card-figure {
+  color: var(--ink);
+}
+.folio-local-card .calc-card-figure {
+  color: var(--ink);
+}
+.net-savings-card .calc-card-figure {
+  color: var(--ink);
+}
+.sovereign-calc-card .sovereign-receipt-preview {
+  background: var(--canvas);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.sovereign-calculator-presets button {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.sovereign-calculator-presets button:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.sovereign-calculator-presets button.selected {
+  background: var(--ink);
+  border-color: var(--accent);
+  color: var(--canvas);
+}
+.copy-sovereign-receipt-button {
+  background: var(--ink);
+  border-color: var(--accent);
+  color: var(--canvas);
+}
+.copy-sovereign-receipt-button:hover {
+  background: var(--canvas);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.sovereign-calculator-presets button:focus-visible,
+.copy-sovereign-receipt-button:focus-visible {
+  outline-color: var(--accent);
+}
+.continue-card {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.continue-card:hover {
+  border-color: var(--accent);
+}
+.continue-preview {
+  background: var(--canvas);
+  color: var(--muted);
+}
+.continue-preview p,
+.continue-meta span {
+  color: var(--muted);
+}
+.continue-meta {
+  border-color: var(--line);
+}
+.continue-meta strong {
+  color: var(--ink);
+}
+.library-empty {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.library-empty h3 {
+  color: var(--ink);
+}
+.library-empty p {
+  color: var(--muted);
+}
+.library-empty button {
+  color: var(--ink);
+}
+.library-empty button:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+}
+.library-search {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--muted);
+}
+.library-search:focus-within {
+  border-color: var(--accent);
+}
+.library-search input {
+  background: transparent;
+  color: var(--ink);
+}
+.library-search input::placeholder {
+  color: var(--muted);
+}
+.library-tools select {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.library-tools select:focus-visible {
+  outline-color: var(--accent);
+}
+.library-tools select option {
+  background: var(--surface);
+  color: var(--ink);
+}
