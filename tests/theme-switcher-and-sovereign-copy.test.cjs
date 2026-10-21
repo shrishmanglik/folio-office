@@ -354,3 +354,30 @@ test('Folio Office includes Universal Offline Desktop + Free Local Open-Source L
     assert.ok(shellTemplateTs.includes(modelTag), `Expected ${modelTag} in shell-template.ts`);
   }
 });
+
+test('Folio Office exposes top-level App-Command Navbar, Role-Portal Switcher, and 5 1-click sovereign templates', () => {
+  const appTsx = fs.readFileSync(path.join(srcDir, 'App.tsx'), 'utf8');
+  const workspaceTsx = fs.readFileSync(path.join(srcDir, 'Workspace.tsx'), 'utf8');
+
+  assert.match(appTsx, /data-testid="folio-full-suite-os"/);
+  assert.match(workspaceTsx, /data-testid="app-command-navbar"/);
+  assert.match(workspaceTsx, /data-testid="role-portal-switcher"/);
+
+  for (const portalLabel of [
+    'Solo Founder & Executive',
+    'Boutique Agency & Advisory',
+    'Engineering & Research Lab',
+  ]) {
+    assert.ok(workspaceTsx.includes(portalLabel), `Expected role portal "${portalLabel}" in Workspace.tsx`);
+  }
+
+  for (const templateLabel of [
+    'Executive Client Audit Document',
+    'Live Formula & Margin Spreadsheet',
+    'Board Pitch Presentation Deck',
+    'Research & Engineering Notebook',
+    'Microsoft 365 / Google Workspace Per-Seat Tax Savings & Local AI Vault',
+  ]) {
+    assert.ok(workspaceTsx.includes(templateLabel), `Expected 1-click template "${templateLabel}" in Workspace.tsx`);
+  }
+});
