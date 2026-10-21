@@ -1,0 +1,103 @@
+{
+  "product": "folio-office",
+  "url": "http://127.0.0.1:4392",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Laptop GPU (0x00002D59) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "checks": [
+    {
+      "theme": "void",
+      "width": 1920,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "paper",
+      "width": 1920,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "contrast",
+      "width": 1920,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "daltonic",
+      "width": 1920,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "void",
+      "width": 1440,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "paper",
+      "width": 1440,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "contrast",
+      "width": 1440,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "daltonic",
+      "width": 1440,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "void",
+      "width": 1280,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "paper",
+      "width": 1280,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "contrast",
+      "width": 1280,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "daltonic",
+      "width": 1280,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "void",
+      "width": 390,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "paper",
+      "width": 390,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "contrast",
+      "width": 390,
+      "checked": 12,
+      "failures": []
+    },
+    {
+      "theme": "daltonic",
+      "width": 390,
+      "checked": 12,
+      "failures": []
+    }
+  ]
+}

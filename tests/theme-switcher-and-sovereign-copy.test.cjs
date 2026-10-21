@@ -5,6 +5,37 @@ const path = require('node:path');
 
 const srcDir = path.join(__dirname, '../src');
 
+const readThemeParityBlock = () => {
+  const themeCss = fs.readFileSync(path.join(srcDir, 'Theme.css'), 'utf8');
+  const marker = '/* Four-theme workspace parity */';
+  const markerIndex = themeCss.indexOf(marker);
+  assert.notEqual(markerIndex, -1, 'Theme.css must include the four-theme workspace parity block');
+  return { themeCss, parityCss: themeCss.slice(markerIndex + marker.length) };
+};
+
+const assertRuleUses = (css, selector, declarations) => {
+  const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = css.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`));
+  assert.ok(match, `Expected a theme parity rule for ${selector}`);
+  for (const declaration of declarations) {
+    assert.match(match[1], declaration, `Expected ${selector} to use ${declaration}`);
+  }
+};
+
+const contrastRatio = (foreground, background) => {
+  const luminance = (hex) => {
+    const channels = hex.slice(1).match(/.{2}/g).map((channel) => {
+      const value = Number.parseInt(channel, 16) / 255;
+      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  };
+  const foregroundLuminance = luminance(foreground);
+  const backgroundLuminance = luminance(background);
+  return (Math.max(foregroundLuminance, backgroundLuminance) + 0.05)
+    / (Math.min(foregroundLuminance, backgroundLuminance) + 0.05);
+};
+
 test('Folio Office includes 44x44px top-right icon-only 4-theme switcher and 4 reading atmospheres', () => {
   const appTsx = fs.readFileSync(path.join(srcDir, 'App.tsx'), 'utf8');
   const workspaceTsx = fs.readFileSync(path.join(srcDir, 'Workspace.tsx'), 'utf8');
@@ -31,6 +62,82 @@ test('Folio Office includes 44x44px top-right icon-only 4-theme switcher and 4 r
   assert.match(appTsx, /CanvasThemeSwitcher/);
   assert.match( appTsx + '\n' + workspaceTsx, /100% Yours on Your Machine/);
   assert.match(workspaceTsx, /Generate Client Audit Dossier/);
+});
+
+test('all four themes tokenise calculator, continuation, and library surfaces with interactive states', () => {
+  const { themeCss, parityCss } = readThemeParityBlock();
+
+  for (const themeId of ['void', 'paper', 'contrast', 'daltonic']) {
+    const themeMatch = themeCss.match(new RegExp(`:root\\[data-theme="${themeId}"\\]\\s*\\{([^}]*)\\}`));
+    assert.ok(themeMatch, `Expected ${themeId} theme variables`);
+    for (const token of ['surface', 'canvas', 'ink', 'muted', 'line', 'accent']) {
+      assert.match(themeMatch[1], new RegExp(`--${token}\\s*:`), `Expected --${token} in ${themeId}`);
+    }
+  }
+
+  assert.doesNotMatch(parityCss, /#[0-9a-f]{3,8}|rgba?\(|hsla?\(/i, 'Parity rules must not add colour literals');
+
+  const surfaceRules = [
+    '.sovereign-calculator-section',
+    '.continue-card',
+    '.library-empty',
+    '.library-tools select',
+  ];
+  for (const selector of surfaceRules) {
+    assertRuleUses(parityCss, selector, [/background:\s*var\(--surface\)/, /border-color:\s*var\(--line\)/, /color:\s*var\(--ink\)/]);
+  }
+
+  assertRuleUses(parityCss, '.sovereign-calc-card', [/background:\s*var\(--canvas\)/, /border-color:\s*var\(--line\)/, /color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.library-search', [/background:\s*var\(--surface\)/, /border-color:\s*var\(--line\)/, /color:\s*var\(--muted\)/]);
+  assertRuleUses(parityCss, '.sovereign-privacy-comparator', [/background:\s*var\(--surface\)/, /border-color:\s*var\(--line\)/, /color:\s*var\(--ink\)/]);
+  for (const figureSelector of [
+    '.cloud-tax-card .calc-card-figure',
+    '.folio-local-card .calc-card-figure',
+    '.net-savings-card .calc-card-figure',
+  ]) {
+    assertRuleUses(parityCss, figureSelector, [/color:\s*var\(--ink\)/]);
+  }
+  assertRuleUses(parityCss, '.sovereign-calc-card .sovereign-receipt-preview', [/background:\s*var\(--canvas\)/, /border-color:\s*var\(--line\)/, /color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.continue-preview', [/background:\s*var\(--canvas\)/, /color:\s*var\(--muted\)/]);
+
+  assertRuleUses(parityCss, '.sovereign-calculator-presets button', [/background:\s*var\(--surface\)/, /border-color:\s*var\(--line\)/, /color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.sovereign-calculator-presets button:hover', [/border-color:\s*var\(--accent\)/, /color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.sovereign-calculator-presets button.selected', [/background:\s*var\(--ink\)/, /border-color:\s*var\(--accent\)/, /color:\s*var\(--canvas\)/]);
+  assertRuleUses(parityCss, '.copy-sovereign-receipt-button', [/background:\s*var\(--ink\)/, /border-color:\s*var\(--accent\)/, /color:\s*var\(--canvas\)/]);
+  assertRuleUses(parityCss, '.copy-sovereign-receipt-button:hover', [/background:\s*var\(--canvas\)/, /border-color:\s*var\(--accent\)/, /color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.library-empty button', [/color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.sovereign-calculator-header .workspace-eyebrow', [/color:\s*var\(--muted\)/]);
+  assertRuleUses(parityCss, '.library-search:focus-within', [/border-color:\s*var\(--accent\)/]);
+  assertRuleUses(parityCss, '.library-search input', [/background:\s*transparent/, /color:\s*var\(--ink\)/]);
+  assertRuleUses(parityCss, '.library-search input::placeholder', [/color:\s*var\(--muted\)/]);
+  assertRuleUses(parityCss, '.library-tools select:focus-visible', [/outline-color:\s*var\(--accent\)/]);
+});
+
+test('all four theme palettes keep workspace text pairs at WCAG AA contrast', () => {
+  const themeCss = fs.readFileSync(path.join(srcDir, 'Theme.css'), 'utf8');
+  const textPairs = [
+    ['ink', 'canvas'],
+    ['ink', 'surface'],
+    ['muted', 'canvas'],
+    ['muted', 'surface'],
+  ];
+
+  for (const themeId of ['void', 'paper', 'contrast', 'daltonic']) {
+    const themeMatch = themeCss.match(new RegExp(`:root\\[data-theme="${themeId}"\\]\\s*\\{([^}]*)\\}`));
+    assert.ok(themeMatch, `Expected ${themeId} theme variables`);
+    const palette = Object.fromEntries(
+      [...themeMatch[1].matchAll(/--(surface|canvas|ink|muted):\s*(#[0-9a-f]{6})/gi)]
+        .map((match) => [match[1].toLowerCase(), match[2]]),
+    );
+
+    for (const [foreground, background] of textPairs) {
+      const ratio = contrastRatio(palette[foreground], palette[background]);
+      assert.ok(
+        ratio >= 4.5,
+        `${themeId} ${foreground} on ${background} must be at least 4.5:1, received ${ratio.toFixed(2)}:1`,
+      );
+    }
+  }
 });
 
 test('Folio Office includes interactive 5-Year SaaS Subscription vs Sovereign Local Office Calculator', () => {
