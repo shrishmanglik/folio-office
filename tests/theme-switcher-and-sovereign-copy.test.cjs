@@ -33,6 +33,23 @@ test('Folio Office includes 44x44px top-right icon-only 4-theme switcher and 4 r
   assert.match(workspaceTsx, /Generate Client Audit Dossier/);
 });
 
+test('Folio Office includes interactive 5-Year SaaS Subscription vs Sovereign Local Office Calculator', () => {
+  const workspaceTsx = fs.readFileSync(path.join(srcDir, 'Workspace.tsx'), 'utf8');
+  const calcPath = path.join(srcDir, 'SovereignOfficeSavingsCalculator.tsx');
+  assert.ok(fs.existsSync(calcPath), 'SovereignOfficeSavingsCalculator.tsx must exist');
+  const calcTsx = fs.readFileSync(calcPath, 'utf8');
+
+  assert.match(workspaceTsx, /SovereignOfficeSavingsCalculator/);
+  assert.match(calcTsx, /data-testid="sovereign-office-savings-calculator"/);
+  for (const presetLabel of ['1 Solo Founder', '5-Person Studio', '15-Person Boutique Agency']) {
+    assert.ok(calcTsx.includes(presetLabel), `Expected calculator preset "${presetLabel}"`);
+  }
+  assert.ok(
+    calcTsx.includes('Folio Office ($0/mo Recurring · 100% Local on Your Machine)'),
+    'Expected Folio Office ($0/mo Recurring · 100% Local on Your Machine) comparison label',
+  );
+});
+
 test('Zero em dashes anywhere in Folio Office UI source', () => {
   const scan = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
