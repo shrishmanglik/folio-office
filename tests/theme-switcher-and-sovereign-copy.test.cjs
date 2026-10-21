@@ -50,6 +50,33 @@ test('Folio Office includes interactive 5-Year SaaS Subscription vs Sovereign Lo
   );
 });
 
+test('Folio Office includes 3-Second Cloud Docs Telemetry vs Air-Gapped Local Vault Privacy Comparator and 1-Click Copy Sovereign Office Verification Receipt', () => {
+  const appModulePath = path.join(srcDir, 'app', 'folio-office-app.ts');
+  const shellTemplatePath = path.join(srcDir, 'ui', 'shell-template.ts');
+  const calcPath = path.join(srcDir, 'SovereignOfficeSavingsCalculator.tsx');
+
+  assert.ok(fs.existsSync(appModulePath), 'src/app/folio-office-app.ts must exist');
+  assert.ok(fs.existsSync(shellTemplatePath), 'src/ui/shell-template.ts must exist');
+
+  const appModuleTs = fs.readFileSync(appModulePath, 'utf8');
+  const shellTemplateTs = fs.readFileSync(shellTemplatePath, 'utf8');
+  const calcTsx = fs.readFileSync(calcPath, 'utf8');
+
+  assert.match(shellTemplateTs, /data-testid="folio-privacy-comparator"/);
+  assert.match(shellTemplateTs, /data-testid="copy-sovereign-office-receipt-btn"/);
+  assert.match(calcTsx, /data-testid="folio-privacy-comparator"/);
+  assert.match(calcTsx, /data-testid="copy-sovereign-office-receipt-btn"/);
+  assert.match(appModuleTs, /copySovereignOfficeVerificationReceipt/);
+
+  for (const docType of [
+    'M&A Term Sheet & Cap Table (.xlsx + .docx)',
+    'Litigation & Client Contract Dossier (.docx)',
+    'Board Strategy Deck (.pptx)',
+  ]) {
+    assert.ok(shellTemplateTs.includes(docType), `Expected confidential document type "${docType}" in shell-template.ts`);
+  }
+});
+
 test('Zero em dashes anywhere in Folio Office UI source', () => {
   const scan = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { ShieldCheck, HardDrive, Calculator } from 'lucide-react';
+import { ShieldCheck, HardDrive, Calculator, Lock, Copy, Check } from 'lucide-react';
+import {
+  FOLIO_PRIVACY_COMPARATOR_PRESETS,
+  copySovereignOfficeVerificationReceipt,
+} from './app/folio-office-app';
 
 export interface OfficeSeatPreset {
   id: string;
@@ -55,9 +59,23 @@ function formatUsd(amount: number): string {
 
 export default function SovereignOfficeSavingsCalculator() {
   const [selectedId, setSelectedId] = useState<string>(SOVEREIGN_OFFICE_SEAT_PRESETS[1].id);
+  const [selectedDocPresetId, setSelectedDocPresetId] = useState<string>(
+    FOLIO_PRIVACY_COMPARATOR_PRESETS[0].id,
+  );
+  const [copiedDocPresetId, setCopiedDocPresetId] = useState<string | null>(null);
+
   const activePreset =
     SOVEREIGN_OFFICE_SEAT_PRESETS.find((preset) => preset.id === selectedId) ??
     SOVEREIGN_OFFICE_SEAT_PRESETS[0];
+
+  const activeDocPreset =
+    FOLIO_PRIVACY_COMPARATOR_PRESETS.find((preset) => preset.id === selectedDocPresetId) ??
+    FOLIO_PRIVACY_COMPARATOR_PRESETS[0];
+
+  const handleCopyReceipt = async () => {
+    await copySovereignOfficeVerificationReceipt(activeDocPreset.id);
+    setCopiedDocPresetId(activeDocPreset.id);
+  };
 
   return (
     <section
@@ -120,6 +138,81 @@ export default function SovereignOfficeSavingsCalculator() {
           </span>
           <strong className="calc-card-figure">{formatUsd(activePreset.fiveYearNetSavingsUsd)} Retained</strong>
           <p>{activePreset.sovereigntyNote}</p>
+        </div>
+      </div>
+
+      <div
+        className="sovereign-privacy-comparator"
+        data-testid="folio-privacy-comparator"
+        aria-label="3-Second Cloud Docs Telemetry vs Air-Gapped Local Vault Privacy Comparator"
+      >
+        <div className="sovereign-calculator-header">
+          <div>
+            <span className="workspace-eyebrow">
+              <Lock size={12} /> 3-SECOND CLOUD DOCS TELEMETRY VS AIR-GAPPED LOCAL VAULT PRIVACY COMPARATOR
+            </span>
+            <h3>Keep confidential work off third-party cloud telemetry pipelines.</h3>
+          </div>
+          <div
+            className="sovereign-calculator-presets"
+            role="tablist"
+            aria-label="Confidential document type presets"
+          >
+            {FOLIO_PRIVACY_COMPARATOR_PRESETS.map((docPreset) => {
+              const selected = docPreset.id === activeDocPreset.id;
+              return (
+                <button
+                  key={docPreset.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  data-testid={`folio-privacy-preset-${docPreset.id}`}
+                  className={selected ? 'selected' : ''}
+                  onClick={() => setSelectedDocPresetId(docPreset.id)}
+                >
+                  {docPreset.documentType}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="sovereign-calculator-grid">
+          <div className="sovereign-calc-card cloud-tax-card">
+            <span className="calc-card-kicker">Cloud Docs Telemetry Exposure</span>
+            <p>{activeDocPreset.cloudTelemetryExposure}</p>
+            <p>{activeDocPreset.cloudRetentionRisk}</p>
+          </div>
+
+          <div className="sovereign-calc-card folio-local-card">
+            <span className="calc-card-kicker">
+              <HardDrive size={13} /> Air-Gapped Local Vault Guarantee
+            </span>
+            <p>{activeDocPreset.localVaultGuarantee}</p>
+          </div>
+
+          <div className="sovereign-calc-card net-savings-card">
+            <span className="calc-card-kicker">
+              <ShieldCheck size={13} /> Sovereign Office Verification Receipt
+            </span>
+            <p className="sovereign-receipt-preview">{activeDocPreset.verificationReceiptText}</p>
+            <button
+              type="button"
+              data-testid="copy-sovereign-office-receipt-btn"
+              className="copy-sovereign-receipt-button"
+              onClick={handleCopyReceipt}
+            >
+              {copiedDocPresetId === activeDocPreset.id ? (
+                <>
+                  <Check size={14} /> Copied Sovereign Office Verification Receipt
+                </>
+              ) : (
+                <>
+                  <Copy size={14} /> 1-Click Copy Sovereign Office Verification Receipt
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </section>
