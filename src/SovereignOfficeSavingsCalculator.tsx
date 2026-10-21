@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { ShieldCheck, HardDrive, Calculator, Lock, Copy, Check } from 'lucide-react';
+import { ShieldCheck, HardDrive, Calculator, Lock, Copy, Check, FileCheck2 } from 'lucide-react';
 import {
   FOLIO_PRIVACY_COMPARATOR_PRESETS,
+  FOLIO_EXPORT_VERIFIER_PRESETS,
   copySovereignOfficeVerificationReceipt,
+  copyClientDeliverableManifest,
 } from './app/folio-office-app';
 
 export interface OfficeSeatPreset {
@@ -64,6 +66,11 @@ export default function SovereignOfficeSavingsCalculator() {
   );
   const [copiedDocPresetId, setCopiedDocPresetId] = useState<string | null>(null);
 
+  const [selectedExportPresetId, setSelectedExportPresetId] = useState<string>(
+    FOLIO_EXPORT_VERIFIER_PRESETS[0].id,
+  );
+  const [copiedExportPresetId, setCopiedExportPresetId] = useState<string | null>(null);
+
   const activePreset =
     SOVEREIGN_OFFICE_SEAT_PRESETS.find((preset) => preset.id === selectedId) ??
     SOVEREIGN_OFFICE_SEAT_PRESETS[0];
@@ -72,9 +79,18 @@ export default function SovereignOfficeSavingsCalculator() {
     FOLIO_PRIVACY_COMPARATOR_PRESETS.find((preset) => preset.id === selectedDocPresetId) ??
     FOLIO_PRIVACY_COMPARATOR_PRESETS[0];
 
+  const activeExportPreset =
+    FOLIO_EXPORT_VERIFIER_PRESETS.find((preset) => preset.id === selectedExportPresetId) ??
+    FOLIO_EXPORT_VERIFIER_PRESETS[0];
+
   const handleCopyReceipt = async () => {
     await copySovereignOfficeVerificationReceipt(activeDocPreset.id);
     setCopiedDocPresetId(activeDocPreset.id);
+  };
+
+  const handleCopyManifest = async () => {
+    await copyClientDeliverableManifest(activeExportPreset.id);
+    setCopiedExportPresetId(activeExportPreset.id);
   };
 
   return (
@@ -209,6 +225,81 @@ export default function SovereignOfficeSavingsCalculator() {
               ) : (
                 <>
                   <Copy size={14} /> 1-Click Copy Sovereign Office Verification Receipt
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="sovereign-privacy-comparator"
+        data-testid="folio-export-verifier"
+        aria-label="3-Second Multi-Format Sovereign Export and Formula Audit Verifier"
+      >
+        <div className="sovereign-calculator-header">
+          <div>
+            <span className="workspace-eyebrow">
+              <FileCheck2 size={12} /> 3-SECOND MULTI-FORMAT SOVEREIGN EXPORT & FORMULA AUDIT VERIFIER
+            </span>
+            <h3>Verify zero formula errors and local SHA-256 export integrity before sending to clients.</h3>
+          </div>
+          <div
+            className="sovereign-calculator-presets"
+            role="tablist"
+            aria-label="Sovereign export verifier presets"
+          >
+            {FOLIO_EXPORT_VERIFIER_PRESETS.map((exportPreset) => {
+              const selected = exportPreset.id === activeExportPreset.id;
+              return (
+                <button
+                  key={exportPreset.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  data-testid={`folio-export-preset-${exportPreset.id}`}
+                  className={selected ? 'selected' : ''}
+                  onClick={() => setSelectedExportPresetId(exportPreset.id)}
+                >
+                  {exportPreset.deliverableLabel}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="sovereign-calculator-grid">
+          <div className="sovereign-calc-card folio-local-card">
+            <span className="calc-card-kicker">Local OOXML Package Format</span>
+            <p>{activeExportPreset.ooxmlFormatSummary}</p>
+          </div>
+
+          <div className="sovereign-calc-card folio-local-card">
+            <span className="calc-card-kicker">
+              <ShieldCheck size={13} /> Deterministic Formula & Schema Audit
+            </span>
+            <p>{activeExportPreset.formulaAndSchemaAudit}</p>
+            <p className="sovereign-receipt-preview">{activeExportPreset.localSha256Digest}</p>
+          </div>
+
+          <div className="sovereign-calc-card net-savings-card">
+            <span className="calc-card-kicker">
+              <FileCheck2 size={13} /> Client Deliverable Manifest
+            </span>
+            <p className="sovereign-receipt-preview">{activeExportPreset.manifestText}</p>
+            <button
+              type="button"
+              data-testid="copy-deliverable-manifest-btn"
+              className="copy-sovereign-receipt-button"
+              onClick={handleCopyManifest}
+            >
+              {copiedExportPresetId === activeExportPreset.id ? (
+                <>
+                  <Check size={14} /> Copied Deliverable Manifest
+                </>
+              ) : (
+                <>
+                  <Copy size={14} /> 1-Click Copy Client Deliverable Manifest
                 </>
               )}
             </button>
