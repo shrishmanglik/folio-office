@@ -1,0 +1,353 @@
+{
+  "interactions": [
+    {
+      "preset": "saas-p-and-l",
+      "workspace": "document-studio",
+      "kind": "document"
+    },
+    {
+      "preset": "saas-p-and-l",
+      "workspace": "financial-grid",
+      "kind": "spreadsheet"
+    },
+    {
+      "preset": "saas-p-and-l",
+      "workspace": "deck-builder",
+      "kind": "presentation"
+    },
+    {
+      "preset": "saas-p-and-l",
+      "workspace": "cryptographic-export",
+      "kind": "receipt"
+    },
+    {
+      "preset": "msa-sow-contract",
+      "workspace": "document-studio",
+      "kind": "document"
+    },
+    {
+      "preset": "msa-sow-contract",
+      "workspace": "financial-grid",
+      "kind": "spreadsheet"
+    },
+    {
+      "preset": "msa-sow-contract",
+      "workspace": "deck-builder",
+      "kind": "presentation"
+    },
+    {
+      "preset": "msa-sow-contract",
+      "workspace": "cryptographic-export",
+      "kind": "receipt"
+    },
+    {
+      "preset": "series-a-board-deck",
+      "workspace": "document-studio",
+      "kind": "document"
+    },
+    {
+      "preset": "series-a-board-deck",
+      "workspace": "financial-grid",
+      "kind": "spreadsheet"
+    },
+    {
+      "preset": "series-a-board-deck",
+      "workspace": "deck-builder",
+      "kind": "presentation"
+    },
+    {
+      "preset": "series-a-board-deck",
+      "workspace": "cryptographic-export",
+      "kind": "receipt"
+    },
+    {
+      "preset": "agency-retainer-audit",
+      "workspace": "document-studio",
+      "kind": "document"
+    },
+    {
+      "preset": "agency-retainer-audit",
+      "workspace": "financial-grid",
+      "kind": "spreadsheet"
+    },
+    {
+      "preset": "agency-retainer-audit",
+      "workspace": "deck-builder",
+      "kind": "presentation"
+    },
+    {
+      "preset": "agency-retainer-audit",
+      "workspace": "cryptographic-export",
+      "kind": "receipt"
+    },
+    {
+      "preset": "ontario-tax-ledger",
+      "workspace": "document-studio",
+      "kind": "document"
+    },
+    {
+      "preset": "ontario-tax-ledger",
+      "workspace": "financial-grid",
+      "kind": "spreadsheet"
+    },
+    {
+      "preset": "ontario-tax-ledger",
+      "workspace": "deck-builder",
+      "kind": "presentation"
+    },
+    {
+      "preset": "ontario-tax-ledger",
+      "workspace": "cryptographic-export",
+      "kind": "receipt"
+    },
+    {
+      "preset": "ip-clean-room-dossier",
+      "workspace": "document-studio",
+      "kind": "document"
+    },
+    {
+      "preset": "ip-clean-room-dossier",
+      "workspace": "financial-grid",
+      "kind": "spreadsheet"
+    },
+    {
+      "preset": "ip-clean-room-dossier",
+      "workspace": "deck-builder",
+      "kind": "presentation"
+    },
+    {
+      "preset": "ip-clean-room-dossier",
+      "workspace": "cryptographic-export",
+      "kind": "receipt"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1920,
+      "theme": "void",
+      "componentWidth": 1380,
+      "pageWidth": 1920,
+      "viewport": 1920,
+      "background": "rgb(18, 19, 26)",
+      "color": "rgb(245, 242, 235)",
+      "cardBackgrounds": [
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)"
+      ]
+    },
+    {
+      "width": 1920,
+      "theme": "paper",
+      "componentWidth": 1380,
+      "pageWidth": 1920,
+      "viewport": 1920,
+      "background": "rgb(243, 236, 225)",
+      "color": "rgb(28, 21, 18)",
+      "cardBackgrounds": [
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)"
+      ]
+    },
+    {
+      "width": 1920,
+      "theme": "contrast",
+      "componentWidth": 1380,
+      "pageWidth": 1920,
+      "viewport": 1920,
+      "background": "rgb(10, 10, 10)",
+      "color": "rgb(255, 255, 255)",
+      "cardBackgrounds": [
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)"
+      ]
+    },
+    {
+      "width": 1920,
+      "theme": "daltonic",
+      "componentWidth": 1380,
+      "pageWidth": 1920,
+      "viewport": 1920,
+      "background": "rgb(13, 34, 66)",
+      "color": "rgb(240, 246, 252)",
+      "cardBackgrounds": [
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)"
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "void",
+      "componentWidth": 1134,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "background": "rgb(18, 19, 26)",
+      "color": "rgb(245, 242, 235)",
+      "cardBackgrounds": [
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)"
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "paper",
+      "componentWidth": 1134,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "background": "rgb(243, 236, 225)",
+      "color": "rgb(28, 21, 18)",
+      "cardBackgrounds": [
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)"
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "contrast",
+      "componentWidth": 1134,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "background": "rgb(10, 10, 10)",
+      "color": "rgb(255, 255, 255)",
+      "cardBackgrounds": [
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)"
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "daltonic",
+      "componentWidth": 1134,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "background": "rgb(13, 34, 66)",
+      "color": "rgb(240, 246, 252)",
+      "cardBackgrounds": [
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)"
+      ]
+    },
+    {
+      "width": 1280,
+      "theme": "void",
+      "componentWidth": 974,
+      "pageWidth": 1280,
+      "viewport": 1280,
+      "background": "rgb(18, 19, 26)",
+      "color": "rgb(245, 242, 235)",
+      "cardBackgrounds": [
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)"
+      ]
+    },
+    {
+      "width": 1280,
+      "theme": "paper",
+      "componentWidth": 974,
+      "pageWidth": 1280,
+      "viewport": 1280,
+      "background": "rgb(243, 236, 225)",
+      "color": "rgb(28, 21, 18)",
+      "cardBackgrounds": [
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)"
+      ]
+    },
+    {
+      "width": 1280,
+      "theme": "contrast",
+      "componentWidth": 974,
+      "pageWidth": 1280,
+      "viewport": 1280,
+      "background": "rgb(10, 10, 10)",
+      "color": "rgb(255, 255, 255)",
+      "cardBackgrounds": [
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)"
+      ]
+    },
+    {
+      "width": 1280,
+      "theme": "daltonic",
+      "componentWidth": 974,
+      "pageWidth": 1280,
+      "viewport": 1280,
+      "background": "rgb(13, 34, 66)",
+      "color": "rgb(240, 246, 252)",
+      "cardBackgrounds": [
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)"
+      ]
+    },
+    {
+      "width": 390,
+      "theme": "void",
+      "componentWidth": 300,
+      "pageWidth": 390,
+      "viewport": 390,
+      "background": "rgb(18, 19, 26)",
+      "color": "rgb(245, 242, 235)",
+      "cardBackgrounds": [
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)",
+        "rgb(10, 10, 14)"
+      ]
+    },
+    {
+      "width": 390,
+      "theme": "paper",
+      "componentWidth": 300,
+      "pageWidth": 390,
+      "viewport": 390,
+      "background": "rgb(243, 236, 225)",
+      "color": "rgb(28, 21, 18)",
+      "cardBackgrounds": [
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)",
+        "rgb(250, 245, 238)"
+      ]
+    },
+    {
+      "width": 390,
+      "theme": "contrast",
+      "componentWidth": 300,
+      "pageWidth": 390,
+      "viewport": 390,
+      "background": "rgb(10, 10, 10)",
+      "color": "rgb(255, 255, 255)",
+      "cardBackgrounds": [
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)",
+        "rgb(0, 0, 0)"
+      ]
+    },
+    {
+      "width": 390,
+      "theme": "daltonic",
+      "componentWidth": 300,
+      "pageWidth": 390,
+      "viewport": 390,
+      "background": "rgb(13, 34, 66)",
+      "color": "rgb(240, 246, 252)",
+      "cardBackgrounds": [
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)",
+        "rgb(6, 22, 46)"
+      ]
+    }
+  ],
+  "errors": [],
+  "serverDiagnostics": [],
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Laptop GPU (0x00002D59) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+}

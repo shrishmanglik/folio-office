@@ -1,0 +1,43 @@
+✔ Folio Office includes 44x44px top-right icon-only 4-theme switcher and 4 reading atmospheres (8.8966ms)
+✔ all four themes tokenise calculator, continuation, and library surfaces with interactive states (2.9569ms)
+✔ all four theme palettes keep workspace text pairs at WCAG AA contrast (1.3737ms)
+✔ Folio Office includes interactive 5-Year SaaS Subscription vs Sovereign Local Office Calculator (1.5306ms)
+✔ Folio Office includes 3-Second Cloud Docs Telemetry vs Air-Gapped Local Vault Privacy Comparator and 1-Click Copy Sovereign Office Verification Receipt (4.4215ms)
+✔ Folio Office exposes the native preset and sovereign command workspace contracts (2.3789ms)
+✖ native presets create complete editor data and calculated receipts in every workspace (501.3856ms)
+✔ sovereign command suite uses semantic theme tokens and phone-contained horizontal tabs (2.6856ms)
+✔ Folio Office includes 3-Second Multi-Format Sovereign Export & Formula Audit Verifier and 1-Click Copy Client Deliverable Manifest (0.7744ms)
+✔ Zero em dashes anywhere in Folio Office UI source (29.0057ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 873.6957
+
+✖ failing tests:
+
+test at tests\theme-switcher-and-sovereign-copy.test.cjs:238:1
+✖ native presets create complete editor data and calculated receipts in every workspace (501.3856ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 'editorial'
+
+      at TestContext.<anonymous> (C:\AGI\products\folio-office\tests\theme-switcher-and-sovereign-copy.test.cjs:261:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'editorial',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

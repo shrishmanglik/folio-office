@@ -184,6 +184,115 @@ test('Folio Office includes 3-Second Cloud Docs Telemetry vs Air-Gapped Local Va
   }
 });
 
+test('Folio Office exposes the native preset and sovereign command workspace contracts', () => {
+  const suitePath = path.join(srcDir, 'FolioSovereignCommandSuite.tsx');
+  assert.ok(fs.existsSync(suitePath), 'FolioSovereignCommandSuite.tsx must exist');
+  const suite = fs.readFileSync(suitePath, 'utf8');
+  const workspace = fs.readFileSync(path.join(srcDir, 'Workspace.tsx'), 'utf8');
+  const appModule = fs.readFileSync(path.join(srcDir, 'app', 'folio-office-app.ts'), 'utf8');
+
+  assert.match(workspace, /FolioSovereignCommandSuite/);
+  assert.match(appModule, /FOLIO_NATIVE_PRESETS/);
+  assert.match(appModule, /FOLIO_COMMAND_WORKSPACES/);
+  assert.match(suite, /data-testid="folio-tri-surface-bar"/);
+  assert.match(suite, /data-testid="folio-command-suite"/);
+  assert.match(suite, /onKeyDown/);
+  assert.match(suite, /buildFolioPresetReceipt/);
+  assert.match(suite, /buildFolioNativeArtifact/);
+  assert.match(suite, /calculateFolioPresetResult/);
+  assert.doesNotMatch(suite, /querySelectorAll|\.click\(\)/, 'Native actions must use Workspace callbacks');
+  const presets = {
+    'saas-p-and-l': 'SaaS P&L & Cash-Flow Grid',
+    'msa-sow-contract': 'Master Services Agreement & SOW',
+    'series-a-board-deck': 'Executive Board & Investor Deck',
+    'agency-retainer-audit': 'Client Retainer & Margin Audit',
+    'ontario-tax-ledger': 'Canadian Corp Tax & HST Ledger',
+    'ip-clean-room-dossier': 'Clean-Room IP & SHA-256 Dossier',
+  };
+  for (const [id, label] of Object.entries(presets)) {
+    assert.ok(suite.includes(id), `Expected native preset ${id}`);
+    assert.ok(suite.includes(label), `Expected native preset label ${label}`);
+    assert.match(suite, /folio-native-preset-/);
+  }
+  const workspaces = {
+    'document-studio': '1. Sovereign Document & Contract Editor',
+    'financial-grid': '2. Deterministic Financial Grid & Formula Auditor',
+    'deck-builder': '3. Executive Deck & Board Brief Builder',
+    'cryptographic-export': '4. Air-Gapped Vault & Multi-Format Cryptographic Export',
+  };
+  for (const [id, label] of Object.entries(workspaces)) {
+    assert.ok(suite.includes(id), `Expected command workspace ${id}`);
+    assert.ok(suite.includes(label), `Expected command workspace label ${label}`);
+    assert.match(suite, /folio-workspace-tab-/);
+  }
+  for (const calculation of ['24000-8400', '2-0', '12*18000', '(12000-7200)/12000', '10000*.13']) {
+    assert.ok(suite.includes(calculation), `Expected deterministic preset calculation ${calculation}`);
+  }
+  for (const nativeShape of ["workspace.kind==='spreadsheet'", "workspace.kind==='presentation'", 'data:{html:']) {
+    assert.ok(suite.includes(nativeShape), `Expected native artifact shape ${nativeShape}`);
+  }
+  assert.match(suite, /file\.kind===workspace\.kind&&file\.name===preset\.label/);
+  assert.match(workspace, /files=\{p\.files\} ready=\{p\.ready\} onCreate=\{p\.onCreate\} onOpen=\{p\.onOpen\}/);
+});
+
+test('native presets create complete editor data and calculated receipts in every workspace', () => {
+  assert.match(fs.readFileSync(path.join(srcDir, 'app', 'folio-office-app.ts'), 'utf8'), /default as FolioSovereignCommandSuite/);
+  const typescript = require('typescript');
+  const Module = require('node:module');
+  const filename = path.join(srcDir, 'FolioSovereignCommandSuite.tsx');
+  const compiled = typescript.transpileModule(fs.readFileSync(filename, 'utf8'), {
+    compilerOptions: { module: typescript.ModuleKind.CommonJS, jsx: typescript.JsxEmit.ReactJSX },
+  });
+  const loaded = new Module(filename, module);
+  loaded.filename = filename;
+  loaded.paths = Module._nodeModulePaths(path.dirname(filename));
+  loaded._compile(compiled.outputText, filename);
+  const suite = loaded.exports;
+  assert.deepEqual(suite.FOLIO_NATIVE_PRESETS.map(preset => suite.calculateFolioPresetResult(preset.id)), [15600, 2, 216000, 0.4, 1300, 0]);
+  for (const preset of suite.FOLIO_NATIVE_PRESETS) {
+    for (const workspace of suite.FOLIO_COMMAND_WORKSPACES) {
+      const artifact = suite.buildFolioNativeArtifact(preset.id, workspace.id);
+      const receipt = suite.buildFolioPresetReceipt(preset.id, workspace.id);
+      assert.equal(artifact.kind, workspace.kind);
+      assert.equal(artifact.name, preset.label);
+      assert.ok(receipt.includes(suite.formatFolioPresetResult(preset.id)));
+      assert.ok(receipt.includes(workspace.label));
+      assert.match(receipt, /Digest: not calculated/);
+      if (artifact.kind === 'presentation') {
+        assert.equal(artifact.data.theme, 'editorial');
+        assert.equal(artifact.data.slides[0].layout, 'content');
+        for (const key of ['title', 'body', 'right', 'notes']) assert.equal(typeof artifact.data.slides[0][key], 'string', key);
+      } else if (artifact.kind === 'spreadsheet') {
+        assert.equal(artifact.data.activeSheet, artifact.data.sheets[0].id);
+        assert.equal(artifact.data.sheets[0].cells[2][1], suite.getFolioSpreadsheetFormula(preset.id));
+      } else {
+        assert.ok(artifact.data.html.includes(preset.label));
+        assert.ok(artifact.data.html.includes(suite.formatFolioPresetResult(preset.id)));
+      }
+    }
+  }
+});
+
+test('sovereign command suite uses semantic theme tokens and phone-contained horizontal tabs', () => {
+  const workspaceCss = fs.readFileSync(path.join(srcDir, 'Workspace.css'), 'utf8');
+  const themeCss = fs.readFileSync(path.join(srcDir, 'Theme.css'), 'utf8');
+  const commandCss = `${workspaceCss}\n${themeCss}`;
+  assert.match(commandCss, /\.folio-command-suite/);
+  for (const token of ['surface', 'canvas', 'ink', 'muted', 'line', 'accent']) {
+    assert.match(commandCss, new RegExp(`var\\(--${token}\\)`), `Expected command suite to use --${token}`);
+  }
+  assert.match(commandCss, /\.folio-workspace-tabs[^}]*overflow-x:\s*auto/s);
+  assert.match(commandCss, /@media\(max-width:390px\)/);
+  assert.match(themeCss, /@media\s*\(max-width:\s*800px\)[\s\S]*?\.office-app\s*\{\s*min-width:\s*0/);
+  assert.match(themeCss, /\.sovereign-receipt-preview\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(themeCss, /grid-template-columns:\s*minmax\(0,\s*1fr\)\s+44px/);
+  const suiteCss = workspaceCss.slice(workspaceCss.indexOf('.folio-command-suite{'), workspaceCss.indexOf('.sovereign-calculator-section{'));
+  assert.doesNotMatch(suiteCss, /#[\da-f]{3,8}\b|rgba?\(|hsla?\(/i);
+  for (const match of suiteCss.matchAll(/font-size:(\d+)px/g)) {
+    assert.ok(Number(match[1]) >= 12, 'New command-suite text must reach the 12px product-screen floor');
+  }
+});
+
 test('Folio Office includes 3-Second Multi-Format Sovereign Export & Formula Audit Verifier and 1-Click Copy Client Deliverable Manifest', () => {
   const appModuleTs = fs.readFileSync(path.join(srcDir, 'app', 'folio-office-app.ts'), 'utf8');
   const shellTemplateTs = fs.readFileSync(path.join(srcDir, 'ui', 'shell-template.ts'), 'utf8');

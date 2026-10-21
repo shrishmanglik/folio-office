@@ -6,6 +6,7 @@ import {
   type ConfidentialDocPrivacyPreset,
   type SovereignExportVerifierPreset,
 } from '../ui/shell-template';
+export {default as FolioSovereignCommandSuite,FOLIO_NATIVE_PRESETS,FOLIO_COMMAND_WORKSPACES,calculateFolioPresetResult,getFolioSpreadsheetFormula,formatFolioPresetResult,buildFolioPresetReceipt,buildFolioNativeArtifact,type FolioNativePreset,type FolioCommandWorkspace} from '../FolioSovereignCommandSuite';
 
 export {
   FOLIO_PRIVACY_COMPARATOR_PRESETS,

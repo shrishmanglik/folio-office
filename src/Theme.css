@@ -354,3 +354,41 @@
   background: var(--surface);
   color: var(--ink);
 }
+
+/* Keep the command suite inside the existing compact phone rail. */
+.sovereign-receipt-preview {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.folio-command-heading .workspace-eyebrow {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 800px) {
+  .office-app { min-width: 0; }
+  .office-app .sidebar { width: 66px; min-width: 66px; padding: 22px 8px; }
+  .office-app .sidebar nav button { font-size: 0; min-height: 44px; padding: 0; justify-content: center; }
+  .office-app .sidebar nav button svg { flex-shrink: 0; }
+  .office-app .sidebar nav button span,
+  .office-app .sidebar-bottom { display: none; }
+  .office-app .main-shell { margin-left: 66px; width: calc(100% - 66px); min-width: 0; }
+  .workspace-body { padding: 20px 12px; }
+  .workspace-topbar { height: auto; min-height: 64px; padding: 12px; flex-wrap: wrap; gap: 12px; }
+  .workspace-top-actions { flex-wrap: wrap; }
+  .workspace-home .library-filterbar,
+  .workspace-home .library-tools { flex-wrap: wrap; width: 100%; }
+  .workspace-home .table-heading,
+  .workspace-home .file-row { grid-template-columns: minmax(0, 1fr) 44px; }
+  .workspace-home .file-type,
+  .workspace-home .file-time,
+  .workspace-home .table-heading > span:nth-child(2),
+  .workspace-home .table-heading > span:nth-child(3) { display: none; }
+  .workspace-home .file-open { min-width: 0; }
+  .workspace-home .file-open > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .workspace-home .file-menu-wrap > button { width: 44px; min-width: 44px; min-height: 44px; }
+  .folio-command-suite { min-width: 0; }
+  .folio-tri-surface > strong { padding-right: 56px; }
+}
