@@ -327,3 +327,30 @@ test('Zero em dashes anywhere in Folio Office UI source', () => {
   };
   scan(srcDir);
 });
+
+test('Folio Office includes Universal Offline Desktop + Free Local Open-Source LLM & Dual Ownership Hub', () => {
+  const contractPath = path.join(__dirname, '../desktop/distribution-contract.json');
+  assert.ok(fs.existsSync(contractPath), 'desktop/distribution-contract.json must exist');
+  const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+  assert.equal(contract.architecture_pattern, 'shared_brain');
+  assert.equal(contract.no_backend_fork, true);
+  assert.equal(contract.local_llm_loopback, 'http://127.0.0.1:11434');
+  assert.equal(contract.fact_sheet_budget_bytes, 3072);
+
+  const shellTemplateTs = fs.readFileSync(path.join(srcDir, 'ui', 'shell-template.ts'), 'utf8');
+  const calcTsx = fs.readFileSync(path.join(srcDir, 'SovereignOfficeSavingsCalculator.tsx'), 'utf8');
+
+  for (const testId of [
+    'ownership-model-switcher',
+    'desktop-download-hub',
+    'local-llm-hardware-selector',
+    'offline-parity-table',
+  ]) {
+    assert.match(shellTemplateTs, new RegExp(`data-testid="${testId}"`), `Expected ${testId} in shell-template.ts`);
+    assert.match(calcTsx, new RegExp(`data-testid="${testId}"`), `Expected ${testId} in SovereignOfficeSavingsCalculator.tsx`);
+  }
+
+  for (const modelTag of ['llama3.2:1b', 'llama3.2:3b', 'qwen2.5:7b', 'qwen3:8b', '127.0.0.1:11434']) {
+    assert.ok(shellTemplateTs.includes(modelTag), `Expected ${modelTag} in shell-template.ts`);
+  }
+});

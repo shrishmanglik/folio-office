@@ -16,6 +16,161 @@ export interface SovereignExportVerifierPreset {
   manifestText: string;
 }
 
+export interface FolioOwnershipModelOption {
+  id: 'one-time-offline-desktop' | 'monthly-cloud-subscription';
+  label: string;
+  headline: string;
+  priceBadge: string;
+  aiEngineSummary: string;
+  storageAndPrivacySummary: string;
+  bestForSummary: string;
+}
+
+export interface FolioDesktopInstallerTarget {
+  id: 'windows' | 'macos' | 'linux';
+  osLabel: string;
+  formatBadge: string;
+  architectureNote: string;
+  installerFilename: string;
+  sha256Preview: string;
+}
+
+export interface FolioLocalLlmHardwareTier {
+  id: string;
+  hardwareTier: string;
+  modelTag: string;
+  vramBudget: string;
+  ollamaCommand: string;
+  loopbackEndpoint: string;
+  recommendedUseCase: string;
+}
+
+export interface FolioOfflineParityRow {
+  capability: string;
+  offlineDesktopStatus: string;
+  cloudWebStatus: string;
+}
+
+export const FOLIO_OWNERSHIP_MODEL_OPTIONS: FolioOwnershipModelOption[] = [
+  {
+    id: 'one-time-offline-desktop',
+    label: 'One-Time Offline Desktop Purchase ($0/mo Forever)',
+    headline: 'Buy once, own forever on your machine with unlimited free local open-source AI.',
+    priceBadge: '$0/mo Recurring · One-Time License',
+    aiEngineSummary:
+      'Unlimited free local LLM drafting (Llama 3.2 / Qwen) over loopback 127.0.0.1:11434 with < 3 KB deterministic fact sheets and $0 API token bills.',
+    storageAndPrivacySummary:
+      '100% air-gapped local vault (.docx, .xlsx, .pptx, .md) on your SSD with zero outbound telemetry.',
+    bestForSummary:
+      'Solo founders, boutique agencies, legal/M&A practices, and teams eliminating monthly per-seat SaaS rent.',
+  },
+  {
+    id: 'monthly-cloud-subscription',
+    label: 'Monthly Cloud Subscription (Managed Browser Workspace)',
+    headline: 'Zero-install browser access with identical deterministic OOXML and formula audit parity.',
+    priceBadge: '$22/mo Cloud Seat · Cancel Anytime',
+    aiEngineSummary:
+      'Managed cloud inference or local loopback bridge fed by the exact same < 3 KB deterministic fact sheet.',
+    storageAndPrivacySummary:
+      'Instant browser workspace with optional encrypted export to local .docx, .xlsx, and .pptx packages.',
+    bestForSummary:
+      'Distributed operators who want instant multi-device browser access without installing a local runtime.',
+  },
+];
+
+export const FOLIO_DESKTOP_INSTALLER_TARGETS: FolioDesktopInstallerTarget[] = [
+  {
+    id: 'windows',
+    osLabel: 'Windows 11 / 10 Desktop',
+    formatBadge: '.exe / .msi Installer',
+    architectureNote: 'x64 & ARM64 Native Shared-Brain Package',
+    installerFilename: 'Folio-Office-Setup-1.4.0-x64.msi',
+    sha256Preview: 'sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+  },
+  {
+    id: 'macos',
+    osLabel: 'macOS Apple Silicon & Intel',
+    formatBadge: '.dmg Universal Disk Image',
+    architectureNote: 'Universal Binary (M1 / M2 / M3 / M4 + Intel)',
+    installerFilename: 'Folio-Office-1.4.0-universal.dmg',
+    sha256Preview: 'sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4',
+  },
+  {
+    id: 'linux',
+    osLabel: 'Linux Workstation',
+    formatBadge: '.AppImage / .deb Package',
+    architectureNote: 'x86_64 & ARM64 Air-Gapped Desktop Build',
+    installerFilename: 'Folio-Office-1.4.0-x86_64.AppImage',
+    sha256Preview: 'sha256:2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae',
+  },
+];
+
+export const FOLIO_LOCAL_LLM_HARDWARE_TIERS: FolioLocalLlmHardwareTier[] = [
+  {
+    id: 'ram-8gb-light',
+    hardwareTier: '8 GB RAM Ultrabook',
+    modelTag: 'llama3.2:1b',
+    vramBudget: '1.3 GB RAM / VRAM',
+    ollamaCommand: 'ollama run llama3.2:1b',
+    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    recommendedUseCase:
+      'Instant offline contract clause summaries, executive brief polishing, and slide speaker notes.',
+  },
+  {
+    id: 'ram-16gb-balanced',
+    hardwareTier: '8-16 GB RAM Standard Laptop',
+    modelTag: 'llama3.2:3b',
+    vramBudget: '2.2 GB RAM / VRAM',
+    ollamaCommand: 'ollama run llama3.2:3b',
+    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    recommendedUseCase:
+      'Full multi-section M&A memo drafting, board deck narratives, and redline commentary at $0 token cost.',
+  },
+  {
+    id: 'ram-16gb-plus-workstation',
+    hardwareTier: '16 GB+ Pro Workstation',
+    modelTag: 'qwen2.5:7b',
+    vramBudget: '4.7 GB RAM / VRAM',
+    ollamaCommand: 'ollama run qwen2.5:7b',
+    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    recommendedUseCase:
+      'Deep financial waterfall narrative synthesis and multi-document legal dossier drafting.',
+  },
+  {
+    id: 'ram-24gb-studio',
+    hardwareTier: '24 GB+ Studio Rig',
+    modelTag: 'qwen3:8b',
+    vramBudget: '5.2 GB RAM / VRAM',
+    ollamaCommand: 'ollama run qwen3:8b',
+    loopbackEndpoint: 'http://127.0.0.1:11434/api/generate',
+    recommendedUseCase:
+      'Maximum local reasoning for complex regulatory filings and clean-room IP audit reports.',
+  },
+];
+
+export const FOLIO_OFFLINE_PARITY_ROWS: FolioOfflineParityRow[] = [
+  {
+    capability: 'OOXML Document (.docx), Spreadsheet (.xlsx), & Deck (.pptx) Engine',
+    offlineDesktopStatus: '100% Local on Your Machine (Zero Network Calls)',
+    cloudWebStatus: '100% Shared-Brain Engine in Browser',
+  },
+  {
+    capability: 'Deterministic Formula & Schema Audit (0 #REF!, 0 #DIV/0!, 0 #NAME?)',
+    offlineDesktopStatus: '100% Deterministic Local Verification',
+    cloudWebStatus: '100% Deterministic Browser Verification',
+  },
+  {
+    capability: 'AI Executive Narrative Drafting (< 3 KB Fact Sheet Guardrail)',
+    offlineDesktopStatus: 'Unlimited Free Open-Source Local LLM (Ollama 127.0.0.1:11434)',
+    cloudWebStatus: 'Managed Cloud AI or Local Loopback Bridge',
+  },
+  {
+    capability: 'Ongoing Running Cost & Seat Tax',
+    offlineDesktopStatus: 'One-Time Purchase · $0/mo Forever',
+    cloudWebStatus: 'Optional Monthly Cloud Subscription',
+  },
+];
+
 export const FOLIO_PRIVACY_COMPARATOR_PRESETS: ConfidentialDocPrivacyPreset[] = [
   {
     id: 'ma-term-sheet-cap-table',
@@ -113,6 +268,38 @@ export function renderFolioExportVerifierShell(selectedId: string = FOLIO_EXPORT
     `<p>${active.formulaAndSchemaAudit}</p>`,
     `<p>${active.localSha256Digest}</p>`,
     `<button type="button" data-testid="copy-deliverable-manifest-btn">1-Click Copy Client Deliverable Manifest</button>`,
+    `</section>`,
+  ].join('\n');
+}
+
+export function renderFolioOwnershipHubShell(
+  selectedModelId: FolioOwnershipModelOption['id'] = 'one-time-offline-desktop',
+  selectedTierId: string = FOLIO_LOCAL_LLM_HARDWARE_TIERS[1].id,
+): string {
+  const model =
+    FOLIO_OWNERSHIP_MODEL_OPTIONS.find((item) => item.id === selectedModelId) ??
+    FOLIO_OWNERSHIP_MODEL_OPTIONS[0];
+  const tier =
+    FOLIO_LOCAL_LLM_HARDWARE_TIERS.find((item) => item.id === selectedTierId) ??
+    FOLIO_LOCAL_LLM_HARDWARE_TIERS[1];
+
+  return [
+    `<section data-testid="ownership-model-switcher" aria-label="One-Time Offline Desktop Ownership vs Monthly Cloud Subscription Switcher">`,
+    `<h3>${model.label}</h3>`,
+    `<p>${model.headline}</p>`,
+    `</section>`,
+    `<section data-testid="desktop-download-hub" aria-label="Offline Desktop Installer Download Hub">`,
+    ...FOLIO_DESKTOP_INSTALLER_TARGETS.map(
+      (target) => `<div data-installer-os="${target.id}">${target.osLabel} (${target.formatBadge}): ${target.installerFilename}</div>`,
+    ),
+    `</section>`,
+    `<section data-testid="local-llm-hardware-selector" aria-label="Free Open-Source Local LLM Hardware Selector">`,
+    `<p>${tier.hardwareTier} · ${tier.modelTag} · ${tier.ollamaCommand} · ${tier.loopbackEndpoint}</p>`,
+    `</section>`,
+    `<section data-testid="offline-parity-table" aria-label="Offline Desktop vs Cloud Web 100% Feature Parity Table">`,
+    ...FOLIO_OFFLINE_PARITY_ROWS.map(
+      (row) => `<div>${row.capability}: ${row.offlineDesktopStatus} | ${row.cloudWebStatus}</div>`,
+    ),
     `</section>`,
   ].join('\n');
 }
