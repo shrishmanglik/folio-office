@@ -77,6 +77,27 @@ test('Folio Office includes 3-Second Cloud Docs Telemetry vs Air-Gapped Local Va
   }
 });
 
+test('Folio Office includes 3-Second Multi-Format Sovereign Export & Formula Audit Verifier and 1-Click Copy Client Deliverable Manifest', () => {
+  const appModuleTs = fs.readFileSync(path.join(srcDir, 'app', 'folio-office-app.ts'), 'utf8');
+  const shellTemplateTs = fs.readFileSync(path.join(srcDir, 'ui', 'shell-template.ts'), 'utf8');
+  const calcTsx = fs.readFileSync(path.join(srcDir, 'SovereignOfficeSavingsCalculator.tsx'), 'utf8');
+
+  assert.match(shellTemplateTs, /data-testid="folio-export-verifier"/);
+  assert.match(shellTemplateTs, /data-testid="copy-deliverable-manifest-btn"/);
+  assert.match(calcTsx, /data-testid="folio-export-verifier"/);
+  assert.match(calcTsx, /data-testid="copy-deliverable-manifest-btn"/);
+  assert.match(calcTsx, /Copied Deliverable Manifest/);
+  assert.match(appModuleTs, /copyClientDeliverableManifest/);
+
+  for (const exportPreset of [
+    '.docx Executive Contract Brief',
+    '.xlsx Deterministic Financial Waterfall (0 Formula Errors)',
+    '.pptx Board Architecture Deck',
+  ]) {
+    assert.ok(shellTemplateTs.includes(exportPreset), `Expected export preset "${exportPreset}" in shell-template.ts`);
+  }
+});
+
 test('Zero em dashes anywhere in Folio Office UI source', () => {
   const scan = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
