@@ -361,7 +361,9 @@ test('Folio Office exposes top-level App-Command Navbar, Role-Portal Switcher, a
 
   assert.match(appTsx, /data-testid="folio-full-suite-os"/);
   assert.match(workspaceTsx, /data-testid="app-command-navbar"/);
+  assert.match(workspaceTsx, /data-testid="command-ownership-switcher"/);
   assert.match(workspaceTsx, /data-testid="role-portal-switcher"/);
+  assert.match(workspaceTsx, /FOLIO_OPERATIONAL_ROOMS/);
 
   for (const portalLabel of [
     'Solo Founder & Executive',
