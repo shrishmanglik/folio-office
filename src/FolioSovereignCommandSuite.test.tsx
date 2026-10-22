@@ -106,6 +106,10 @@ describe('Folio interactive financial and seat-tax simulator',()=>{
   expect(screen.getByTestId('four-in-one-workspace-deck')).toBeTruthy();
   fireEvent.click(screen.getByTestId('launch-four-in-one-notebook'));
   expect(onCreate).toHaveBeenCalledWith('notebook','Research & Engineering Notebook',expect.any(Object));
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+  expect(onCreate).toHaveBeenCalledWith('document','Executive Client Audit Document',expect.any(Object));
+  expect(onCreate).toHaveBeenCalledWith('spreadsheet','Live Formula & Margin Spreadsheet',expect.any(Object));
+  expect(onCreate).toHaveBeenCalledWith('presentation','Board Pitch Presentation Deck',expect.any(Object));
 
   expect(screen.getByTestId('private-local-ai-assistant-workbench')).toBeTruthy();
   fireEvent.click(screen.getByTestId('local-ai-task-pill-presentation-deck'));
