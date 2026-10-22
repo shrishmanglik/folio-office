@@ -1,0 +1,34 @@
+
+> folio-office@0.8.0 test:ui
+> vitest run
+
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (30 tests) 51266ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  402ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish  305ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence  323ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save  608ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1396ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1439ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1682ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  2266ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  2104ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  320ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > carries failed A into an already queued cumulative B save  5996ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retains a failed edit on a plain Ctrl+S retry  6650ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retains failed doc A content when a later edit to doc B saves  5687ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retries a newly created file after its first save fails  5705ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > does not finish close until a failed edit is stored by the close retry  5044ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps an unseen remote Q across three queued user saves  3393ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > blocks every later storage call after an engine revision conflict  863ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps the two-sided barrier until Keep copies, then saves recovery edits  5708ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 2450ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  491ms
+   ✓ Folio interactive financial and seat-tax simulator > keeps the simulated sheet action disabled until the workspace is ready  305ms
+
+ Test Files  2 passed (2)
+      Tests  51 passed (51)
+   Start at  15:55:34
+   Duration  68.31s (transform 1.09s, setup 0ms, collect 6.41s, tests 53.72s, environment 6.83s, prepare 336ms)

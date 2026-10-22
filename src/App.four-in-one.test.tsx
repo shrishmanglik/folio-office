@@ -31,8 +31,10 @@ const requireSuccess=(result:EnsureTemplatesResult|undefined):Extract<EnsureTemp
 const existingCatalogFiles=():OfficeFile[]=>FOLIO_FOUR_IN_ONE_PILLARS.map((seed,index)=>({id:`existing-${index+1}`,templateId:seed.templateId,kind:seed.kind,name:seed.name,updatedAt:'2026-10-22T00:00:00.000Z',data:structuredClone(seed.data)}));
 const probeFile=(id:string,name:string,html='<p>x</p>'):OfficeFile=>({id,kind:'document',name,updatedAt:'2026-10-22T00:00:00.000Z',data:{html}});
 const pause=(ms:number)=>new Promise(resolve=>setTimeout(resolve,ms));
-const realDeferredStore=async(initial:OfficeFile[])=>{const dir=fs.mkdtempSync(path.join(os.tmpdir(),'folio-pr14-author-red-'));probeDirs.push(dir);const engine=createEngine(dir);await engine.saveSnapshot(initial,[]);const held:Array<()=>Promise<void>>=[];const save=vi.fn<SaveFunction>((files,base)=>new Promise(resolve=>held.push(async()=>{try{resolve({ok:true,files:await engine.saveSnapshot(files,base)});}catch(error:any){resolve({ok:false,error:error.message,code:error.code});}})));Object.defineProperty(window,'office',{configurable:true,value:{load:()=>engine.snapshot(),save}});return{engine,save,held};};
+const realDeferredStore=async(initial:OfficeFile[])=>{const dir=fs.mkdtempSync(path.join(os.tmpdir(),'folio-pr14-author-red-'));probeDirs.push(dir);const engine=createEngine(dir);await engine.saveSnapshot(initial,[]);const held:Array<()=>Promise<void>>=[];const history:OfficeFile[][]=[];const finishClose=vi.fn();const save=vi.fn<SaveFunction>((files,base)=>new Promise(resolve=>held.push(async()=>{try{const stored=await engine.saveSnapshot(files,base);history.push(structuredClone(stored));resolve({ok:true,files:stored});}catch(error:any){resolve({ok:false,error:error.message,code:error.code});}})));Object.defineProperty(window,'office',{configurable:true,value:{load:()=>engine.snapshot(),save,finishClose}});return{dir,engine,save,held,history,finishClose};};
 const settleProbe=async(store:{held:Array<()=>Promise<void>>})=>{for(let round=0;round<8;round++){await act(async()=>{await pause(260);});const pending=store.held.splice(0);if(!pending.length&&round>1)return;for(const finish of pending)await act(async()=>{await finish();await pause(10);});}};
+const failHeldSaveBusy=async(store:{dir:string,held:Array<()=>Promise<void>>})=>{const lock=path.join(store.dir,'workspace.lock');fs.writeFileSync(lock,'{"pid":999999}');await act(async()=>{await store.held.shift()!();await pause(20);});fs.rmSync(lock);};
+const saveStatus=()=>document.querySelector('.save-state')?.textContent??'';
 
 describe('App four-in-one persistence boundary',()=>{
  it('acknowledges one browser-preview batch only after all four files are stored',async()=>{
@@ -380,4 +382,65 @@ describe('PR14 storage conflict and queued-intent red controls',()=>{
   fireEvent.keyDown(window,{key:'s',ctrlKey:true});await waitFor(()=>expect(save).toHaveBeenCalledOnce());act(()=>capturedWorkspace().onFavorite(existing[0].id));release({ok:true,files:save.mock.calls[0][0]});await waitFor(()=>expect(document.querySelector('.save-state')?.textContent).toBe('Unsaved changes'));
   await waitFor(()=>expect(save.mock.calls.length).toBeGreaterThanOrEqual(2));release({ok:true});await waitFor(()=>expect(document.querySelector('.save-state')?.textContent).toBe('Save failed'));
  });
+});
+
+describe('PR14 round 3 failed-save intent and conflict barriers',()=>{
+ it('carries failed A into an already queued cumulative B save',async()=>{
+  const store=await realDeferredStore([probeFile('doc-1','Doc')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-1'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-1'));
+  fireEvent.change(screen.getByRole('textbox',{name:'File name'}),{target:{value:'A renamed'}});await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});
+  act(()=>capturedDocumentEditor().onChange({html:'<p>B body</p>'}));await act(async()=>{await pause(260);});
+  await failHeldSaveBusy(store);await settleProbe(store);const disk:OfficeFile[]=await store.engine.snapshot();
+  expect({name:disk[0].name,html:disk[0].data.html}).toEqual({name:'A renamed',html:'<p>B body</p>'});expect(capturedDocumentEditor().file.name).toBe('A renamed');
+ },30000);
+
+ it('retains a failed edit on a plain Ctrl+S retry',async()=>{
+  const store=await realDeferredStore([probeFile('doc-1','Doc')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-1'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-1'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>important edit</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});await failHeldSaveBusy(store);
+  fireEvent.keyDown(window,{key:'s',ctrlKey:true});await settleProbe(store);const disk:OfficeFile[]=await store.engine.snapshot();
+  expect({disk:disk[0].data.html,ui:capturedDocumentEditor().file.data.html,status:saveStatus()}).toEqual({disk:'<p>important edit</p>',ui:'<p>important edit</p>',status:'Saved on this device'});
+ },30000);
+
+ it('retains failed doc A content when a later edit to doc B saves',async()=>{
+  const store=await realDeferredStore([probeFile('doc-a','A doc','<p>a</p>'),probeFile('doc-b','B doc','<p>b</p>')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-a'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-a'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>A edited</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});await failHeldSaveBusy(store);
+  fireEvent.change(screen.getByRole('combobox',{name:'Switch file'}),{target:{value:'doc-b'}});await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-b'));act(()=>capturedDocumentEditor().onChange({html:'<p>B edited</p>'}));await settleProbe(store);
+  const disk:OfficeFile[]=await store.engine.snapshot();expect(disk.find(file=>file.id==='doc-a')?.data.html).toBe('<p>A edited</p>');expect(disk.find(file=>file.id==='doc-b')?.data.html).toBe('<p>B edited</p>');
+ },30000);
+
+ it('retries a newly created file after its first save fails',async()=>{
+  const store=await realDeferredStore([probeFile('keep','Kept')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onCreate('document','Created during busy'));fireEvent.click(await screen.findByRole('button',{name:'Back to workspace'}));
+  await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});const created=capturedWorkspace().files.find(file=>file.name==='Created during busy')!;await failHeldSaveBusy(store);fireEvent.keyDown(window,{key:'s',ctrlKey:true});await settleProbe(store);
+  const disk:OfficeFile[]=await store.engine.snapshot();expect(disk.some(file=>file.id===created.id)).toBe(true);expect(capturedWorkspace().files.some(file=>file.id===created.id)).toBe(true);
+ },30000);
+
+ it('does not finish close until a failed edit is stored by the close retry',async()=>{
+  const store=await realDeferredStore([probeFile('doc-1','Doc')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-1'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-1'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>close keeps me</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});await failHeldSaveBusy(store);window.dispatchEvent(new Event('office-closing'));expect(store.finishClose).not.toHaveBeenCalled();await settleProbe(store);await waitFor(()=>expect(store.finishClose).toHaveBeenCalledOnce());
+  const disk:OfficeFile[]=await store.engine.snapshot();expect(disk[0].data.html).toBe('<p>close keeps me</p>');
+ },30000);
+
+ it('keeps an unseen remote Q across three queued user saves',async()=>{
+  const store=await realDeferredStore([probeFile('y','Y'),probeFile('a','A'),probeFile('b','B')]);render(<App/>);await waitUntilReady();
+  act(()=>capturedWorkspace().onOpen('y'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('y'));act(()=>capturedDocumentEditor().onChange({html:'<p>Y user</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});
+  fireEvent.change(screen.getByRole('combobox',{name:'Switch file'}),{target:{value:'a'}});await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('a'));act(()=>capturedDocumentEditor().onChange({html:'<p>A user</p>'}));await act(async()=>{await pause(260);});
+  fireEvent.change(screen.getByRole('combobox',{name:'Switch file'}),{target:{value:'b'}});await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('b'));act(()=>capturedDocumentEditor().onChange({html:'<p>B user</p>'}));await act(async()=>{await pause(260);});
+  const before:OfficeFile[]=await store.engine.snapshot();await store.engine.saveSnapshot([...before,probeFile('q','Agent Q','<p>Q remote</p>')],before);await settleProbe(store);const disk:OfficeFile[]=await store.engine.snapshot();
+  expect(store.history.length).toBeGreaterThanOrEqual(3);for(const accepted of store.history.slice(0,3))expect(accepted.find(file=>file.id==='q')?.data.html).toBe('<p>Q remote</p>');
+  expect(disk.find(file=>file.id==='q')?.data.html).toBe('<p>Q remote</p>');expect(disk.find(file=>file.id==='y')?.data.html).toBe('<p>Y user</p>');expect(disk.find(file=>file.id==='a')?.data.html).toBe('<p>A user</p>');expect(disk.find(file=>file.id==='b')?.data.html).toBe('<p>B user</p>');
+ },30000);
+
+ it('blocks every later storage call after an engine revision conflict',async()=>{
+  const store=await realDeferredStore([probeFile('doc-1','Doc')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-1'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-1'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>User first</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});const disk:OfficeFile[]=await store.engine.snapshot();await store.engine.execute({operation:'file.update',requestId:'agent-conflict',fileId:'doc-1',expectedRevision:disk[0].revision,data:{html:'<p>Agent wins</p>'}});await act(async()=>{await store.held.shift()!();await pause(20);});
+  expect(screen.getByRole('button',{name:'Keep my edits as copies'})).toBeTruthy();act(()=>capturedDocumentEditor().onChange({html:'<p>User again</p>'}));fireEvent.keyDown(window,{key:'s',ctrlKey:true});await act(async()=>{await pause(300);});expect(store.save).toHaveBeenCalledOnce();
+ },30000);
+
+ it('keeps the two-sided barrier until Keep copies, then saves recovery edits',async()=>{
+  const store=await realDeferredStore([probeFile('doc-f','F doc','<p>F original</p>'),probeFile('doc-g','G doc','<p>G original</p>')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-g'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-g'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>G user</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});const disk:OfficeFile[]=await store.engine.snapshot();await store.engine.execute({operation:'file.update',requestId:'agent-f',fileId:'doc-f',expectedRevision:disk.find(file=>file.id==='doc-f')?.revision,data:{html:'<p>Agent F</p>'}});
+  fireEvent.change(screen.getByRole('combobox',{name:'Switch file'}),{target:{value:'doc-f'}});await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-f'));act(()=>capturedDocumentEditor().onChange({html:'<p>User F</p>'}));await act(async()=>{await store.held.shift()!();await pause(350);});expect(store.save).toHaveBeenCalledOnce();await settleProbe(store);const callsAtBarrier=store.save.mock.calls.length;
+  act(()=>capturedDocumentEditor().onChange({html:'<p>Blocked edit</p>'}));fireEvent.keyDown(window,{key:'s',ctrlKey:true});await act(async()=>{await pause(300);});expect(store.save).toHaveBeenCalledTimes(callsAtBarrier);
+  fireEvent.click(screen.getByRole('button',{name:'Keep my edits as copies'}));await act(async()=>{await pause(50);});await settleProbe(store);act(()=>capturedDocumentEditor().onChange({html:'<p>After recovery</p>'}));await settleProbe(store);const final:OfficeFile[]=await store.engine.snapshot();
+  expect(final.find(file=>file.id==='doc-f')?.data.html).toBe('<p>Agent F</p>');expect(final.some(file=>file.name==='F doc (recovered copy)')).toBe(true);expect(final.some(file=>file.data?.html==='<p>After recovery</p>')).toBe(true);
+ },30000);
 });

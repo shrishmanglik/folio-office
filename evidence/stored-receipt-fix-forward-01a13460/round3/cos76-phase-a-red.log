@@ -1,0 +1,129 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (30 tests | 5 failed) 43421ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 81ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 30ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 51ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 22ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure 268ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 36ms
+   ✓ App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 29ms
+   ✓ App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 38ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 174ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 112ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 43ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 80ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 68ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 225ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 107ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save 227ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1224ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1285ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1222ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  1226ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1572ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  329ms
+   × PR14 round 3 failed-save intent and conflict barriers > carries failed A into an already queued cumulative B save 4776ms
+     → expected { name: 'Doc', html: '<p>B body</p>' } to deeply equal { name: 'A renamed', …(1) }
+   × PR14 round 3 failed-save intent and conflict barriers > retains a failed edit on a plain Ctrl+S retry 5428ms
+     → expected { disk: '<p>x</p>', …(2) } to deeply equal { disk: '<p>important edit</p>', …(2) }
+   × PR14 round 3 failed-save intent and conflict barriers > retains failed doc A content when a later edit to doc B saves 6198ms
+     → expected '<p>a</p>' to be '<p>A edited</p>' // Object.is equality
+   × PR14 round 3 failed-save intent and conflict barriers > retries a newly created file after its first save fails 4464ms
+     → expected false to be true // Object.is equality
+   × PR14 round 3 failed-save intent and conflict barriers > does not finish close until a failed edit is stored by the close retry 5017ms
+     → expected '<p>x</p>' to be '<p>close keeps me</p>' // Object.is equality
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps an unseen remote Q across three queued user saves  3788ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > blocks every later storage call after an engine revision conflict  817ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps the two-sided barrier until Keep copies, then saves recovery edits  4483ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 round 3 failed-save intent and conflict barriers > carries failed A into an already queued cumulative B save
+AssertionError: expected { name: 'Doc', html: '<p>B body</p>' } to deeply equal { name: 'A renamed', …(1) }
+
+- Expected
++ Received
+
+  {
+    "html": "<p>B body</p>",
+-   "name": "A renamed",
++   "name": "Doc",
+  }
+
+ ❯ src/App.four-in-one.test.tsx:393:54
+    391|   act(()=>capturedDocumentEditor().onChange({html:'<p>B body</p>'}));a…
+    392|   await failHeldSaveBusy(store);await settleProbe(store);const disk:Of…
+    393|   expect({name:disk[0].name,html:disk[0].data.html}).toEqual({name:'A …
+       |                                                      ^
+    394|  },30000);
+    395|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 round 3 failed-save intent and conflict barriers > retains a failed edit on a plain Ctrl+S retry
+AssertionError: expected { disk: '<p>x</p>', …(2) } to deeply equal { disk: '<p>important edit</p>', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "disk": "<p>important edit</p>",
++   "disk": "<p>x</p>",
+    "status": "Saved on this device",
+-   "ui": "<p>important edit</p>",
++   "ui": "<p>x</p>",
+  }
+
+ ❯ src/App.four-in-one.test.tsx:400:99
+    398|   act(()=>capturedDocumentEditor().onChange({html:'<p>important edit</…
+    399|   fireEvent.keyDown(window,{key:'s',ctrlKey:true});await settleProbe(s…
+    400|   expect({disk:disk[0].data.html,ui:capturedDocumentEditor().file.data…
+       |                                                                                                   ^
+    401|  },30000);
+    402|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 round 3 failed-save intent and conflict barriers > retains failed doc A content when a later edit to doc B saves
+AssertionError: expected '<p>a</p>' to be '<p>A edited</p>' // Object.is equality
+
+Expected: "<p>A edited</p>"
+Received: "<p>a</p>"
+
+ ❯ src/App.four-in-one.test.tsx:407:111
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 round 3 failed-save intent and conflict barriers > retries a newly created file after its first save fails
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/App.four-in-one.test.tsx:413:103
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 round 3 failed-save intent and conflict barriers > does not finish close until a failed edit is stored by the close retry
+AssertionError: expected '<p>x</p>' to be '<p>close keeps me</p>' // Object.is equality
+
+Expected: "<p>close keeps me</p>"
+Received: "<p>x</p>"
+
+ ❯ src/App.four-in-one.test.tsx:419:83
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 25 passed (30)
+   Start at  15:43:15
+   Duration  58.01s (transform 690ms, setup 0ms, collect 3.43s, tests 43.42s, environment 10.01s, prepare 455ms)
