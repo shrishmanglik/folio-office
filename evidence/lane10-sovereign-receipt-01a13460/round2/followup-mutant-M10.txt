@@ -1,0 +1,44 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (12 tests | 1 failed) 4313ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored  454ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 281ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds  476ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 89ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 116ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 172ms
+   × App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 1161ms
+     → expected false to be true // Object.is equality
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 97ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes  424ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 218ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish  401ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence  420ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/App.four-in-one.test.tsx:145:68
+    143|   expect(firstSuccess.createdIds).toHaveLength(3);
+    144|   expect(firstSuccess.existingIds).toEqual([originalId]);
+    145|   expect(firstSuccess.files.every(file=>Boolean(file.templateId))).toB…
+       |                                                                    ^
+    146|   expect(firstSuccess.files.find(file=>file.id===originalId)?.name).to…
+    147|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  08:41:50
+   Duration  23.50s (transform 3.83s, setup 0ms, collect 14.20s, tests 4.31s, environment 3.86s, prepare 214ms)

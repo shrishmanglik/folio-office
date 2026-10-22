@@ -7,7 +7,7 @@ import type{ComponentProps}from'react';
 import type WorkspaceComponent from'./Workspace';
 import type{EnsureTemplatesResult,OfficeFile}from'./types';
 
-type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onCreate'|'onEnsureTemplates'|'onFavorite'|'templateBatchBusy'>;
+type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onCreate'|'onEnsureTemplates'|'onOpen'|'onFavorite'|'templateBatchBusy'>;
 const workspace=vi.hoisted(()=>({props:null as CapturedWorkspaceProps|null}));
 vi.mock('./Workspace',()=>({default:(props:CapturedWorkspaceProps)=>{workspace.props=props;const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];return <><button data-testid="launch-tagged-template" onClick={()=>props.onCreate(seed.kind,seed.name,seed.data,seed.templateId)}>Launch tagged template</button><output data-testid="workspace-file-count">{props.files.length}</output></>;}}));
 
@@ -205,9 +205,28 @@ describe('App four-in-one persistence boundary',()=>{
   finishes[1]({ok:true,files:save.mock.calls[1][0]});
   await act(async()=>{await first;});
   expect(capturedWorkspace().templateBatchBusy).toBe(true);
+  const betweenAcks=capturedWorkspace().files.length;const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];
+  act(()=>capturedWorkspace().onCreate(seed.kind,seed.name,seed.data,seed.templateId));
+  expect(capturedWorkspace().files).toHaveLength(betweenAcks);
   await waitFor(()=>expect(save).toHaveBeenCalledTimes(3));
   finishes[2]({ok:true,files:save.mock.calls[2][0]});
   await act(async()=>{await second;});
   expect(capturedWorkspace().templateBatchBusy).toBe(false);
+ });
+
+ it('acknowledges the saved candidate while retaining a rename and favorite made during persistence',async()=>{
+  const existing=existingCatalogFiles();let finishSave!:(value:SaveResult)=>void;
+  const save=vi.fn<SaveFunction>(()=>new Promise(resolve=>{finishSave=resolve;}));
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue(existing),save}});render(<App/>);await waitUntilReady();
+  let pending!:Promise<EnsureTemplatesResult>;act(()=>{pending=ensure();});await waitFor(()=>expect(save).toHaveBeenCalledOnce());
+  const savedPayload=structuredClone(save.mock.calls[0][0]);
+  act(()=>{capturedWorkspace().onFavorite(existing[0].id);capturedWorkspace().onOpen(existing[0].id);});
+  fireEvent.change(await screen.findByRole('textbox',{name:'File name'}),{target:{value:'Renamed after save began'}});
+  fireEvent.click(screen.getByRole('button',{name:'Back to workspace'}));
+  finishSave({ok:true,files:savedPayload});
+  let result:EnsureTemplatesResult|undefined;await act(async()=>{result=await pending;});
+  const acknowledged=requireSuccess(result).files.find(file=>file.id===existing[0].id);
+  expect(acknowledged).toEqual(savedPayload.find(file=>file.id===existing[0].id));
+  expect(capturedWorkspace().files.find(file=>file.id===existing[0].id)).toMatchObject({name:'Renamed after save began',starred:true});
  });
 });

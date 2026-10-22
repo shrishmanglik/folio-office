@@ -1,0 +1,7 @@
+{
+  "guard": "expected full head mismatch",
+  "exit": 1,
+  "expectedFailureMatched": true,
+  "availableMiB": 8030.0,
+  "actualHead": "6d3553453ed9821e4b99617e476746726ae5e998"
+}
