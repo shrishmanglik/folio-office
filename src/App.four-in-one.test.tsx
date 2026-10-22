@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import {act,cleanup,render,waitFor}from'@testing-library/react';
+import {act,cleanup,fireEvent,render,screen,waitFor}from'@testing-library/react';
 import {afterEach,beforeEach,describe,expect,it,vi}from'vitest';
 import App from'./App';
 import {FOLIO_FOUR_IN_ONE_PILLARS}from'./FolioSovereignCommandSuite';
@@ -7,9 +7,9 @@ import type{ComponentProps}from'react';
 import type WorkspaceComponent from'./Workspace';
 import type{EnsureTemplatesResult,OfficeFile}from'./types';
 
-type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onEnsureTemplates'|'onFavorite'>;
+type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onCreate'|'onEnsureTemplates'|'onFavorite'|'templateBatchBusy'>;
 const workspace=vi.hoisted(()=>({props:null as CapturedWorkspaceProps|null}));
-vi.mock('./Workspace',()=>({default:(props:CapturedWorkspaceProps)=>{workspace.props=props;return <output data-testid="workspace-file-count">{props.files.length}</output>;}}));
+vi.mock('./Workspace',()=>({default:(props:CapturedWorkspaceProps)=>{workspace.props=props;const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];return <><button data-testid="launch-tagged-template" onClick={()=>props.onCreate(seed.kind,seed.name,seed.data,seed.templateId)}>Launch tagged template</button><output data-testid="workspace-file-count">{props.files.length}</output></>;}}));
 
 beforeEach(()=>{localStorage.clear();workspace.props=null;Object.defineProperty(window,'office',{configurable:true,writable:true,value:undefined});});
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
@@ -127,5 +127,87 @@ describe('App four-in-one persistence boundary',()=>{
   let result:EnsureTemplatesResult|undefined;
   await act(async()=>{result=await pending;});
   expect(result).toMatchObject({ok:true,createdIds:[],existingIds:existing.map(file=>file.id),storage:'desktop-local'});
+ });
+
+ it('reuses an individually launched template after a real filename edit and stamps every batch file',async()=>{
+  render(<App/>);await waitUntilReady();
+  fireEvent.click(screen.getByTestId('launch-tagged-template'));
+  const name=await screen.findByRole('textbox',{name:'File name'});
+  fireEvent.change(name,{target:{value:'My retained executive audit'}});
+  fireEvent.click(screen.getByRole('button',{name:'Back to workspace'}));
+  await waitFor(()=>expect(capturedWorkspace().files[0].name).toBe('My retained executive audit'));
+  const originalId=capturedWorkspace().files[0].id;
+
+  let first:EnsureTemplatesResult|undefined;await act(async()=>{first=await ensure();});
+  const firstSuccess=requireSuccess(first);
+  expect(firstSuccess.createdIds).toHaveLength(3);
+  expect(firstSuccess.existingIds).toEqual([originalId]);
+  expect(firstSuccess.files.every(file=>Boolean(file.templateId))).toBe(true);
+  expect(firstSuccess.files.find(file=>file.id===originalId)?.name).toBe('My retained executive audit');
+
+  let second:EnsureTemplatesResult|undefined;await act(async()=>{second=await ensure();});
+  expect(requireSuccess(second)).toMatchObject({createdIds:[],existingIds:firstSuccess.files.map(file=>file.id)});
+ });
+
+ it('reuses an exact legacy kind and name match without a template id',async()=>{
+  const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];
+  const legacy:OfficeFile={id:'legacy-exact',kind:seed.kind,name:seed.name,updatedAt:'2026-10-22T00:00:00.000Z',data:structuredClone(seed.data)};
+  localStorage.setItem('office-workspace-preview',JSON.stringify([legacy]));render(<App/>);await waitUntilReady();
+  let result:EnsureTemplatesResult|undefined;await act(async()=>{result=await ensure();});
+  const success=requireSuccess(result);
+  expect(success.existingIds).toContain('legacy-exact');
+  expect(success.createdIds).toHaveLength(3);
+  expect(capturedWorkspace().files.filter(file=>file.kind===seed.kind&&file.name===seed.name)).toHaveLength(1);
+ });
+
+ it('deep clones supplied tagged data and refuses ensureTemplates before load completes',async()=>{
+  let finishLoad!:(files:OfficeFile[])=>void;const save=vi.fn<SaveFunction>();
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn(()=>new Promise<OfficeFile[]>(resolve=>{finishLoad=resolve;})),save}});
+  render(<App/>);
+  let early:EnsureTemplatesResult|undefined;await act(async()=>{early=await ensure();});
+  expect(early).toEqual({ok:false,error:'Workspace is still opening.'});expect(save).not.toHaveBeenCalled();
+  await act(async()=>finishLoad([]));await waitUntilReady();
+  const supplied={nested:{value:'original'}};
+  act(()=>capturedWorkspace().onCreate('document','Clone check',supplied,'clone-check'));
+  supplied.nested.value='changed outside';
+  fireEvent.click(await screen.findByRole('button',{name:'Back to workspace'}));
+  await waitFor(()=>expect(capturedWorkspace().files.find(file=>file.templateId==='clone-check')?.data).toEqual({nested:{value:'original'}}));
+ });
+
+ it('blocks tagged creation during a queued batch while ordinary creation remains available',async()=>{
+  let finishSave!:(value:SaveResult)=>void;const save=vi.fn<SaveFunction>(()=>new Promise(resolve=>{finishSave=resolve;}));
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue([]),save}});render(<App/>);await waitUntilReady();
+  let pending!:Promise<EnsureTemplatesResult>;act(()=>{pending=ensure();});await waitFor(()=>expect(capturedWorkspace().templateBatchBusy).toBe(true));
+  const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];const before=capturedWorkspace().files.length;
+  act(()=>capturedWorkspace().onCreate(seed.kind,seed.name,seed.data,seed.templateId));
+  expect(capturedWorkspace().files).toHaveLength(before);
+  act(()=>capturedWorkspace().onCreate('document','Ordinary note',{html:'<p>Kept</p>'}));
+  expect((await screen.findByRole('textbox',{name:'File name'})).getAttribute('value')).toBe('Ordinary note');
+  const persisted=save.mock.calls[0][0];finishSave({ok:true,files:persisted});await act(async()=>{await pending;});
+ });
+
+ it('awaits a prior ordinary write and keeps busy true until two queued batches finish',async()=>{
+  const finishes:Array<(value:SaveResult)=>void>=[];
+  const save=vi.fn<SaveFunction>(()=>new Promise(resolve=>finishes.push(resolve)));
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue([]),save}});render(<App/>);await waitUntilReady();
+  fireEvent.keyDown(window,{key:'s',ctrlKey:true});
+  await waitFor(()=>expect(save).toHaveBeenCalledTimes(1));
+
+  let first!:Promise<EnsureTemplatesResult>;let second!:Promise<EnsureTemplatesResult>;
+  act(()=>{first=ensure();second=ensure();});
+  await waitFor(()=>expect(capturedWorkspace().templateBatchBusy).toBe(true));
+  expect(save).toHaveBeenCalledTimes(1);
+  act(()=>capturedWorkspace().onCreate('document','Ordinary file created behind prior write',{html:'<p>Retain me</p>'}));
+  fireEvent.click(await screen.findByRole('button',{name:'Back to workspace'}));
+  finishes[0]({ok:true,files:save.mock.calls[0][0]});
+  await waitFor(()=>expect(save).toHaveBeenCalledTimes(2));
+  expect(save.mock.calls[1][0].some(file=>file.name==='Ordinary file created behind prior write')).toBe(true);
+  finishes[1]({ok:true,files:save.mock.calls[1][0]});
+  await act(async()=>{await first;});
+  expect(capturedWorkspace().templateBatchBusy).toBe(true);
+  await waitFor(()=>expect(save).toHaveBeenCalledTimes(3));
+  finishes[2]({ok:true,files:save.mock.calls[2][0]});
+  await act(async()=>{await second;});
+  expect(capturedWorkspace().templateBatchBusy).toBe(false);
  });
 });

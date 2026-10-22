@@ -129,7 +129,7 @@ describe('Folio interactive financial and seat-tax simulator',()=>{
 
   expect(screen.getByTestId('four-in-one-workspace-deck')).toBeTruthy();
   fireEvent.click(screen.getByTestId('launch-four-in-one-notebook'));
-  expect(onCreate).toHaveBeenCalledWith('notebook','Research & Engineering Notebook',expect.any(Object));
+  expect(onCreate).toHaveBeenCalledWith('notebook','Research & Engineering Notebook',expect.any(Object),'research-eng-notebook');
 
   expect(screen.getByTestId('private-local-ai-assistant-workbench')).toBeTruthy();
   fireEvent.click(screen.getByTestId('local-ai-task-pill-presentation-deck'));
@@ -164,6 +164,7 @@ describe('four-in-one persisted receipt',()=>{
 
   fireEvent.click(button);fireEvent.click(button);
   expect(button.disabled).toBe(true);
+  for(const pillar of FOLIO_FOUR_IN_ONE_PILLARS)expect((screen.getByTestId(`launch-four-in-one-${pillar.id}`)as HTMLButtonElement).disabled).toBe(true);
   expect(onEnsureTemplates).toHaveBeenCalledOnce();
   expect(onEnsureTemplates.mock.calls[0][0]).toEqual(FOLIO_FOUR_IN_ONE_PILLARS);
   expect(writeText).not.toHaveBeenCalled();
@@ -189,6 +190,7 @@ describe('four-in-one persisted receipt',()=>{
   expect(status.textContent).toMatch(/not copied/i);
   const fallback=screen.getByTestId('copy-four-in-one-sovereign-receipt-fallback')as HTMLTextAreaElement;
   expect(fallback.readOnly).toBe(true);
+  expect(fallback.rows).toBe(13);
   expect(fallback.value).toBe(expectedReceipt());
  });
 

@@ -62,3 +62,10 @@ test('four canonical templates validate and retain provenance through native sna
   await fs.promises.rm(fixture,{recursive:true,force:true});
  }
 });
+
+test('both individual template launch surfaces pass the canonical template id as the fourth create argument',()=>{
+ const workspace=fs.readFileSync(path.join(worktreeRoot,'src','Workspace.tsx'),'utf8');
+ const suite=fs.readFileSync(path.join(worktreeRoot,'src','FolioSovereignCommandSuite.tsx'),'utf8');
+ assert.match(workspace,/p\.onCreate\(seed\.kind,seed\.name,seed\.data,seed\.templateId\)/);
+ assert.match(suite,/onCreate\?\.\(pillar\.kind,pillar\.name,pillar\.data,pillar\.templateId\)/);
+});
