@@ -1,0 +1,80 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx (21 tests | 1 failed) 1169ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls 279ms
+   ✓ Folio interactive financial and seat-tax simulator > updates cash flow and rounded margin as revenue and burn change 28ms
+   ✓ Folio interactive financial and seat-tax simulator > reports a loss and handles zero or cleared revenue without a non-finite margin 36ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 5 seats 16ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 0 seats 17ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for -2 seats 13ms
+   ✓ Folio interactive financial and seat-tax simulator > opens an editable spreadsheet with the current inputs and a working cash-flow formula 83ms
+   ✓ Folio interactive financial and seat-tax simulator > uses the same one-seat savings floor in the generated grid 15ms
+   ✓ Folio interactive financial and seat-tax simulator > keeps the simulated sheet action disabled until the workspace is ready 56ms
+   ✓ Folio interactive financial and seat-tax simulator > renders the zero-rent strip, preserves individual template launch, and keeps the local AI workbench 34ms
+   × four-in-one persisted receipt > launches a real Workspace template card with its provenance id 106ms
+     → expected "spy" to be called once with arguments: [ 'document', …(3) ]
+
+Received:
+
+  1st spy call:
+
+@@ -2,7 +2,6 @@
+    "document",
+    "Executive Client Audit Document",
+    {
+      "html": "<h1>Executive Client Audit Document</h1><p><strong>100% Yours on Your Machine:</strong> Prepared locally with zero cloud telemetry or recurring seat fees.</p><h2>1. Where Margin Is Leaking Today</h2><ul><li><p>Third-party platform commissions, manual spreadsheet reconciliations, and recurring SaaS seat overhead.</p></li></ul><h2>2. 30-Day Sovereign Recovery Plan</h2><p>Consolidate documents, spreadsheets, presentations, and notebooks inside a single local device vault.</p>",
+    },
+-   "executive-audit-doc",
+  ]
+
+
+Number of calls: 1
+
+   ✓ four-in-one persisted receipt > without a persistence callback reports preview-only state and never claims files were saved or copied 27ms
+   ✓ four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied 89ms
+   ✓ four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is rejected 28ms
+   ✓ four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is missing 27ms
+   ✓ four-in-one persisted receipt > never claims saved or copied when persistence fails 28ms
+   ✓ four-in-one persisted receipt > binds a pending write to the persona selected when it began 36ms
+   ✓ four-in-one persisted receipt > revalidates storage on clipboard retry and reports zero new files for the existing acknowledgement 60ms
+   ✓ four-in-one persisted receipt > serializes the actual acknowledged IDs, kinds, and renamed files with illustrative cost boundaries 27ms
+   ✓ four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with incomplete files 91ms
+   ✓ four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with duplicate IDs files 68ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > launches a real Workspace template card with its provenance id
+AssertionError: expected "spy" to be called once with arguments: [ 'document', …(3) ]
+
+Received:
+
+  1st spy call:
+
+@@ -2,7 +2,6 @@
+    "document",
+    "Executive Client Audit Document",
+    {
+      "html": "<h1>Executive Client Audit Document</h1><p><strong>100% Yours on Your Machine:</strong> Prepared locally with zero cloud telemetry or recurring seat fees.</p><h2>1. Where Margin Is Leaking Today</h2><ul><li><p>Third-party platform commissions, manual spreadsheet reconciliations, and recurring SaaS seat overhead.</p></li></ul><h2>2. 30-Day Sovereign Recovery Plan</h2><p>Consolidate documents, spreadsheets, presentations, and notebooks inside a single local device vault.</p>",
+    },
+-   "executive-audit-doc",
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:150:20
+    148|   fireEvent.click(screen.getByTestId(`sovereign-template-${seed.templa…
+    149|
+    150|   expect(onCreate).toHaveBeenCalledExactlyOnceWith(seed.kind,seed.name…
+       |                    ^
+    151|  });
+    152|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 passed (21)
+   Start at  12:11:20
+   Duration  3.99s (transform 428ms, setup 0ms, collect 1.13s, tests 1.17s, environment 1.22s, prepare 113ms)

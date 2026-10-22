@@ -1,0 +1,93 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (15 tests | 3 failed) 1680ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 99ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 32ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 58ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 38ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 32ms
+   × App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 32ms
+     → expected 'Executive Client Audit Document' to be 'Agent renamed audit' // Object.is equality
+   × App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 54ms
+     → expected [ …(4) ] to deeply equal [ …(3) ]
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 132ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  416ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 36ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 131ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 142ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 177ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 140ms
+   × App four-in-one persistence boundary > uses the stored agent rename as the next baseline while retaining concurrent UI edits 160ms
+     → expected { id: 'existing-1', …(5) } to match object { name: 'Agent renamed audit' }
+(6 matching properties omitted from actual)
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 872ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate
+AssertionError: expected 'Executive Client Audit Document' to be 'Agent renamed audit' // Object.is equality
+
+Expected: "Agent renamed audit"
+Received: "Executive Client Audit Document"
+
+ ❯ src/App.four-in-one.test.tsx:117:68
+    115|
+    116|   const success=requireSuccess(result);
+    117|   expect(success.files.find(file=>file.id===existing[0].id)?.name).toB…
+       |                                                                    ^
+    118|  });
+    119|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish
+AssertionError: expected [ …(4) ] to deeply equal [ …(3) ]
+
+- Expected
++ Received
+
+  [
+    "924c9413-2cb0-4c6b-ae85-d7de672d8ef3",
+    "f1d3084b-44a9-4def-a180-60f7ff1cb865",
+    "5498aab2-cb8a-4e62-9e2f-a76611c21a95",
++   "675a75bb-8fb9-4cae-a95a-41a2c4e51f26",
+  ]
+
+ ❯ src/App.four-in-one.test.tsx:130:44
+    128|   const success=requireSuccess(result);
+    129|   const stored=save.mock.results[0].value.then(response=>response.file…
+    130|   expect(success.files.map(file=>file.id)).toEqual((await stored).map(…
+       |                                            ^
+    131|   expect(success.createdIds).toEqual(success.files.map(file=>file.id));
+    132|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > uses the stored agent rename as the next baseline while retaining concurrent UI edits
+AssertionError: expected { id: 'existing-1', …(5) } to match object { name: 'Agent renamed audit' }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "name": "Agent renamed audit",
++   "name": "Executive Client Audit Document",
+  }
+
+ ❯ src/App.four-in-one.test.tsx:284:61
+    282|   const [nextCandidate,nextBaseline]=save.mock.calls[1];
+    283|   expect(nextCandidate.find(file=>file.id===existing[0].id)).toMatchOb…
+    284|   expect(nextBaseline.find(file=>file.id===existing[0].id)).toMatchObj…
+       |                                                             ^
+    285|   finishes[1]({ok:true,files:nextCandidate});
+    286|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  3 failed | 33 passed (36)
+   Start at  11:56:59
+   Duration  7.15s (transform 585ms, setup 0ms, collect 2.28s, tests 2.55s, environment 1.82s, prepare 146ms)

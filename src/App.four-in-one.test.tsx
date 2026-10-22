@@ -5,16 +5,19 @@ import App from'./App';
 import {FOLIO_FOUR_IN_ONE_PILLARS}from'./FolioSovereignCommandSuite';
 import type{ComponentProps}from'react';
 import type WorkspaceComponent from'./Workspace';
-import type{EnsureTemplatesResult,OfficeFile}from'./types';
+import type{EditorProps,EnsureTemplatesResult,OfficeFile}from'./types';
 
-type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onCreate'|'onEnsureTemplates'|'onOpen'|'onFavorite'|'templateBatchBusy'>;
+type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onCreate'|'onEnsureTemplates'|'onOpen'|'onFavorite'|'onRemove'|'templateBatchBusy'>;
 const workspace=vi.hoisted(()=>({props:null as CapturedWorkspaceProps|null}));
+const documentEditor=vi.hoisted(()=>({props:null as EditorProps|null}));
 vi.mock('./Workspace',()=>({default:(props:CapturedWorkspaceProps)=>{workspace.props=props;const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];return <><button data-testid="launch-tagged-template" onClick={()=>props.onCreate(seed.kind,seed.name,seed.data,seed.templateId)}>Launch tagged template</button><output data-testid="workspace-file-count">{props.files.length}</output></>;}}));
+vi.mock('./editors/DocumentEditor',()=>({default:(props:EditorProps)=>{documentEditor.props=props;return null;}}));
 
-beforeEach(()=>{localStorage.clear();workspace.props=null;Object.defineProperty(window,'office',{configurable:true,writable:true,value:undefined});});
+beforeEach(()=>{localStorage.clear();workspace.props=null;documentEditor.props=null;Object.defineProperty(window,'office',{configurable:true,writable:true,value:undefined});});
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
 
 const capturedWorkspace=():CapturedWorkspaceProps=>{if(!workspace.props)throw Error('Expected App to render Workspace.');return workspace.props;};
+const capturedDocumentEditor=():EditorProps=>{if(!documentEditor.props)throw Error('Expected App to render DocumentEditor.');return documentEditor.props;};
 const waitUntilReady=async()=>waitFor(()=>expect(capturedWorkspace().ready).toBe(true));
 type SaveFunction=NonNullable<Window['office']>['save'];
 type SaveResult=Awaited<ReturnType<SaveFunction>>;
@@ -89,6 +92,22 @@ describe('App four-in-one persistence boundary',()=>{
   expect(save).toHaveBeenCalledOnce();
  });
 
+ it('keeps close and history blocked when the discriminated persistence result is a failure',async()=>{
+  const existing=existingCatalogFiles();const finishClose=vi.fn();const command=vi.fn();
+  const save=vi.fn<SaveFunction>().mockResolvedValue({ok:false,error:'Disk unavailable',code:'IO_ERROR'});
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue(existing),save,finishClose,command}});
+  render(<App/>);await waitUntilReady();
+
+  act(()=>window.dispatchEvent(new Event('office-closing')));
+  await waitFor(()=>expect(save).toHaveBeenCalledOnce());
+  expect(finishClose).not.toHaveBeenCalled();
+
+  act(()=>capturedWorkspace().onOpen(existing[0].id));
+  fireEvent.click(await screen.findByRole('button',{name:'Version history'}));
+  expect(await screen.findByText('Save your current edits before opening history.')).toBeTruthy();
+  expect(command).not.toHaveBeenCalled();
+ });
+
  it('does not acknowledge an all-existing batch when its required persistence attempt fails',async()=>{
   const existing=existingCatalogFiles();
   const save=vi.fn<SaveFunction>().mockResolvedValue({ok:false,error:'Disk unavailable',code:'IO_ERROR'});
@@ -102,6 +121,33 @@ describe('App four-in-one persistence boundary',()=>{
   expect(save.mock.calls[0][0]).toEqual(existing);
   expect(result).toEqual({ok:false,error:'Disk unavailable'});
   expect(capturedWorkspace().files).toEqual(existing);
+ });
+
+ it('acknowledges native storage names instead of the stale submitted candidate',async()=>{
+  const existing=existingCatalogFiles();
+  const save=vi.fn<SaveFunction>(async files=>({ok:true,files:files.map(file=>file.id===existing[0].id?{...file,name:'Agent renamed audit'}:file)}));
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue(existing),save}});
+  render(<App/>);await waitUntilReady();
+
+  let result:EnsureTemplatesResult|undefined;
+  await act(async()=>{result=await ensure();});
+
+  const success=requireSuccess(result);
+  expect(success.files.find(file=>file.id===existing[0].id)?.name).toBe('Agent renamed audit');
+ });
+
+ it('never acknowledges a candidate file that native storage did not publish',async()=>{
+  const save=vi.fn<SaveFunction>(async files=>({ok:true,files:files.slice(0,3)}));
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue([]),save}});
+  render(<App/>);await waitUntilReady();
+
+  let result:EnsureTemplatesResult|undefined;
+  await act(async()=>{result=await ensure();});
+
+  const success=requireSuccess(result);
+  const stored=save.mock.results[0].value.then(response=>response.files||[]);
+  expect(success.files.map(file=>file.id)).toEqual((await stored).map(file=>file.id));
+  expect(success.createdIds).toEqual(success.files.map(file=>file.id));
  });
 
  it('persists the current unsaved edit before acknowledging an all-existing batch',async()=>{
@@ -203,14 +249,19 @@ describe('App four-in-one persistence boundary',()=>{
   await waitFor(()=>expect(save).toHaveBeenCalledTimes(2));
   expect(save.mock.calls[1][0].some(file=>file.name==='Ordinary file created behind prior write')).toBe(true);
   finishes[1]({ok:true,files:save.mock.calls[1][0]});
-  await act(async()=>{await first;});
+  let firstResult:EnsureTemplatesResult|undefined;
+  await act(async()=>{firstResult=await first;});
   expect(capturedWorkspace().templateBatchBusy).toBe(true);
   const betweenAcks=capturedWorkspace().files.length;const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];
   act(()=>capturedWorkspace().onCreate(seed.kind,seed.name,seed.data,seed.templateId));
   expect(capturedWorkspace().files).toHaveLength(betweenAcks);
   await waitFor(()=>expect(save).toHaveBeenCalledTimes(3));
+  const firstSuccess=requireSuccess(firstResult);
+  expect(save.mock.calls[2][0].map(file=>file.id)).toEqual(save.mock.calls[1][0].map(file=>file.id));
   finishes[2]({ok:true,files:save.mock.calls[2][0]});
-  await act(async()=>{await second;});
+  let secondResult:EnsureTemplatesResult|undefined;
+  await act(async()=>{secondResult=await second;});
+  expect(requireSuccess(secondResult)).toMatchObject({createdIds:[],existingIds:firstSuccess.files.map(file=>file.id)});
   expect(capturedWorkspace().templateBatchBusy).toBe(false);
  });
 
@@ -228,5 +279,39 @@ describe('App four-in-one persistence boundary',()=>{
   const acknowledged=requireSuccess(result).files.find(file=>file.id===existing[0].id);
   expect(acknowledged).toEqual(savedPayload.find(file=>file.id===existing[0].id));
   expect(capturedWorkspace().files.find(file=>file.id===existing[0].id)).toMatchObject({name:'Renamed after save began',starred:true});
+ });
+
+ it('rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save',async()=>{
+  const existing=existingCatalogFiles();const finishes:Array<(value:SaveResult)=>void>=[];
+  const save=vi.fn<SaveFunction>(()=>new Promise(resolve=>finishes.push(resolve)));
+  Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue(existing),save}});
+  render(<App/>);await waitUntilReady();
+
+  let pending!:Promise<EnsureTemplatesResult>;act(()=>{pending=ensure();});await waitFor(()=>expect(save).toHaveBeenCalledOnce());
+  const stored=save.mock.calls[0][0].map(file=>file.id===existing[1].id?{...file,name:'Agent renamed financial grid',revision:'agent-revision'}:file);
+  act(()=>{capturedWorkspace().onFavorite(existing[0].id);capturedWorkspace().onOpen(existing[0].id);});
+  fireEvent.change(await screen.findByRole('textbox',{name:'File name'}),{target:{value:'UI rename after save began'}});
+  act(()=>capturedDocumentEditor().onChange({content:{type:'doc',content:[{type:'paragraph',content:[{type:'text',text:'UI data after save began'}]}]}}));
+  fireEvent.click(screen.getByRole('button',{name:'Back to workspace'}));
+  act(()=>capturedWorkspace().onRemove(existing[2]));
+  act(()=>capturedWorkspace().onCreate('document','Local file added after save began',{nested:{kept:true}}));
+  fireEvent.click(await screen.findByRole('button',{name:'Back to workspace'}));
+  finishes[0]({ok:true,files:stored});
+  await act(async()=>{await pending;});
+  expect(capturedWorkspace().files.find(file=>file.id===existing[0].id)).toMatchObject({name:'UI rename after save began',starred:true,data:{content:{type:'doc',content:[{type:'paragraph',content:[{type:'text',text:'UI data after save began'}]}]}}});
+  expect(capturedWorkspace().files.find(file=>file.id===existing[1].id)).toMatchObject({name:'Agent renamed financial grid',revision:'agent-revision'});
+  expect(capturedWorkspace().files.some(file=>file.id===existing[2].id)).toBe(false);
+  expect(capturedWorkspace().files.find(file=>file.name==='Local file added after save began')?.data).toEqual({nested:{kept:true}});
+
+  fireEvent.keyDown(window,{key:'s',ctrlKey:true});
+  await waitFor(()=>expect(save.mock.calls.length).toBeGreaterThanOrEqual(2));
+  const [nextCandidate,nextBaseline]=save.mock.calls[1];
+  expect(nextCandidate.find(file=>file.id===existing[0].id)).toMatchObject({name:'UI rename after save began',starred:true});
+  expect(nextCandidate.find(file=>file.id===existing[1].id)).toMatchObject({name:'Agent renamed financial grid',revision:'agent-revision'});
+  expect(nextCandidate.some(file=>file.id===existing[2].id)).toBe(false);
+  expect(nextCandidate.find(file=>file.name==='Local file added after save began')?.data).toEqual({nested:{kept:true}});
+  expect(nextBaseline.find(file=>file.id===existing[1].id)).toMatchObject({name:'Agent renamed financial grid',revision:'agent-revision'});
+  expect(nextBaseline.some(file=>file.id===existing[2].id)).toBe(true);
+  finishes[1]({ok:true,files:nextCandidate});
  });
 });

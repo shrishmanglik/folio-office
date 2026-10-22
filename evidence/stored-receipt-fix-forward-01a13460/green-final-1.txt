@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (15 tests) 1760ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save  392ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 1139ms
+
+ Test Files  2 passed (2)
+      Tests  36 passed (36)
+   Start at  12:06:38
+   Duration  8.17s (transform 443ms, setup 0ms, collect 1.88s, tests 2.90s, environment 2.52s, prepare 217ms)

@@ -1,0 +1,58 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (16 tests | 1 failed) 1450ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 88ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 40ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 48ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 28ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  318ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 45ms
+   ✓ App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 30ms
+   ✓ App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 31ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 131ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 114ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 37ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 72ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 59ms
+   × App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 156ms
+     → expected [ …(9) ] to deeply equal [ …(5) ]
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 75ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save 177ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish
+AssertionError: expected [ …(9) ] to deeply equal [ …(5) ]
+
+- Expected
++ Received
+
+  [
++   "8a363c97-4e94-4ade-89cf-6e7ae70d0685",
++   "e84ab9f3-44f9-4bde-a9ab-bc1d7d9912a4",
++   "b3c55f55-6ecf-4f0a-af15-abbdd684ae56",
++   "0b467df5-7b2d-4ed4-b81f-592581b59cc1",
++   "81567824-6d6c-4fea-bb39-19b682b46f9d",
+    "cb1414a4-92b1-4a52-ac11-0c6f170f3138",
+    "835ba57f-d906-425e-b048-92b88f5cf730",
+    "1ab893a8-e1f8-4a02-808f-b2c41056901c",
+    "3d32ab0b-30f9-49ec-90af-959250c563ef",
+-   "81567824-6d6c-4fea-bb39-19b682b46f9d",
+  ]
+
+ ❯ src/App.four-in-one.test.tsx:259:52
+    257|   await waitFor(()=>expect(save).toHaveBeenCalledTimes(3));
+    258|   const firstSuccess=requireSuccess(firstResult);
+    259|   expect(save.mock.calls[2][0].map(file=>file.id)).toEqual(save.mock.c…
+       |                                                    ^
+    260|   finishes[2]({ok:true,files:save.mock.calls[2][0]});
+    261|   let secondResult:EnsureTemplatesResult|undefined;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  12:11:06
+   Duration  4.41s (transform 320ms, setup 0ms, collect 1.36s, tests 1.45s, environment 1.22s, prepare 133ms)

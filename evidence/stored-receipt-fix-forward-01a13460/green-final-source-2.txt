@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 1139ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  302ms
+ ✓ src/App.four-in-one.test.tsx (15 tests) 1341ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  335ms
+
+ Test Files  2 passed (2)
+      Tests  36 passed (36)
+   Start at  12:08:44
+   Duration  11.02s (transform 771ms, setup 0ms, collect 2.70s, tests 2.48s, environment 4.62s, prepare 486ms)

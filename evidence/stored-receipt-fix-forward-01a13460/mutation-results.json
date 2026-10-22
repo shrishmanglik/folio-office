@@ -1,0 +1,23 @@
+[
+  {
+    "mutant": "MA10",
+    "exit": 1,
+    "killed": true,
+    "log": "mutant-MA10.txt",
+    "source_sha256": "de333fcbbd27270c0ca955a6736a215be6773dc71d59823b2b769a5e24380f18"
+  },
+  {
+    "mutant": "MA13",
+    "exit": 1,
+    "killed": true,
+    "log": "mutant-MA13.txt",
+    "source_sha256": "de333fcbbd27270c0ca955a6736a215be6773dc71d59823b2b769a5e24380f18"
+  },
+  {
+    "mutant": "MW04",
+    "exit": 1,
+    "killed": true,
+    "log": "mutant-MW04.txt",
+    "source_sha256": "954acc7f2403eda34a3e0bf40d4ee938f8d0080767e4cb238ac83d9030820342"
+  }
+]

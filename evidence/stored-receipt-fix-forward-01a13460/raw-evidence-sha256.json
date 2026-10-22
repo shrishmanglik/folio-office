@@ -1,0 +1,166 @@
+{
+  "createdUtc": "2026-10-22T16:14:55.2615610Z",
+  "sourceHead": "b5b0a04f501ee36611121bf91b8b96dc6aee93e6",
+  "entries": [
+    {
+      "path": "build-final.txt",
+      "bytes": 957,
+      "sha256": "4d2d395c35bae172fe48af94e973842e22e071a50ac0fa9292051ea16da57ff5"
+    },
+    {
+      "path": "build-proof.txt",
+      "bytes": 957,
+      "sha256": "f5ba72e1b6d53829b87f00225ac29dd4cab7b433ce44a4f259fd0294feec16d5"
+    },
+    {
+      "path": "engine-final.txt",
+      "bytes": 6869,
+      "sha256": "27133d3068abf4af7194c8302f2e0f7851807889c7ec28fd81d3b5b332d30adf"
+    },
+    {
+      "path": "engine-proof.txt",
+      "bytes": 6886,
+      "sha256": "52dbe809643163075f330635e3ca4189548b8b11b1dfbd20e168e3ebcbf11a9a"
+    },
+    {
+      "path": "engine-suite.txt",
+      "bytes": 6866,
+      "sha256": "e223d1fbd82be69dcb22e3c7d9c226a4eb8d273cec0593f01c098d83b61f4323"
+    },
+    {
+      "path": "green-1.txt",
+      "bytes": 394,
+      "sha256": "62a1c8411d8af8f3ad575f92e02130f7b1a211dc1b8df16c0de83ce60d301808"
+    },
+    {
+      "path": "green-final-1.txt",
+      "bytes": 545,
+      "sha256": "4bbbc347d067bc0d3e4e1e0d827f7f249a17f8d2e5d4c2766260795775a71043"
+    },
+    {
+      "path": "green-final-2.txt",
+      "bytes": 394,
+      "sha256": "0f397066dff607298c147339dae2967a271bee458d790b078961fd27f670d8c9"
+    },
+    {
+      "path": "green-final-source-1.txt",
+      "bytes": 1007,
+      "sha256": "a7d6d68491fbc40ad8cc0b0eee4111c648103917b1ea306541a5904dd47e5df2"
+    },
+    {
+      "path": "green-final-source-2.txt",
+      "bytes": 706,
+      "sha256": "ef3571f4ad971de7767fb4a0166d81e791fffb046f9673ea1c6a8bbe8355b3d4"
+    },
+    {
+      "path": "green-proof-1.txt",
+      "bytes": 536,
+      "sha256": "afd580c014dc61c48be0a0580d888ec82bc99845f752216db0cc5ae164b37507"
+    },
+    {
+      "path": "green-proof-2.txt",
+      "bytes": 536,
+      "sha256": "73a4f5dfd8a01db27ac39c8b0256637a7d7b8730f1ed90e6aa979f4b5142232d"
+    },
+    {
+      "path": "INTERFACE-NOTE.md",
+      "bytes": 1123,
+      "sha256": "cced035130b96ec0a74e0a2b5e88c425d520f4d56e7fc46ecf488de9dd1b5841"
+    },
+    {
+      "path": "mutant-MA10.txt",
+      "bytes": 3865,
+      "sha256": "55696833785b593f7a97b73ceb4859684c0182703ab5e26d4ad65d49e86c1ec7"
+    },
+    {
+      "path": "mutant-MA13.txt",
+      "bytes": 3388,
+      "sha256": "a3b8214ad879bb88f415d194e7d3685f6ca9c6feac3eec2bdfe94aeaf4ef64c9"
+    },
+    {
+      "path": "mutant-MW04.txt",
+      "bytes": 5071,
+      "sha256": "73a5817a971aff7e66282dcac772e32a5915281c2ff60a6f2dd46498762d9a38"
+    },
+    {
+      "path": "mutants-final-console.txt",
+      "bytes": 476,
+      "sha256": "f20d57586702953c16eed7c9951147ee0a43de4b6ddc9928ee3bbb6ab806a6d8"
+    },
+    {
+      "path": "mutants-proof-console.txt",
+      "bytes": 476,
+      "sha256": "f20d57586702953c16eed7c9951147ee0a43de4b6ddc9928ee3bbb6ab806a6d8"
+    },
+    {
+      "path": "mutation-controls.py",
+      "bytes": 2309,
+      "sha256": "c45efc38a2a6775c4092ad6d030d38e718d431235e8aa4e9ff672390305f588a"
+    },
+    {
+      "path": "mutation-results.json",
+      "bytes": 578,
+      "sha256": "5b17a3d2fac731abbfe595376510f95d244db8a9ee0bf6bc7b35763195624f70"
+    },
+    {
+      "path": "npm-ci.txt",
+      "bytes": 1181,
+      "sha256": "2b299729ce9ef809b7bd716a6c40cfe11d1655f03ee8aeffbe0448a65eb8c7cf"
+    },
+    {
+      "path": "PHASE-A-ANALYSIS.md",
+      "bytes": 2415,
+      "sha256": "6dcab78168288efa37905a17a3c0c88445ac210a609f1ae8bd8c610cb775cfc0"
+    },
+    {
+      "path": "phase-a-result.json",
+      "bytes": 322,
+      "sha256": "589d744cf339ba193e1f4fcfbb3a42689dfa4a2438e33768b8ca9c6b728de2ff"
+    },
+    {
+      "path": "qualification-final.json",
+      "bytes": 494,
+      "sha256": "c1570d874090db8b8dc16370720418315c0981cde7b234538f15eb4238297052"
+    },
+    {
+      "path": "qualification-proof.json",
+      "bytes": 494,
+      "sha256": "40f28fc85c8a495fdb3bcda69b66a321a9ecd41d6fe7e81546daa4646f8a81d7"
+    },
+    {
+      "path": "red-vitest.txt",
+      "bytes": 5445,
+      "sha256": "8334cb2911601b76ad4dadd9072400946bf451a3e15e4a6aa62c3ba27d85c15d"
+    },
+    {
+      "path": "RESULT.md",
+      "bytes": 1851,
+      "sha256": "d2c1dccfe2e5b72390716b8ec9f80db2da1cd2d8bdda87989af4572b5ee2f855"
+    },
+    {
+      "path": "TEST-LIST.md",
+      "bytes": 760,
+      "sha256": "0e854187040caaf95df54a297301ec94d2c7b6fd492634c86a26f6dcee144524"
+    },
+    {
+      "path": "typecheck-final.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "typecheck-proof.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "typecheck.txt",
+      "bytes": 174,
+      "sha256": "548f73903e0500dcaad846ab89efef1b187c40217fe50e39cc9a9b980cf3946f"
+    },
+    {
+      "path": "typing-focused.txt",
+      "bytes": 556,
+      "sha256": "0046cf471debb7aa2ff8d27e124047bf7ba85b32ce4e5dabe741056aa305580f"
+    }
+  ]
+}

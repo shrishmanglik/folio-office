@@ -1,0 +1,32 @@
+[
+  {
+    "name": "focused-proof-1",
+    "exit": 0,
+    "memoryMB": 6390.0
+  },
+  {
+    "name": "focused-proof-2",
+    "exit": 0,
+    "memoryMB": 6318.0
+  },
+  {
+    "name": "mutants-proof",
+    "exit": 0,
+    "memoryMB": 6368.0
+  },
+  {
+    "name": "engine-proof",
+    "exit": 0,
+    "memoryMB": 7074.0
+  },
+  {
+    "name": "typecheck-proof",
+    "exit": 0,
+    "memoryMB": 6830.0
+  },
+  {
+    "name": "build-proof",
+    "exit": 0,
+    "memoryMB": 7079.0
+  }
+]
