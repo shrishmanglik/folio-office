@@ -91,4 +91,26 @@ describe('Folio interactive financial and seat-tax simulator',()=>{
   fireEvent.click(button);
   expect(onCreate).toHaveBeenCalledOnce();
  });
+
+ it('renders the zero-rent annual tax killer strip, tactile four-in-one workspace deck, and 100% on-device local AI workbench',()=>{
+  const onCreate=vi.fn();
+  render(<FolioSovereignCommandSuite onCreate={onCreate}/>);
+  expect(screen.getByTestId('zero-rent-annual-tax-killer-strip')).toBeTruthy();
+  expect(screen.getByTestId('zero-rent-annual-saved-readout').textContent).toBe('$300/yr');
+  expect(screen.getByTestId('zero-rent-five-year-saved-readout').textContent).toBe('$1,500 / 5 yrs saved');
+  fireEvent.click(screen.getByTestId('zero-rent-persona-pill-family-business'));
+  expect(screen.getByTestId('zero-rent-annual-saved-readout').textContent).toBe('$1,500/yr');
+  expect(screen.getByTestId('zero-rent-five-year-saved-readout').textContent).toBe('$7,500 / 5 yrs saved');
+  expect(screen.getByTestId('zero-lockout-hard-drive-guarantee').textContent).toContain('Never Locked Out of Your Own Work');
+
+  expect(screen.getByTestId('four-in-one-workspace-deck')).toBeTruthy();
+  fireEvent.click(screen.getByTestId('launch-four-in-one-notebook'));
+  expect(onCreate).toHaveBeenCalledWith('notebook','Research & Engineering Notebook',expect.any(Object));
+
+  expect(screen.getByTestId('private-local-ai-assistant-workbench')).toBeTruthy();
+  fireEvent.click(screen.getByTestId('local-ai-task-pill-presentation-deck'));
+  expect(screen.getByTestId('local-ai-execution-output').textContent).toContain('127.0.0.1:11434');
+  fireEvent.click(screen.getByTestId('local-ai-apply-to-file-btn'));
+  expect(onCreate).toHaveBeenCalledWith('presentation','3-Bullet Board Narrative Deck',expect.any(Object));
+ });
 });
