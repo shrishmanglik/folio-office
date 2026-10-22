@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ✓ src/FolioSovereignCommandSuite.test.tsx (20 tests) 1191ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  301ms
+ ✓ src/App.four-in-one.test.tsx (6 tests) 602ms
+
+ Test Files  2 passed (2)
+      Tests  26 passed (26)
+   Start at  00:53:37
+   Duration  10.99s (transform 685ms, setup 0ms, collect 3.91s, tests 1.79s, environment 4.00s, prepare 281ms)

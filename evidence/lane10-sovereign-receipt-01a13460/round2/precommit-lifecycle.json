@@ -1,0 +1,27 @@
+{
+  "stage": "precommit",
+  "status": "PASS",
+  "failure": null,
+  "started": "2026-10-22T12:44:28.4329973Z",
+  "finished": "2026-10-22T12:45:50.7641818Z",
+  "head": "6d3553453ed9821e4b99617e476746726ae5e998",
+  "expectedHead": "",
+  "steps": [
+    {
+      "name": "node",
+      "exit": 0,
+      "availableMiB": 9392.0
+    },
+    {
+      "name": "ui",
+      "exit": 0,
+      "availableMiB": 8689.0
+    },
+    {
+      "name": "build",
+      "exit": 0,
+      "availableMiB": 9255.0
+    }
+  ],
+  "leaseReleased": true
+}

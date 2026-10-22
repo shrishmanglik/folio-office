@@ -1,0 +1,109 @@
+{
+  "recordedAtUtc": "2026-10-22T12:23:58.6974660Z",
+  "baseHead": "8999118c2254d9119e3236d4cf6b14609d3c6824",
+  "source": [
+    {
+      "path": "src/App.tsx",
+      "bytes": 18773,
+      "sha256": "12a8e33b70f508c0a71221866157d87217737d4fd85252e3d4a65e7ad130c9bb"
+    },
+    {
+      "path": "src/Workspace.tsx",
+      "bytes": 16994,
+      "sha256": "954acc7f2403eda34a3e0bf40d4ee938f8d0080767e4cb238ac83d9030820342"
+    },
+    {
+      "path": "src/FolioSovereignCommandSuite.tsx",
+      "bytes": 27723,
+      "sha256": "8234645211873d459c85d0143da3a1023b8034d45081cd96499a16dd4a1ecfbb"
+    },
+    {
+      "path": "src/Workspace.css",
+      "bytes": 22771,
+      "sha256": "7f727940d047b874b2410a7125c4fce08270e29afb03f7d2dc0996862963abea"
+    },
+    {
+      "path": "src/App.four-in-one.test.tsx",
+      "bytes": 13409,
+      "sha256": "5fc08c3c4e6ec87439a4f3b6ea16ac6eafeca79e89f57fa1962c19123016e539"
+    },
+    {
+      "path": "src/FolioSovereignCommandSuite.test.tsx",
+      "bytes": 17029,
+      "sha256": "91ecc208256761dec3e059a1d0d6dc3b429c546277abc0494d1c62a15ec56d45"
+    },
+    {
+      "path": "tests/four-in-one-persistence.test.cjs",
+      "bytes": 3469,
+      "sha256": "c5cbb811df8df99dfde85bd9ab2a581d58061d58d3fbdb213b3745ac8cd25de5"
+    }
+  ],
+  "evidence": [
+    {
+      "name": "green-1-node.txt",
+      "bytes": 349,
+      "sha256": "e2caf2cdda7c7afe13a03194dd6662f644880fe2a2a873a08bc4121c9b7ad19f"
+    },
+    {
+      "name": "green-1-slot.txt",
+      "bytes": 22,
+      "sha256": "7fbae7436cb014d4d2bdc651ec57999dda05a3c9fae805193550cecb287fa80a"
+    },
+    {
+      "name": "green-1-vitest.txt",
+      "bytes": 1284,
+      "sha256": "55ba15f38a39c8aa60287370b08b3482775b39cb8a6caad89e1e6b3b28978ecb"
+    },
+    {
+      "name": "green-2-vitest.txt",
+      "bytes": 984,
+      "sha256": "47ea6b74252440997afaad53773ff4434554be408ad31dccc7f9d9e6776bedf8"
+    },
+    {
+      "name": "green-final-app.txt",
+      "bytes": 1157,
+      "sha256": "d7e33693917067806b3f4dc2fcb9dabf99fb785c9b4965fac99a1dc61ed51ae7"
+    },
+    {
+      "name": "mutant-M10.txt",
+      "bytes": 4716,
+      "sha256": "eceb699844a56b1477cdb1c18730d9ec846551271919765c2fef0a0d2a467ae1"
+    },
+    {
+      "name": "mutant-M8.txt",
+      "bytes": 2700,
+      "sha256": "3dbb96b8c4246a97d3226250bf2074f576c152c0741e0962edea48ea423fe727"
+    },
+    {
+      "name": "mutants-slot.txt",
+      "bytes": 22,
+      "sha256": "7fbae7436cb014d4d2bdc651ec57999dda05a3c9fae805193550cecb287fa80a"
+    },
+    {
+      "name": "red-node.txt",
+      "bytes": 22124,
+      "sha256": "01d55172ed0b08c686094ba7e2719421c8e6ab2d8773c6cecd1076b2170cd2f5"
+    },
+    {
+      "name": "red-slot.txt",
+      "bytes": 22,
+      "sha256": "fd1bf255ff90b009b1190737d4dc9864fb075f35b6b6482bc368f6c5372257d6"
+    },
+    {
+      "name": "red-vitest.txt",
+      "bytes": 23828,
+      "sha256": "793ac3279ecf18f2c8c822408bb390d59273b42738fc4e1ed525d3bd5418b1c1"
+    },
+    {
+      "name": "RESULT.md",
+      "bytes": 1754,
+      "sha256": "f97258c4cac8de278d163b664ed2ad4d3ed9fa75d7dbf7c616045f3bccaa340e"
+    },
+    {
+      "name": "run-mutants.ps1",
+      "bytes": 2741,
+      "sha256": "a629681cadf5e6efc8d7faae9cd5de1e0bc3cc54455f2937dd47b892ff07ef12"
+    }
+  ],
+  "appMutantRestoreSha256": "12a8e33b70f508c0a71221866157d87217737d4fd85252e3d4a65e7ad130c9bb"
+}

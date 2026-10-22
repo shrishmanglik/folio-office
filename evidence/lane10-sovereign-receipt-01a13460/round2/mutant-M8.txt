@@ -1,0 +1,36 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (11 tests | 1 failed) 3607ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 204ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 81ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 172ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 50ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 73ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 181ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  1583ms
+   × App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 145ms
+     → expected [] to include 'legacy-exact'
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 274ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available  367ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish  473ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id
+AssertionError: expected [] to include 'legacy-exact'
+ ❯ src/App.four-in-one.test.tsx:158:31
+    156|   let result:EnsureTemplatesResult|undefined;await act(async()=>{resul…
+    157|   const success=requireSuccess(result);
+    158|   expect(success.existingIds).toContain('legacy-exact');
+       |                               ^
+    159|   expect(success.createdIds).toHaveLength(3);
+    160|   expect(capturedWorkspace().files.filter(file=>file.kind===seed.kind&…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  08:21:33
+   Duration  21.42s (transform 6.64s, setup 0ms, collect 12.27s, tests 3.61s, environment 3.39s, prepare 778ms)

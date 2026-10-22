@@ -1,0 +1,44 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (12 tests | 1 failed) 2819ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 199ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 109ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 155ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 100ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 87ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 194ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  1142ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 43ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 197ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 154ms
+   × App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 208ms
+     → expected false to be true // Object.is equality
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 228ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/App.four-in-one.test.tsx:204:100
+    202|   finishes[0]({ok:true,files:save.mock.calls[0][0]});
+    203|   await waitFor(()=>expect(save).toHaveBeenCalledTimes(2));
+    204|   expect(save.mock.calls[1][0].some(file=>file.name==='Ordinary file c…
+       |                                                                                                    ^
+    205|   finishes[1]({ok:true,files:save.mock.calls[1][0]});
+    206|   await act(async()=>{await first;});
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  08:42:17
+   Duration  14.35s (transform 3.09s, setup 0ms, collect 8.52s, tests 2.82s, environment 1.34s, prepare 157ms)

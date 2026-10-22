@@ -328,14 +328,35 @@ test('Zero em dashes anywhere in Folio Office UI source', () => {
   scan(srcDir);
 });
 
-test('Folio Office includes Universal Offline Desktop + Free Local Open-Source LLM & Dual Ownership Hub', () => {
+test('Folio Office ownership hub is interactive and stays inside the source-only release boundary', () => {
   const contractPath = path.join(__dirname, '../desktop/distribution-contract.json');
   assert.ok(fs.existsSync(contractPath), 'desktop/distribution-contract.json must exist');
   const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
-  assert.equal(contract.architecture_pattern, 'shared_brain');
-  assert.equal(contract.no_backend_fork, true);
-  assert.equal(contract.local_llm_loopback, 'http://127.0.0.1:11434');
-  assert.equal(contract.fact_sheet_budget_bytes, 3072);
+  assert.equal(contract.product, 'Folio Office');
+  assert.equal(contract.contract_version, '2026-10-21');
+  assert.equal(contract.status, 'source_contract_not_release_artifact');
+  assert.equal(contract.shared_brain.frontend, 'src');
+  assert.equal(contract.shared_brain.calculation_engine, 'src/app/folio-office-app.ts');
+  assert.equal(contract.shared_brain.no_backend_fork, true);
+  assert.equal(contract.shared_brain.local_llm_loopback, 'http://127.0.0.1:11434');
+  assert.equal(contract.shared_brain.fact_sheet_budget_bytes, 3072);
+  assert.match(contract.shared_brain.rule, /deterministic engine only/i);
+  assert.match(contract.shared_brain.rule, /AI interpretation only/i);
+  assert.deepEqual(contract.distribution_channels.map((channel) => channel.id), [
+    'web_subscription',
+    'windows_desktop',
+    'macos_desktop',
+    'mobile_companion',
+  ]);
+  const windows = contract.distribution_channels.find((channel) => channel.id === 'windows_desktop');
+  assert.equal(windows.status, 'source_present_release_not_signed');
+  assert.match(windows.runtime, /Electron source present/i);
+  assert.match(windows.runtime, /Tauri v2 installer and key ring in preparation/i);
+  assert.equal(contract.license_boundary.term, 'perpetual_major_version');
+  assert.equal(contract.license_boundary.monthly_local_cap, null);
+  assert.equal(contract.license_boundary.public_numeric_price, null);
+  assert.equal(contract.license_boundary.released_license_key, false);
+  assert.equal(contract.installers, undefined);
 
   const shellTemplateTs = fs.readFileSync(path.join(srcDir, 'ui', 'shell-template.ts'), 'utf8');
   const calcTsx = fs.readFileSync(path.join(srcDir, 'SovereignOfficeSavingsCalculator.tsx'), 'utf8');
@@ -350,9 +371,60 @@ test('Folio Office includes Universal Offline Desktop + Free Local Open-Source L
     assert.match(calcTsx, new RegExp(`data-testid="${testId}"`), `Expected ${testId} in SovereignOfficeSavingsCalculator.tsx`);
   }
 
-  for (const modelTag of ['llama3.2:1b', 'llama3.2:3b', 'qwen2.5:7b', 'qwen3:8b', '127.0.0.1:11434']) {
+  for (const modelTag of ['llama3.2:3b', 'qwen2.5:7b', 'qwen2.5:14b', 'deepseek-r1:8b', '127.0.0.1:11434']) {
     assert.ok(shellTemplateTs.includes(modelTag), `Expected ${modelTag} in shell-template.ts`);
   }
+  for (const label of [
+    'One-Time Offline Desktop Purchase (Unlimited Free Local AI)',
+    'Monthly Cloud Subscription (Hosted Web & Cloud AI)',
+  ]) {
+    assert.ok(shellTemplateTs.includes(label), `Expected ownership label ${label}`);
+  }
+  assert.match(calcTsx, /className="ownership-surface"/);
+  assert.match(calcTsx, /className="ownership-model-copy"/);
+  assert.match(calcTsx, /aria-pressed=\{selectedOwnershipModelId === option\.id\}/);
+  assert.match(calcTsx, /<select[\s\S]*data-testid="local-llm-hardware-selector"/);
+  assert.match(calcTsx, /data-release-status="in-preparation"/);
+  assert.match(calcTsx, /<table data-testid="offline-parity-table">/);
+  assert.match(calcTsx, /<code key=\{command\}>\{command\}<\/code>/);
+  assert.doesNotMatch(calcTsx, /href=.*(?:\.msi|\.exe|\.dmg)/i);
+
+  const installerBlock = shellTemplateTs.slice(
+    shellTemplateTs.indexOf('export const FOLIO_DESKTOP_INSTALLER_TARGETS'),
+    shellTemplateTs.indexOf('export const FOLIO_LOCAL_LLM_HARDWARE_TIERS'),
+  );
+  assert.doesNotMatch(installerBlock, /[a-f0-9]{64}|\.msi|\.exe|\.dmg|href=/i);
+  assert.doesNotMatch(shellTemplateTs, /\$22\/mo Cloud Seat/);
+  assert.match(shellTemplateTs, /data-release-status="in-preparation"/);
+  assert.match(shellTemplateTs, /proposed hosted subscription model/i);
+
+  const typescript = require('typescript');
+  const Module = require('node:module');
+  const shellFilename = path.join(srcDir, 'ui', 'shell-template.ts');
+  const compiled = typescript.transpileModule(shellTemplateTs, {
+    compilerOptions: { module: typescript.ModuleKind.CommonJS },
+  });
+  const loaded = new Module(shellFilename, module);
+  loaded.filename = shellFilename;
+  loaded.paths = Module._nodeModulePaths(path.dirname(shellFilename));
+  loaded._compile(compiled.outputText, shellFilename);
+  const shell = loaded.exports;
+  assert.deepEqual(
+    shell.FOLIO_LOCAL_LLM_HARDWARE_TIERS.map((tier) => [tier.hardwareTier, tier.modelTag]),
+    [['4-8 GB RAM', 'llama3.2:3b'], ['16 GB RAM', 'qwen2.5:7b'], ['32+ GB RAM', 'qwen2.5:14b / deepseek-r1:8b']],
+  );
+  assert.equal(shell.FOLIO_OFFLINE_PARITY_ROWS.length, 5);
+  assert.deepEqual(shell.FOLIO_OFFLINE_PARITY_ROWS.at(-1), {
+    capability: 'Cloud team sync',
+    offlineDesktopStatus: 'Not available offline',
+    cloudWebStatus: 'Within plan allowance',
+    needsInternet: 'Yes',
+  });
+  const rendered = shell.renderFolioOwnershipHubShell('monthly-cloud-subscription', '32gb-plus');
+  assert.match(rendered, /data-release-status="in-preparation"/);
+  assert.match(rendered, /ollama run qwen2\.5:14b/);
+  assert.match(rendered, /ollama run deepseek-r1:8b/);
+  assert.doesNotMatch(rendered, /[a-f0-9]{64}|\.msi|\.exe|\.dmg|href=/i);
 });
 
 test('Folio Office exposes top-level App-Command Navbar, Role-Portal Switcher, and 5 1-click sovereign templates', () => {
@@ -373,13 +445,16 @@ test('Folio Office exposes top-level App-Command Navbar, Role-Portal Switcher, a
     assert.ok(workspaceTsx.includes(portalLabel), `Expected role portal "${portalLabel}" in Workspace.tsx`);
   }
 
+  const catalogueTsx = fs.readFileSync(path.join(srcDir, 'FolioSovereignCommandSuite.tsx'), 'utf8');
+  assert.match(workspaceTsx, /FOLIO_FOUR_IN_ONE_PILLARS\.map/);
+  assert.match(workspaceTsx, /FOLIO_FOUR_IN_ONE_PILLARS\.find/);
   for (const templateLabel of [
     'Executive Client Audit Document',
     'Live Formula & Margin Spreadsheet',
     'Board Pitch Presentation Deck',
     'Research & Engineering Notebook',
-    'Microsoft 365 / Google Workspace Per-Seat Tax Savings & Local AI Vault',
   ]) {
-    assert.ok(workspaceTsx.includes(templateLabel), `Expected 1-click template "${templateLabel}" in Workspace.tsx`);
+    assert.ok(catalogueTsx.includes(templateLabel), `Expected shared 1-click template "${templateLabel}"`);
   }
+  assert.ok(workspaceTsx.includes('Microsoft 365 / Google Workspace Per-Seat Tax Savings & Local AI Vault'));
 });

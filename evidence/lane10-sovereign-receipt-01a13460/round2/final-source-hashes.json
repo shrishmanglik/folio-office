@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-22T12:47:47.078660+00:00",
+  "workingBase": "6d3553453ed9821e4b99617e476746726ae5e998",
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "d9509d9b8039d7e9ebf5d0da515614df29a6d27af806ae06b5daf29803b220f6"
+    },
+    {
+      "path": "src/App.four-in-one.test.tsx",
+      "sha256": "51ec728cad07bacffa11a6849b5ac02cd764092b4f37a5533c5e95d60f659f64"
+    },
+    {
+      "path": "src/Workspace.css",
+      "sha256": "b72607888574a943f2bb079524cf1cc14ab63c671cdd36b2b67d99ee2a3246c1"
+    },
+    {
+      "path": "src/Workspace.tsx",
+      "sha256": "954acc7f2403eda34a3e0bf40d4ee938f8d0080767e4cb238ac83d9030820342"
+    },
+    {
+      "path": "src/FolioSovereignCommandSuite.tsx",
+      "sha256": "8234645211873d459c85d0143da3a1023b8034d45081cd96499a16dd4a1ecfbb"
+    },
+    {
+      "path": "src/FolioSovereignCommandSuite.test.tsx",
+      "sha256": "91ecc208256761dec3e059a1d0d6dc3b429c546277abc0494d1c62a15ec56d45"
+    },
+    {
+      "path": "tests/four-in-one-persistence.test.cjs",
+      "sha256": "c5cbb811df8df99dfde85bd9ab2a581d58061d58d3fbdb213b3745ac8cd25de5"
+    },
+    {
+      "path": "evidence/interface.md",
+      "sha256": "3bc9805658e8f9ab83370272ff0d75b7069dca7d50fb118daa648295a5c162fe"
+    },
+    {
+      "path": "evidence/lane10-sovereign-receipt-01a13460/round2/verify-browser-round2.mjs",
+      "sha256": "5b6a4f8b24328e9adb92f3df8ca2b4492a970d08ae00078c9e8d8c15d79c9121"
+    }
+  ]
+}

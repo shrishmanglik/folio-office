@@ -1,0 +1,12 @@
+MEMORY_AVAILABLE_MB=5130
+
+> folio-office@0.8.0 build
+> tsc -b && vite build
+
+src/App.four-in-one.test.tsx(58,38): error TS2493: Tuple type '[]' of length '0' has no element at index '0'.
+src/App.four-in-one.test.tsx(110,10): error TS2532: Object is possibly 'undefined'.
+src/App.four-in-one.test.tsx(110,29): error TS2493: Tuple type '[]' of length '0' has no element at index '0'.
+src/App.four-in-one.test.tsx(111,48): error TS2493: Tuple type '[]' of length '0' has no element at index '0'.
+src/FolioSovereignCommandSuite.test.tsx(168,42): error TS2493: Tuple type '[]' of length '0' has no element at index '0'.
+src/FolioSovereignCommandSuite.tsx(59,678): error TS2339: Property 'error' does not exist on type 'EnsureTemplatesResult'.
+  Property 'error' does not exist on type '{ ok: true; files: OfficeFile[]; createdIds: string[]; existingIds: string[]; storage: "desktop-local" | "browser-preview"; }'.

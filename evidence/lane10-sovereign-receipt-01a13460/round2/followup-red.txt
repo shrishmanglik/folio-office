@@ -1,0 +1,75 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (12 tests | 2 failed) 4806ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored  521ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 205ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds  354ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 39ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 125ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 250ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  1433ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 84ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes  331ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 232ms
+   × App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 544ms
+     → expected true to be false // Object.is equality
+   × App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 687ms
+     → expected { id: 'existing-1', …(6) } to deeply equal { id: 'existing-1', …(5) }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/App.four-in-one.test.tsx:214:49
+    212|   finishes[2]({ok:true,files:save.mock.calls[2][0]});
+    213|   await act(async()=>{await second;});
+    214|   expect(capturedWorkspace().templateBatchBusy).toBe(false);
+       |                                                 ^
+    215|  });
+    216|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence
+AssertionError: expected { id: 'existing-1', …(6) } to deeply equal { id: 'existing-1', …(5) }
+
+- Expected
++ Received
+
+@@ -2,9 +2,10 @@
+    "data": {
+      "html": "<h1>Executive Client Audit Document</h1><p><strong>100% Yours on Your Machine:</strong> Prepared locally with zero cloud telemetry or recurring seat fees.</p><h2>1. Where Margin Is Leaking Today</h2><ul><li><p>Third-party platform commissions, manual spreadsheet reconciliations, and recurring SaaS seat overhead.</p></li></ul><h2>2. 30-Day Sovereign Recovery Plan</h2><p>Consolidate documents, spreadsheets, presentations, and notebooks inside a single local device vault.</p>",
+    },
+    "id": "existing-1",
+    "kind": "document",
+-   "name": "Executive Client Audit Document",
++   "name": "Renamed after save began",
++   "starred": true,
+    "templateId": "executive-audit-doc",
+-   "updatedAt": "2026-10-22T00:00:00.000Z",
++   "updatedAt": "2026-10-22T12:38:44.491Z",
+  }
+
+ ❯ src/App.four-in-one.test.tsx:229:24
+    227|   let result:EnsureTemplatesResult|undefined;await act(async()=>{resul…
+    228|   const acknowledged=requireSuccess(result).files.find(file=>file.id==…
+    229|   expect(acknowledged).toEqual(savedPayload.find(file=>file.id===exist…
+       |                        ^
+    230|   expect(capturedWorkspace().files.find(file=>file.id===existing[0].id…
+    231|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 10 passed (12)
+   Start at  08:37:56
+   Duration  48.10s (transform 7.28s, setup 0ms, collect 25.89s, tests 4.81s, environment 16.25s, prepare 359ms)

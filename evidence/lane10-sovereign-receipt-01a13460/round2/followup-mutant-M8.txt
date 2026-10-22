@@ -1,0 +1,89 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (12 tests | 3 failed) 9066ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 203ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 122ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds  312ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 133ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 59ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 264ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  1271ms
+   × App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 105ms
+     → expected [] to include 'legacy-exact'
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 294ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 223ms
+   × App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 5030ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 1047ms
+     → Expected App to render Workspace.
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-theme[39m=[32m"paper"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id
+AssertionError: expected [] to include 'legacy-exact'
+ ❯ src/App.four-in-one.test.tsx:158:31
+    156|   let result:EnsureTemplatesResult|undefined;await act(async()=>{resul…
+    157|   const success=requireSuccess(result);
+    158|   expect(success.existingIds).toContain('legacy-exact');
+       |                               ^
+    159|   expect(success.createdIds).toHaveLength(3);
+    160|   expect(capturedWorkspace().files.filter(file=>file.kind===seed.kind&…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/App.four-in-one.test.tsx:189:2
+    187|  });
+    188|
+    189|  it('awaits a prior ordinary write and keeps busy true until two queue…
+       |  ^
+    190|   const finishes:Array<(value:SaveResult)=>void>=[];
+    191|   const save=vi.fn<SaveFunction>(()=>new Promise(resolve=>finishes.pus…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence
+Error: Expected App to render Workspace.
+
+Ignored nodes: comments, script, style
+<html
+  data-theme="paper"
+>
+  <head />
+  <body>
+    <div />
+  </body>
+</html>
+ ❯ capturedWorkspace src/App.four-in-one.test.tsx:17:79
+     15| afterEach(()=>{cleanup();vi.restoreAllMocks();});
+     16|
+     17| const capturedWorkspace=():CapturedWorkspaceProps=>{if(!workspace.prop…
+       |                                                                               ^
+     18| const waitUntilReady=async()=>waitFor(()=>expect(capturedWorkspace().r…
+     19| type SaveFunction=NonNullable<Window['office']>['save'];
+ ❯ src/App.four-in-one.test.tsx:18:50
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../../products/folio-office/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 9 passed (12)
+   Start at  08:41:27
+   Duration  18.56s (transform 1.55s, setup 0ms, collect 5.08s, tests 9.07s, environment 2.47s, prepare 370ms)

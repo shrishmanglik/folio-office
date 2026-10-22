@@ -1,0 +1,25 @@
+MEMORY_AVAILABLE_MB=5029
+Thu Oct 22 01:22:17 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 610.71                 KMD Version: 610.71        CUDA UMD Version: 13.3     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5060 ...  WDDM  |   00000000:01:00.0  On |                  N/A |
+| N/A   57C    P2              8W /   74W |     592MiB /   8151MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A           12920    C+G   ...s\Python\Python313\python.exe      N/A      |
+|    0   N/A  N/A           15668    C+G   ...s\Python\Python313\python.exe      N/A      |
+|    0   N/A  N/A           20500    C+G   ...1g1gvanyjgm\WhatsApp.Root.exe      N/A      |
+|    0   N/A  N/A           32900    C+G   C:\Windows\explorer.exe               N/A      |
++-----------------------------------------------------------------------------------------+
+{"status":"PASS","views":16,"captures":7,"errors":0,"cleanup":{"browserClosed":true,"browserServerClosed":true,"serverExit":null,"serverSignal":"SIGTERM"}}

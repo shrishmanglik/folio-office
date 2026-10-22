@@ -1,0 +1,14 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (12 tests) 4020ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  1634ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes  434ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available  306ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish  438ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence  442ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  08:40:47
+   Duration  35.72s (transform 3.49s, setup 0ms, collect 18.28s, tests 4.02s, environment 12.31s, prepare 237ms)

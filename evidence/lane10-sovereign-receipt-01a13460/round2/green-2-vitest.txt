@@ -1,0 +1,14 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (11 tests) 3869ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file  1433ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes  491ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available  467ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (20 tests) 1875ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  665ms
+
+ Test Files  2 passed (2)
+      Tests  31 passed (31)
+   Start at  08:21:05
+   Duration  22.75s (transform 3.09s, setup 0ms, collect 11.18s, tests 5.74s, environment 4.48s, prepare 319ms)

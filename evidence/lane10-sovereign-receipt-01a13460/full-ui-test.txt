@@ -1,0 +1,15 @@
+MEMORY_AVAILABLE_MB=4265
+
+> folio-office@0.8.0 test:ui
+> vitest run
+
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ✓ src/FolioSovereignCommandSuite.test.tsx (20 tests) 640ms
+ ✓ src/App.four-in-one.test.tsx (6 tests) 335ms
+
+ Test Files  2 passed (2)
+      Tests  26 passed (26)
+   Start at  01:19:03
+   Duration  4.63s (transform 357ms, setup 0ms, collect 1.51s, tests 975ms, environment 1.55s, prepare 137ms)

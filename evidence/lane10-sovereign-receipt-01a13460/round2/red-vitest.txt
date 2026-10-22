@@ -1,0 +1,560 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx (20 tests | 4 failed) 1568ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  531ms
+   ✓ Folio interactive financial and seat-tax simulator > updates cash flow and rounded margin as revenue and burn change 74ms
+   ✓ Folio interactive financial and seat-tax simulator > reports a loss and handles zero or cleared revenue without a non-finite margin 71ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 5 seats 24ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 0 seats 39ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for -2 seats 27ms
+   ✓ Folio interactive financial and seat-tax simulator > opens an editable spreadsheet with the current inputs and a working cash-flow formula 152ms
+   ✓ Folio interactive financial and seat-tax simulator > uses the same one-seat savings floor in the generated grid 29ms
+   ✓ Folio interactive financial and seat-tax simulator > keeps the simulated sheet action disabled until the workspace is ready 79ms
+   × Folio interactive financial and seat-tax simulator > renders the zero-rent strip, preserves individual template launch, and keeps the local AI workbench 61ms
+     → expected "spy" to be called with arguments: [ 'notebook', …(3) ]
+
+Received:
+
+  1st spy call:
+
+  [
+    "notebook",
+    "Research & Engineering Notebook",
+-   Any<Object>,
+-   "research-eng-notebook",
++   {
++     "pages": [
++       {
++         "id": "eng-1",
++         "text": "# Research & Engineering Notebook
++
++ - Storage: 100% Local Device Vault
++ - Local AI Loopback: http://127.0.0.1:11434 (Qwen 2.5 / Llama 3.2)
++ - Formula Audit: 0 #REF!, 0 #DIV/0!, 0 #NAME?",
++         "title": "Architecture & Benchmark Log",
++       },
++       {
++         "id": "eng-2",
++         "text": "All exported .docx, .xlsx, and .pptx packages stay under local custody.",
++         "title": "Deliverable Verification Notes",
++       },
++     ],
++   },
+  ]
+
+
+Number of calls: 1
+
+   ✓ four-in-one persisted receipt > without a persistence callback reports preview-only state and never claims files were saved or copied 41ms
+   × four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied 23ms
+     → expected false to be true // Object.is equality
+   × four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is rejected 40ms
+     → expected 2 to be 13 // Object.is equality
+   × four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is missing 31ms
+     → expected 2 to be 13 // Object.is equality
+   ✓ four-in-one persisted receipt > never claims saved or copied when persistence fails 45ms
+   ✓ four-in-one persisted receipt > binds a pending write to the persona selected when it began 40ms
+   ✓ four-in-one persisted receipt > revalidates storage on clipboard retry and reports zero new files for the existing acknowledgement 134ms
+   ✓ four-in-one persisted receipt > serializes the actual acknowledged IDs, kinds, and renamed files with illustrative cost boundaries 51ms
+   ✓ four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with incomplete files 36ms
+   ✓ four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with duplicate IDs files 36ms
+ ❯ src/App.four-in-one.test.tsx (10 tests | 3 failed) 3537ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 196ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 116ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 133ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 53ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 65ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 171ms
+   × App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 1550ms
+     → expected [ …(4) ] to have a length of 3 but got 4
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 109ms
+   × App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 36ms
+     → expected { ok: false, …(1) } to deeply equal { ok: false, …(1) }
+   × App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 1104ms
+     → expected undefined to be true // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-theme[39m=[32m"paper"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"office-app"[39m
+        [33mdata-testid[39m=[32m"folio-full-suite-os"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"ags-theme-switcher"[39m
+          [33mdata-active-theme[39m=[32m"paper"[39m
+          [33mdata-slot[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-controls[39m=[32m"ags-theme-panel"[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"Theme: Warm Archival Paper. Choose reading atmosphere"[39m
+            [33mclass[39m=[32m"ags-theme-switcher__trigger"[39m
+            [33mdata-testid[39m=[32m"canvas-theme-switcher"[39m
+            [33mdata-theme-trigger[39m=[32m"paper"[39m
+            [33mstyle[39m=[32m"width: 44px; height: 44px; min-width: 44px; min-height: 44px;"[39m
+            [33mtitle[39m=[32m"Reading atmosphere: Warm Archival Paper"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-eye"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"16"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"16"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"12"[39m
+                [33mcy[39m=[32m"12"[39m
+                [33mr[39m=[32m"3"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<aside[39m
+          [33mclass[39m=[32m"sidebar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"workspace-name"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"workspace-mark"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-layout-grid"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"22"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"22"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"3"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"14"[39m
+                  [33my[39m=[32m"3"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"14"[39m
+                  [33my[39m=[32m"14"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<span>[39m
+              [0mFolio Office[0m
+              [36m<small>[39m
+                [0m100% YOURS ON YOUR MACHINE[0m
+              [36m</small>[39m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"new-button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33mclass[39m=[32m"lucide lucide-plus"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"18"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"18"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M5 12h14"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 5v14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0mCreate new[0m
+          [36m</button>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-label"[39m
+          [36m>[39m
+            [0mWORKSPACE[0m
+          [36m</div>[39m
+          [36m<nav>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"active"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-layout-grid"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"3"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[3...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file
+AssertionError: expected [ …(4) ] to have a length of 3 but got 4
+
+- Expected
++ Received
+
+- 3
++ 4
+
+ ❯ src/App.four-in-one.test.tsx:143:35
+    141|   let first:EnsureTemplatesResult|undefined;await act(async()=>{first=…
+    142|   const firstSuccess=requireSuccess(first);
+    143|   expect(firstSuccess.createdIds).toHaveLength(3);
+       |                                   ^
+    144|   expect(firstSuccess.existingIds).toEqual([originalId]);
+    145|   expect(firstSuccess.files.every(file=>Boolean(file.templateId))).toB…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes
+AssertionError: expected { ok: false, …(1) } to deeply equal { ok: false, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "error": "Workspace is still opening.",
++   "error": "Cannot read properties of undefined (reading 'ok')",
+    "ok": false,
+  }
+
+ ❯ src/App.four-in-one.test.tsx:168:17
+    166|   render(<App/>);
+    167|   let early:EnsureTemplatesResult|undefined;await act(async()=>{early=…
+    168|   expect(early).toEqual({ok:false,error:'Workspace is still opening.'}…
+       |                 ^
+    169|   await act(async()=>finishLoad([]));await waitUntilReady();
+    170|   const supplied={nested:{value:'original'}};
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available
+AssertionError: expected undefined to be true // Object.is equality
+
+Ignored nodes: comments, script, style
+<html
+  data-theme="paper"
+>
+  <head />
+  <body>
+    <div>
+      <div
+        class="office-app"
+        data-testid="folio-full-suite-os"
+      >
+        <div
+          class="ags-theme-switcher"
+          data-active-theme="paper"
+          data-slot="root"
+        >
+          <button
+            aria-controls="ags-theme-panel"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            aria-label="Theme: Warm Archival Paper. Choose reading atmosphere"
+            class="ags-theme-switcher__trigger"
+            data-testid="canvas-theme-switcher"
+            data-theme-trigger="paper"
+            style="width: 44px; height: 44px; min-width: 44px; min-height: 44px;"
+            title="Reading atmosphere: Warm Archival Paper"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-eye"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
+            </svg>
+          </button>
+        </div>
+        <aside
+          class="sidebar"
+        >
+          <div
+            class="workspace-name"
+          >
+            <div
+              class="workspace-mark"
+            >
+              <svg
+                class="lucide lucide-layout-grid"
+                fill="none"
+                height="22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="3"
+                  y="3"
+                />
+                <rect
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="14"
+                  y="3"
+                />
+                <rect
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="14"
+                  y="14"
+                />
+                <rect
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="3"
+                  y="14"
+                />
+              </svg>
+            </div>
+            <span>
+              Folio Office
+              <small>
+                100% YOURS ON YOUR MACHINE
+              </small>
+            </span>
+          </div>
+          <button
+            class="new-button"
+          >
+            <svg
+              class="lucide lucide-plus"
+              fill="none"
+              height="18"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14"
+              />
+              <path
+                d="M12 5v14"
+              />
+            </svg>
+            Create new
+          </button>
+          <div
+            class="nav-label"
+          >
+            WORKSPACE
+          </div>
+          <nav>
+            <button
+              class="active"
+            >
+              <svg
+                class="lucide lucide-layout-grid"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="3"
+                  y="3"
+                />
+                <rect
+                  height=[3...
+
+- Expected:
+true
+
++ Received:
+undefined
+
+ ❯ src/App.four-in-one.test.tsx:180:140
+    178|   let finishSave!:(value:SaveResult)=>void;const save=vi.fn<SaveFuncti…
+    179|   Object.defineProperty(window,'office',{configurable:true,value:{load…
+    180|   let pending!:Promise<EnsureTemplatesResult>;act(()=>{pending=ensure(…
+       |                                                                                                                                            ^
+    181|   const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];const before=capturedWorkspa…
+    182|   act(()=>capturedWorkspace().onCreate(seed.kind,seed.name,seed.data,s…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../../products/folio-office/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > Folio interactive financial and seat-tax simulator > renders the zero-rent strip, preserves individual template launch, and keeps the local AI workbench
+AssertionError: expected "spy" to be called with arguments: [ 'notebook', …(3) ]
+
+Received:
+
+  1st spy call:
+
+  [
+    "notebook",
+    "Research & Engineering Notebook",
+-   Any<Object>,
+-   "research-eng-notebook",
++   {
++     "pages": [
++       {
++         "id": "eng-1",
++         "text": "# Research & Engineering Notebook
++
++ - Storage: 100% Local Device Vault
++ - Local AI Loopback: http://127.0.0.1:11434 (Qwen 2.5 / Llama 3.2)
++ - Formula Audit: 0 #REF!, 0 #DIV/0!, 0 #NAME?",
++         "title": "Architecture & Benchmark Log",
++       },
++       {
++         "id": "eng-2",
++         "text": "All exported .docx, .xlsx, and .pptx packages stay under local custody.",
++         "title": "Deliverable Verification Notes",
++       },
++     ],
++   },
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:132:20
+    130|   expect(screen.getByTestId('four-in-one-workspace-deck')).toBeTruthy(…
+    131|   fireEvent.click(screen.getByTestId('launch-four-in-one-notebook'));
+    132|   expect(onCreate).toHaveBeenCalledWith('notebook','Research & Enginee…
+       |                    ^
+    133|
+    134|   expect(screen.getByTestId('private-local-ai-assistant-workbench')).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:167:142
+    165|   fireEvent.click(button);fireEvent.click(button);
+    166|   expect(button.disabled).toBe(true);
+    167|   for(const pillar of FOLIO_FOUR_IN_ONE_PILLARS)expect((screen.getByTe…
+       |                                                                                                                                              ^
+    168|   expect(onEnsureTemplates).toHaveBeenCalledOnce();
+    169|   expect(onEnsureTemplates.mock.calls[0][0]).toEqual(FOLIO_FOUR_IN_ONE…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is rejected
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is missing
+AssertionError: expected 2 to be 13 // Object.is equality
+
+- Expected
++ Received
+
+- 13
++ 2
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:193:25
+    191|   const fallback=screen.getByTestId('copy-four-in-one-sovereign-receip…
+    192|   expect(fallback.readOnly).toBe(true);
+    193|   expect(fallback.rows).toBe(13);
+       |                         ^
+    194|   expect(fallback.value).toBe(expectedReceipt());
+    195|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  7 failed | 23 passed (30)
+   Start at  08:14:42
+   Duration  40.98s (transform 5.33s, setup 0ms, collect 18.48s, tests 5.11s, environment 15.97s, prepare 557ms)
