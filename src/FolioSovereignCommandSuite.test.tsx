@@ -1,10 +1,34 @@
 // @vitest-environment jsdom
 import {afterEach,describe,expect,it,vi}from'vitest';
-import {cleanup,fireEvent,render,screen,within}from'@testing-library/react';
+import {cleanup,fireEvent,render,screen,waitFor,within}from'@testing-library/react';
 import {FormulaEngine}from'../shared/formulas.mjs';
-import FolioSovereignCommandSuite,{FOLIO_COMMAND_WORKSPACES,FOLIO_NATIVE_PRESETS}from'./FolioSovereignCommandSuite';
+import FolioSovereignCommandSuite,{FOLIO_COMMAND_WORKSPACES,FOLIO_FOUR_IN_ONE_PILLARS,FOLIO_NATIVE_PRESETS}from'./FolioSovereignCommandSuite';
+import type{EnsureTemplatesResult,FolioTemplateSeed,OfficeFile}from'./types';
 
-afterEach(cleanup);
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+
+const deferred=<T,>()=>{let resolve!:(value:T)=>void;let reject!:(reason?:unknown)=>void;const promise=new Promise<T>((yes,no)=>{resolve=yes;reject=no;});return{promise,resolve,reject};};
+const acknowledgedFiles=():OfficeFile[]=>FOLIO_FOUR_IN_ONE_PILLARS.map((seed,index)=>({
+ id:`template-${index+1}`,
+ templateId:seed.templateId,
+ kind:seed.kind,
+ name:seed.name,
+ data:seed.data,
+ updatedAt:'2026-10-22T00:00:00.000Z',
+}));
+const expectedReceipt=(files=acknowledgedFiles(),createdIds=files.map(file=>file.id),existingIds:string[]=[]):string=>[
+ 'Folio Office 4-in-1 Sovereign Template Receipt',
+ 'Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)',
+ 'Illustrative annual cloud-seat fee comparison: $300/yr',
+ 'Illustrative five-year comparison: $1,500 / 5 yrs saved',
+ 'Cost boundary: Excludes future acquisition price and buyer hardware costs.',
+ 'Storage: browser-preview',
+ `Created File IDs: ${createdIds.length?createdIds.join(' | '):'none'}`,
+ `Existing File IDs: ${existingIds.length?existingIds.join(' | '):'none'}`,
+ 'Acknowledged Files:',
+ ...files.map(file=>`${file.kind} | ${file.name} | ${file.id}`),
+].join('\n');
+const installClipboard=(writeText:ReturnType<typeof vi.fn>)=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText}});
 
 describe('Folio interactive financial and seat-tax simulator',()=>{
  it('starts inside the workspace panel with the default scenario and preserves existing controls',()=>{
@@ -92,7 +116,7 @@ describe('Folio interactive financial and seat-tax simulator',()=>{
   expect(onCreate).toHaveBeenCalledOnce();
  });
 
- it('renders the zero-rent annual tax killer strip, tactile four-in-one workspace deck, and 100% on-device local AI workbench',()=>{
+ it('renders the zero-rent strip, preserves individual template launch, and keeps the local AI workbench',()=>{
   const onCreate=vi.fn();
   render(<FolioSovereignCommandSuite onCreate={onCreate}/>);
   expect(screen.getByTestId('zero-rent-annual-tax-killer-strip')).toBeTruthy();
@@ -106,15 +130,148 @@ describe('Folio interactive financial and seat-tax simulator',()=>{
   expect(screen.getByTestId('four-in-one-workspace-deck')).toBeTruthy();
   fireEvent.click(screen.getByTestId('launch-four-in-one-notebook'));
   expect(onCreate).toHaveBeenCalledWith('notebook','Research & Engineering Notebook',expect.any(Object));
-  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
-  expect(onCreate).toHaveBeenCalledWith('document','Executive Client Audit Document',expect.any(Object));
-  expect(onCreate).toHaveBeenCalledWith('spreadsheet','Live Formula & Margin Spreadsheet',expect.any(Object));
-  expect(onCreate).toHaveBeenCalledWith('presentation','Board Pitch Presentation Deck',expect.any(Object));
 
   expect(screen.getByTestId('private-local-ai-assistant-workbench')).toBeTruthy();
   fireEvent.click(screen.getByTestId('local-ai-task-pill-presentation-deck'));
   expect(screen.getByTestId('local-ai-execution-output').textContent).toContain('127.0.0.1:11434');
   fireEvent.click(screen.getByTestId('local-ai-apply-to-file-btn'));
   expect(onCreate).toHaveBeenCalledWith('presentation','3-Bullet Board Narrative Deck',expect.any(Object));
+ });
+});
+
+describe('four-in-one persisted receipt',()=>{
+ it('without a persistence callback reports preview-only state and never claims files were saved or copied',async()=>{
+  const writeText=vi.fn().mockResolvedValue(undefined);installClipboard(writeText);
+  render(<FolioSovereignCommandSuite/>);
+
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+
+  const status=await screen.findByTestId('copy-four-in-one-sovereign-receipt-status');
+  expect(status.textContent).toMatch(/preview/i);
+  expect(status.textContent).toMatch(/not saved/i);
+  expect(status.textContent).toMatch(/not copied/i);
+  expect(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn').textContent).not.toMatch(/saved|copied/i);
+  expect(writeText).not.toHaveBeenCalled();
+ });
+
+ it('disables duplicate launches while persistence is pending and waits for clipboard before claiming copied',async()=>{
+  const save=deferred<EnsureTemplatesResult>();
+  const copy=deferred<void>();
+  const onEnsureTemplates=vi.fn<(seeds:readonly FolioTemplateSeed[])=>Promise<EnsureTemplatesResult>>(()=>save.promise);
+  const writeText=vi.fn(()=>copy.promise);installClipboard(writeText);
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+  const button=screen.getByTestId('copy-four-in-one-sovereign-receipt-btn')as HTMLButtonElement;
+
+  fireEvent.click(button);fireEvent.click(button);
+  expect(button.disabled).toBe(true);
+  expect(onEnsureTemplates).toHaveBeenCalledOnce();
+  expect(onEnsureTemplates.mock.calls[0][0]).toEqual(FOLIO_FOUR_IN_ONE_PILLARS);
+  expect(writeText).not.toHaveBeenCalled();
+
+  const files=acknowledgedFiles();
+  save.resolve({ok:true,files,createdIds:files.map(file=>file.id),existingIds:[],storage:'browser-preview'});
+  await waitFor(()=>expect(writeText).toHaveBeenCalledExactlyOnceWith(expectedReceipt(files)));
+  expect(button.textContent).not.toMatch(/copied/i);
+  copy.resolve();
+  await waitFor(()=>expect(button.textContent).toMatch(/copied/i));
+ });
+
+ it.each(['rejected','missing']as const)('exposes the exact receipt for manual copy when clipboard is %s',async(mode)=>{
+  const onEnsureTemplates=vi.fn().mockResolvedValue({ok:true,files:acknowledgedFiles(),createdIds:['template-1','template-2','template-3','template-4'],existingIds:[],storage:'browser-preview'});
+  if(mode==='rejected')installClipboard(vi.fn().mockRejectedValue(new Error('denied')));
+  else Object.defineProperty(navigator,'clipboard',{configurable:true,value:undefined});
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+
+  const status=await screen.findByTestId('copy-four-in-one-sovereign-receipt-status');
+  expect(status.textContent).toMatch(/files saved/i);
+  expect(status.textContent).toMatch(/not copied/i);
+  const fallback=screen.getByTestId('copy-four-in-one-sovereign-receipt-fallback')as HTMLTextAreaElement;
+  expect(fallback.readOnly).toBe(true);
+  expect(fallback.value).toBe(expectedReceipt());
+ });
+
+ it('never claims saved or copied when persistence fails',async()=>{
+  const writeText=vi.fn().mockResolvedValue(undefined);installClipboard(writeText);
+  const onEnsureTemplates=vi.fn().mockResolvedValue({ok:false,error:'Save failed'});
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+
+  const status=await screen.findByTestId('copy-four-in-one-sovereign-receipt-status');
+  expect(status.textContent).toMatch(/save failed/i);
+  expect(status.textContent).not.toMatch(/files saved|copied/i);
+  expect(writeText).not.toHaveBeenCalled();
+ });
+
+ it('binds a pending write to the persona selected when it began',async()=>{
+  const save=deferred<EnsureTemplatesResult>();
+  const onEnsureTemplates=vi.fn<(seeds:readonly FolioTemplateSeed[])=>Promise<EnsureTemplatesResult>>(()=>save.promise);
+  const writeText=vi.fn().mockResolvedValue(undefined);installClipboard(writeText);
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+  fireEvent.click(screen.getByTestId('zero-rent-persona-pill-family-business'));
+  save.resolve({ok:true,files:acknowledgedFiles(),createdIds:['template-1','template-2','template-3','template-4'],existingIds:[],storage:'browser-preview'});
+
+  await waitFor(()=>expect(writeText).toHaveBeenCalledOnce());
+  expect(writeText.mock.calls[0][0]).toBe(expectedReceipt());
+  expect(writeText.mock.calls[0][0]).not.toContain('Persona: 5-Person Family Business');
+  expect(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn').textContent).not.toMatch(/copied/i);
+  expect(screen.getByTestId('copy-four-in-one-sovereign-receipt-status').textContent).toMatch(/ready for the current persona/i);
+ });
+
+ it('revalidates storage on clipboard retry and reports zero new files for the existing acknowledgement',async()=>{
+  const writeText=vi.fn().mockRejectedValueOnce(new Error('denied')).mockResolvedValueOnce(undefined);installClipboard(writeText);
+  const files=acknowledgedFiles();
+  const renamed=files.map((file,index)=>index?file:{...file,name:'My edited executive audit'});
+  const onEnsureTemplates=vi.fn()
+   .mockResolvedValueOnce({ok:true,files,createdIds:files.map(file=>file.id),existingIds:[],storage:'browser-preview'})
+   .mockResolvedValueOnce({ok:true,files:renamed,createdIds:[],existingIds:renamed.map(file=>file.id),storage:'browser-preview'});
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+  const button=screen.getByTestId('copy-four-in-one-sovereign-receipt-btn');
+
+  fireEvent.click(button);
+  await screen.findByTestId('copy-four-in-one-sovereign-receipt-fallback');
+  fireEvent.click(button);
+
+  await waitFor(()=>expect(writeText).toHaveBeenCalledTimes(2));
+  expect(onEnsureTemplates).toHaveBeenCalledTimes(2);
+  expect(writeText.mock.calls[1][0]).toBe(expectedReceipt(renamed,[],renamed.map(file=>file.id)));
+  expect(writeText.mock.calls[1][0]).toContain('My edited executive audit');
+  expect((await screen.findByTestId('copy-four-in-one-sovereign-receipt-status')).textContent).toMatch(/copied/i);
+  expect(button.textContent).not.toMatch(/created|recreated|launched/i);
+ });
+
+ it('serializes the actual acknowledged IDs, kinds, and renamed files with illustrative cost boundaries',async()=>{
+  const files=acknowledgedFiles().map((file,index)=>index?file:{...file,name:'My edited executive audit'});
+  const onEnsureTemplates=vi.fn().mockResolvedValue({ok:true,files,createdIds:[],existingIds:files.map(file=>file.id),storage:'browser-preview'});
+  const writeText=vi.fn().mockResolvedValue(undefined);installClipboard(writeText);
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+
+  await waitFor(()=>expect(writeText).toHaveBeenCalledExactlyOnceWith(expectedReceipt(files,[],files.map(file=>file.id))));
+  const receipt=writeText.mock.calls[0][0];
+  expect(receipt).toContain('document | My edited executive audit | template-1');
+  expect(receipt).not.toContain('Annual Cloud Tax Eliminated');
+  expect(receipt).not.toContain('5-Year Capital Retained');
+ });
+
+ it.each([
+  ['incomplete',acknowledgedFiles().slice(0,3)],
+  ['duplicate IDs',[...acknowledgedFiles().slice(0,3),acknowledgedFiles()[0]]],
+ ] as const)('refuses an unconfirmed ok acknowledgement with %s files',async(_case,files)=>{
+  const writeText=vi.fn().mockResolvedValue(undefined);installClipboard(writeText);
+  const onEnsureTemplates=vi.fn().mockResolvedValue({ok:true,files:[...files],createdIds:[...files].map(file=>file.id),existingIds:[],storage:'browser-preview'});
+  render(<FolioSovereignCommandSuite onEnsureTemplates={onEnsureTemplates}/>);
+
+  fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn'));
+
+  const status=await screen.findByTestId('copy-four-in-one-sovereign-receipt-status');
+  expect(status.textContent).toMatch(/unconfirmed/i);
+  expect(status.textContent).not.toMatch(/copied/i);
+  expect(writeText).not.toHaveBeenCalled();
  });
 });

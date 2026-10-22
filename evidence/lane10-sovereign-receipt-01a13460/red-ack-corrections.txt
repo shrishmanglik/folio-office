@@ -1,0 +1,965 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx (20 tests | 8 failed) 2612ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls 139ms
+   ✓ Folio interactive financial and seat-tax simulator > updates cash flow and rounded margin as revenue and burn change 19ms
+   ✓ Folio interactive financial and seat-tax simulator > reports a loss and handles zero or cleared revenue without a non-finite margin 25ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 5 seats 13ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 0 seats 15ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for -2 seats 11ms
+   ✓ Folio interactive financial and seat-tax simulator > opens an editable spreadsheet with the current inputs and a working cash-flow formula 54ms
+   ✓ Folio interactive financial and seat-tax simulator > uses the same one-seat savings floor in the generated grid 12ms
+   ✓ Folio interactive financial and seat-tax simulator > keeps the simulated sheet action disabled until the workspace is ready 25ms
+   ✓ Folio interactive financial and seat-tax simulator > renders the zero-rent strip, preserves individual template launch, and keeps the local AI workbench 19ms
+   ✓ four-in-one persisted receipt > without a persistence callback reports preview-only state and never claims files were saved or copied 19ms
+   × four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied 1039ms
+     → expected "spy" to be called once with arguments: [ Array(1) ]
+
+Received:
+
+  1st spy call:
+
+  [
+-   "Folio Office 4-in-1 Sovereign Template Receipt
++   "Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt
+  Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)
+- Illustrative annual cloud-seat fee comparison: $300/yr
+- Illustrative five-year comparison: $1,500 / 5 yrs saved
+- Cost boundary: Excludes future acquisition price and buyer hardware costs.
+- Storage: browser-preview
+- Created File IDs: template-1 | template-2 | template-3 | template-4
+- Existing File IDs: none
+- Acknowledged Files:
+- document | Executive Client Audit Document | template-1
+- spreadsheet | Live Formula & Margin Spreadsheet | template-2
+- presentation | Board Pitch Presentation Deck | template-3
+- notebook | Research & Engineering Notebook | template-4",
++ Annual Cloud Tax Eliminated: $300/yr
++ 5-Year Capital Retained: $1,500 / 5 yrs saved
++ Templates Saved: Executive Client Audit Document | Live Formula & Margin Spreadsheet | Board Pitch Presentation Deck | Research & Engineering Notebook
++ Storage: browser-preview",
+  ]
+
+
+Number of calls: 1
+
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"folio-command-title"[39m
+        [33mclass[39m=[32m"folio-command-suite"[39m
+        [33mdata-testid[39m=[32m"folio-command-suite"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"folio-tri-surface-bar"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0m100% Local on Your Machine · Air-Gapped SQLite/File Vault · Deterministic Formula Verifier[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 1 · Local Browser Studio[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0m0 ms Cloud Latency · Instant OOXML & Formula Engine[0m
+              [36m</span>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 2 · Offline Desktop App + Local AI[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mZero Seat Tax · Local GGUF / WebGPU Co-Pilot[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mLocal AI is available only when a compatible local model provider is configured.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 3 · Air-Gapped Vault & Cryptographic Export[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mSHA-256 Verified .docx, .xlsx, .pptx & .pdf[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mDigest verification is reported only after a real export. Vault availability follows the installed desktop provider.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"zero-rent-annual-tax-killer-strip"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mWhy pay Microsoft or Google $300 to $1,500 every year forever just to write documents, crunch numbers, and build slide decks while cloud servers scan your private files?[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"Zero-rent annual tax personas"[39m
+            [33mclass[39m=[32m"folio-native-presets"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-solo-founder"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSolo Founder ($300/yr · $1,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-writer"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Writer ($360/yr · $1,800 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-consultant"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Consultant ($600/yr · $3,000 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-family-business"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m5-Person Family Business ($1,500/yr · $7,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mAnnual Cloud Tax Eliminated[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-annual-saved-readout"[39m
+              [36m>[39m
+                [0m$300/yr[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0m1 seat Microsoft 365 Business Standard + Copilot or Google Workspace at $25/mo = $300/yr vs $0/mo recurring in Folio Office.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m5-Year Capital Retained[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-five-year-saved-readout"[39m
+              [36m>[39m
+                [0m$1,500 / 5 yrs saved[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mFolio Office recurring fee: $0/mo forever.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mHard-Drive Custody Guarantee[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-lockout-hard-drive-guarantee"[39m
+              [36m>[39m
+                [0mBuy Once · Clean Local Files on Your Hard Drive Forever (.docx, .xlsx, .pptx, .json) · Zero Corporate Cloud Scanning · Never Locked Out of Your Own Work[0m
+              [36m</span>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"four-in-one-workspace-deck"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mTactile Four-in-One Workspace Deck · Pre-Loaded With Executive Templates[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m1. Documents[0m
+                [0m · [0m
+                [0m.docx Sovereign Custody[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mExecutive Client Audit Document[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mPre-loaded executive operations and margin diagnostic with a 30-day recovery plan.[0m
+              [36m</small>[39m
+              [36m<button[39m
+                [33mda...
+   × four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is rejected 29ms
+     → expected 'Folio Office 4-in-1 Sovereign Zero-Re…' to be 'Folio Office 4-in-1 Sovereign Templat…' // Object.is equality
+   × four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is missing 31ms
+     → expected 'Folio Office 4-in-1 Sovereign Zero-Re…' to be 'Folio Office 4-in-1 Sovereign Templat…' // Object.is equality
+   ✓ four-in-one persisted receipt > never claims saved or copied when persistence fails 19ms
+   × four-in-one persisted receipt > binds a pending write to the persona selected when it began 25ms
+     → expected 'Folio Office 4-in-1 Sovereign Zero-Re…' to be 'Folio Office 4-in-1 Sovereign Templat…' // Object.is equality
+   × four-in-one persisted receipt > revalidates storage on clipboard retry and reports zero new files for the existing acknowledgement 44ms
+     → expected "spy" to be called 2 times, but got 1 times
+   × four-in-one persisted receipt > serializes the actual acknowledged IDs, kinds, and renamed files with illustrative cost boundaries 1029ms
+     → expected "spy" to be called once with arguments: [ Array(1) ]
+
+Received:
+
+  1st spy call:
+
+  [
+-   "Folio Office 4-in-1 Sovereign Template Receipt
++   "Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt
+  Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)
+- Illustrative annual cloud-seat fee comparison: $300/yr
+- Illustrative five-year comparison: $1,500 / 5 yrs saved
+- Cost boundary: Excludes future acquisition price and buyer hardware costs.
+- Storage: browser-preview
+- Created File IDs: none
+- Existing File IDs: template-1 | template-2 | template-3 | template-4
+- Acknowledged Files:
+- document | My edited executive audit | template-1
+- spreadsheet | Live Formula & Margin Spreadsheet | template-2
+- presentation | Board Pitch Presentation Deck | template-3
+- notebook | Research & Engineering Notebook | template-4",
++ Annual Cloud Tax Eliminated: $300/yr
++ 5-Year Capital Retained: $1,500 / 5 yrs saved
++ Templates Saved: Executive Client Audit Document | Live Formula & Margin Spreadsheet | Board Pitch Presentation Deck | Research & Engineering Notebook
++ Storage: browser-preview",
+  ]
+
+
+Number of calls: 1
+
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"folio-command-title"[39m
+        [33mclass[39m=[32m"folio-command-suite"[39m
+        [33mdata-testid[39m=[32m"folio-command-suite"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"folio-tri-surface-bar"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0m100% Local on Your Machine · Air-Gapped SQLite/File Vault · Deterministic Formula Verifier[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 1 · Local Browser Studio[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0m0 ms Cloud Latency · Instant OOXML & Formula Engine[0m
+              [36m</span>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 2 · Offline Desktop App + Local AI[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mZero Seat Tax · Local GGUF / WebGPU Co-Pilot[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mLocal AI is available only when a compatible local model provider is configured.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 3 · Air-Gapped Vault & Cryptographic Export[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mSHA-256 Verified .docx, .xlsx, .pptx & .pdf[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mDigest verification is reported only after a real export. Vault availability follows the installed desktop provider.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"zero-rent-annual-tax-killer-strip"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mWhy pay Microsoft or Google $300 to $1,500 every year forever just to write documents, crunch numbers, and build slide decks while cloud servers scan your private files?[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"Zero-rent annual tax personas"[39m
+            [33mclass[39m=[32m"folio-native-presets"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-solo-founder"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSolo Founder ($300/yr · $1,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-writer"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Writer ($360/yr · $1,800 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-consultant"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Consultant ($600/yr · $3,000 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-family-business"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m5-Person Family Business ($1,500/yr · $7,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mAnnual Cloud Tax Eliminated[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-annual-saved-readout"[39m
+              [36m>[39m
+                [0m$300/yr[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0m1 seat Microsoft 365 Business Standard + Copilot or Google Workspace at $25/mo = $300/yr vs $0/mo recurring in Folio Office.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m5-Year Capital Retained[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-five-year-saved-readout"[39m
+              [36m>[39m
+                [0m$1,500 / 5 yrs saved[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mFolio Office recurring fee: $0/mo forever.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mHard-Drive Custody Guarantee[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-lockout-hard-drive-guarantee"[39m
+              [36m>[39m
+                [0mBuy Once · Clean Local Files on Your Hard Drive Forever (.docx, .xlsx, .pptx, .json) · Zero Corporate Cloud Scanning · Never Locked Out of Your Own Work[0m
+              [36m</span>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"four-in-one-workspace-deck"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mTactile Four-in-One Workspace Deck · Pre-Loaded With Executive Templates[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m1. Documents[0m
+                [0m · [0m
+                [0m.docx Sovereign Custody[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mExecutive Client Audit Document[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mPre-loaded executive operations and margin diagnostic with a 30-day recovery plan.[0m
+              [36m</small>[39m
+              [36m<button[39m
+                [33mda...
+   × four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with incomplete files 22ms
+     → expected 'Files saved and receipt copied for So…' to match /unconfirmed/i
+   × four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with duplicate IDs files 20ms
+     → expected 'Files saved and receipt copied for So…' to match /unconfirmed/i
+ ❯ src/App.four-in-one.test.tsx (6 tests | 2 failed) 497ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 61ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 37ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 40ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 20ms
+   × App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 26ms
+     → expected "spy" to be called once, but got 0 times
+   × App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 311ms
+     → expected true to be false // Object.is equality
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails
+AssertionError: expected "spy" to be called once, but got 0 times
+ ❯ src/App.four-in-one.test.tsx:90:16
+     88|   await act(async()=>{result=await ensure();});
+     89|
+     90|   expect(save).toHaveBeenCalledOnce();
+       |                ^
+     91|   expect(save.mock.calls[0][0]).toEqual(existing);
+     92|   expect(result).toEqual({ok:false,error:'Disk unavailable'});
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/App.four-in-one.test.tsx:109:19
+    107|   await waitFor(()=>expect(save).toHaveBeenCalledOnce());
+    108|
+    109|   expect(settled).toBe(false);
+       |                   ^
+    110|   expect(save.mock.calls[0][0].find((file:any)=>file.id===existing[0].…
+    111|   finishSave({ok:true,files:save.mock.calls[0][0]});
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied
+AssertionError: expected "spy" to be called once with arguments: [ Array(1) ]
+
+Received:
+
+  1st spy call:
+
+  [
+-   "Folio Office 4-in-1 Sovereign Template Receipt
++   "Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt
+  Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)
+- Illustrative annual cloud-seat fee comparison: $300/yr
+- Illustrative five-year comparison: $1,500 / 5 yrs saved
+- Cost boundary: Excludes future acquisition price and buyer hardware costs.
+- Storage: browser-preview
+- Created File IDs: template-1 | template-2 | template-3 | template-4
+- Existing File IDs: none
+- Acknowledged Files:
+- document | Executive Client Audit Document | template-1
+- spreadsheet | Live Formula & Margin Spreadsheet | template-2
+- presentation | Board Pitch Presentation Deck | template-3
+- notebook | Research & Engineering Notebook | template-4",
++ Annual Cloud Tax Eliminated: $300/yr
++ 5-Year Capital Retained: $1,500 / 5 yrs saved
++ Templates Saved: Executive Client Audit Document | Live Formula & Margin Spreadsheet | Board Pitch Presentation Deck | Research & Engineering Notebook
++ Storage: browser-preview",
+  ]
+
+
+Number of calls: 1
+
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"folio-command-title"[39m
+        [33mclass[39m=[32m"folio-command-suite"[39m
+        [33mdata-testid[39m=[32m"folio-command-suite"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"folio-tri-surface-bar"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0m100% Local on Your Machine · Air-Gapped SQLite/File Vault · Deterministic Formula Verifier[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 1 · Local Browser Studio[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0m0 ms Cloud Latency · Instant OOXML & Formula Engine[0m
+              [36m</span>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 2 · Offline Desktop App + Local AI[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mZero Seat Tax · Local GGUF / WebGPU Co-Pilot[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mLocal AI is available only when a compatible local model provider is configured.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 3 · Air-Gapped Vault & Cryptographic Export[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mSHA-256 Verified .docx, .xlsx, .pptx & .pdf[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mDigest verification is reported only after a real export. Vault availability follows the installed desktop provider.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"zero-rent-annual-tax-killer-strip"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mWhy pay Microsoft or Google $300 to $1,500 every year forever just to write documents, crunch numbers, and build slide decks while cloud servers scan your private files?[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"Zero-rent annual tax personas"[39m
+            [33mclass[39m=[32m"folio-native-presets"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-solo-founder"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSolo Founder ($300/yr · $1,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-writer"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Writer ($360/yr · $1,800 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-consultant"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Consultant ($600/yr · $3,000 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-family-business"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m5-Person Family Business ($1,500/yr · $7,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mAnnual Cloud Tax Eliminated[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-annual-saved-readout"[39m
+              [36m>[39m
+                [0m$300/yr[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0m1 seat Microsoft 365 Business Standard + Copilot or Google Workspace at $25/mo = $300/yr vs $0/mo recurring in Folio Office.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m5-Year Capital Retained[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-five-year-saved-readout"[39m
+              [36m>[39m
+                [0m$1,500 / 5 yrs saved[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mFolio Office recurring fee: $0/mo forever.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mHard-Drive Custody Guarantee[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-lockout-hard-drive-guarantee"[39m
+              [36m>[39m
+                [0mBuy Once · Clean Local Files on Your Hard Drive Forever (.docx, .xlsx, .pptx, .json) · Zero Corporate Cloud Scanning · Never Locked Out of Your Own Work[0m
+              [36m</span>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"four-in-one-workspace-deck"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mTactile Four-in-One Workspace Deck · Pre-Loaded With Executive Templates[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m1. Documents[0m
+                [0m · [0m
+                [0m.docx Sovereign Custody[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mExecutive Client Audit Document[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mPre-loaded executive operations and margin diagnostic with a 30-day recovery plan.[0m
+              [36m</small>[39m
+              [36m<button[39m
+                [33mda...
+ ❯ src/FolioSovereignCommandSuite.test.tsx:173:39
+    171|   const files=acknowledgedFiles();
+    172|   save.resolve({ok:true,files,createdIds:files.map(file=>file.id),exis…
+    173|   await waitFor(()=>expect(writeText).toHaveBeenCalledExactlyOnceWith(…
+       |                                       ^
+    174|   expect(button.textContent).not.toMatch(/copied/i);
+    175|   copy.resolve();
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../../products/folio-office/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is rejected
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is missing
+AssertionError: expected 'Folio Office 4-in-1 Sovereign Zero-Re…' to be 'Folio Office 4-in-1 Sovereign Templat…' // Object.is equality
+
+- Expected
++ Received
+
+- Folio Office 4-in-1 Sovereign Template Receipt
++ Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt
+  Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)
+- Illustrative annual cloud-seat fee comparison: $300/yr
+- Illustrative five-year comparison: $1,500 / 5 yrs saved
+- Cost boundary: Excludes future acquisition price and buyer hardware costs.
+- Storage: browser-preview
+- Created File IDs: template-1 | template-2 | template-3 | template-4
+- Existing File IDs: none
+- Acknowledged Files:
+- document | Executive Client Audit Document | template-1
+- spreadsheet | Live Formula & Margin Spreadsheet | template-2
+- presentation | Board Pitch Presentation Deck | template-3
+- notebook | Research & Engineering Notebook | template-4
++ Annual Cloud Tax Eliminated: $300/yr
++ 5-Year Capital Retained: $1,500 / 5 yrs saved
++ Templates Saved: Executive Client Audit Document | Live Formula & Margin Spreadsheet | Board Pitch Presentation Deck | Research & Engineering Notebook
++ Storage: browser-preview
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:192:26
+    190|   const fallback=screen.getByTestId('copy-four-in-one-sovereign-receip…
+    191|   expect(fallback.readOnly).toBe(true);
+    192|   expect(fallback.value).toBe(expectedReceipt());
+       |                          ^
+    193|  });
+    194|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > binds a pending write to the persona selected when it began
+AssertionError: expected 'Folio Office 4-in-1 Sovereign Zero-Re…' to be 'Folio Office 4-in-1 Sovereign Templat…' // Object.is equality
+
+- Expected
++ Received
+
+- Folio Office 4-in-1 Sovereign Template Receipt
++ Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt
+  Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)
+- Illustrative annual cloud-seat fee comparison: $300/yr
+- Illustrative five-year comparison: $1,500 / 5 yrs saved
+- Cost boundary: Excludes future acquisition price and buyer hardware costs.
+- Storage: browser-preview
+- Created File IDs: template-1 | template-2 | template-3 | template-4
+- Existing File IDs: none
+- Acknowledged Files:
+- document | Executive Client Audit Document | template-1
+- spreadsheet | Live Formula & Margin Spreadsheet | template-2
+- presentation | Board Pitch Presentation Deck | template-3
+- notebook | Research & Engineering Notebook | template-4
++ Annual Cloud Tax Eliminated: $300/yr
++ 5-Year Capital Retained: $1,500 / 5 yrs saved
++ Templates Saved: Executive Client Audit Document | Live Formula & Margin Spreadsheet | Board Pitch Presentation Deck | Research & Engineering Notebook
++ Storage: browser-preview
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:219:38
+    217|
+    218|   await waitFor(()=>expect(writeText).toHaveBeenCalledOnce());
+    219|   expect(writeText.mock.calls[0][0]).toBe(expectedReceipt());
+       |                                      ^
+    220|   expect(writeText.mock.calls[0][0]).not.toContain('Persona: 5-Person …
+    221|   expect(screen.getByTestId('copy-four-in-one-sovereign-receipt-btn').…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > revalidates storage on clipboard retry and reports zero new files for the existing acknowledgement
+AssertionError: expected "spy" to be called 2 times, but got 1 times
+ ❯ src/FolioSovereignCommandSuite.test.tsx:240:29
+    238|
+    239|   await waitFor(()=>expect(writeText).toHaveBeenCalledTimes(2));
+    240|   expect(onEnsureTemplates).toHaveBeenCalledTimes(2);
+       |                             ^
+    241|   expect(writeText.mock.calls[1][0]).toBe(expectedReceipt(renamed,[],r…
+    242|   expect(writeText.mock.calls[1][0]).toContain('My edited executive au…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > serializes the actual acknowledged IDs, kinds, and renamed files with illustrative cost boundaries
+AssertionError: expected "spy" to be called once with arguments: [ Array(1) ]
+
+Received:
+
+  1st spy call:
+
+  [
+-   "Folio Office 4-in-1 Sovereign Template Receipt
++   "Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt
+  Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)
+- Illustrative annual cloud-seat fee comparison: $300/yr
+- Illustrative five-year comparison: $1,500 / 5 yrs saved
+- Cost boundary: Excludes future acquisition price and buyer hardware costs.
+- Storage: browser-preview
+- Created File IDs: none
+- Existing File IDs: template-1 | template-2 | template-3 | template-4
+- Acknowledged Files:
+- document | My edited executive audit | template-1
+- spreadsheet | Live Formula & Margin Spreadsheet | template-2
+- presentation | Board Pitch Presentation Deck | template-3
+- notebook | Research & Engineering Notebook | template-4",
++ Annual Cloud Tax Eliminated: $300/yr
++ 5-Year Capital Retained: $1,500 / 5 yrs saved
++ Templates Saved: Executive Client Audit Document | Live Formula & Margin Spreadsheet | Board Pitch Presentation Deck | Research & Engineering Notebook
++ Storage: browser-preview",
+  ]
+
+
+Number of calls: 1
+
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<section[39m
+        [33maria-labelledby[39m=[32m"folio-command-title"[39m
+        [33mclass[39m=[32m"folio-command-suite"[39m
+        [33mdata-testid[39m=[32m"folio-command-suite"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"folio-tri-surface-bar"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0m100% Local on Your Machine · Air-Gapped SQLite/File Vault · Deterministic Formula Verifier[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 1 · Local Browser Studio[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0m0 ms Cloud Latency · Instant OOXML & Formula Engine[0m
+              [36m</span>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 2 · Offline Desktop App + Local AI[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mZero Seat Tax · Local GGUF / WebGPU Co-Pilot[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mLocal AI is available only when a compatible local model provider is configured.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mSurface 3 · Air-Gapped Vault & Cryptographic Export[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mSHA-256 Verified .docx, .xlsx, .pptx & .pdf[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mDigest verification is reported only after a real export. Vault availability follows the installed desktop provider.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"zero-rent-annual-tax-killer-strip"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mWhy pay Microsoft or Google $300 to $1,500 every year forever just to write documents, crunch numbers, and build slide decks while cloud servers scan your private files?[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"Zero-rent annual tax personas"[39m
+            [33mclass[39m=[32m"folio-native-presets"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-solo-founder"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSolo Founder ($300/yr · $1,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-writer"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Writer ($360/yr · $1,800 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-independent-consultant"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mIndependent Consultant ($600/yr · $3,000 / 5 yrs saved)[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mdata-testid[39m=[32m"zero-rent-persona-pill-family-business"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m5-Person Family Business ($1,500/yr · $7,500 / 5 yrs saved)[0m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mAnnual Cloud Tax Eliminated[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-annual-saved-readout"[39m
+              [36m>[39m
+                [0m$300/yr[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0m1 seat Microsoft 365 Business Standard + Copilot or Google Workspace at $25/mo = $300/yr vs $0/mo recurring in Folio Office.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m5-Year Capital Retained[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-rent-five-year-saved-readout"[39m
+              [36m>[39m
+                [0m$1,500 / 5 yrs saved[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mFolio Office recurring fee: $0/mo forever.[0m
+              [36m</small>[39m
+            [36m</article>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0mHard-Drive Custody Guarantee[0m
+              [36m</b>[39m
+              [36m<span[39m
+                [33mdata-testid[39m=[32m"zero-lockout-hard-drive-guarantee"[39m
+              [36m>[39m
+                [0mBuy Once · Clean Local Files on Your Hard Drive Forever (.docx, .xlsx, .pptx, .json) · Zero Corporate Cloud Scanning · Never Locked Out of Your Own Work[0m
+              [36m</span>[39m
+            [36m</article>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"folio-tri-surface"[39m
+          [33mdata-testid[39m=[32m"four-in-one-workspace-deck"[39m
+        [36m>[39m
+          [36m<strong>[39m
+            [0mTactile Four-in-One Workspace Deck · Pre-Loaded With Executive Templates[0m
+          [36m</strong>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"folio-surface-grid"[39m
+          [36m>[39m
+            [36m<article>[39m
+              [36m<b>[39m
+                [0m1. Documents[0m
+                [0m · [0m
+                [0m.docx Sovereign Custody[0m
+              [36m</b>[39m
+              [36m<span>[39m
+                [0mExecutive Client Audit Document[0m
+              [36m</span>[39m
+              [36m<small>[39m
+                [0mPre-loaded executive operations and margin diagnostic with a 30-day recovery plan.[0m
+              [36m</small>[39m
+              [36m<button[39m
+                [33mda...
+ ❯ src/FolioSovereignCommandSuite.test.tsx:255:39
+    253|   fireEvent.click(screen.getByTestId('copy-four-in-one-sovereign-recei…
+    254|
+    255|   await waitFor(()=>expect(writeText).toHaveBeenCalledExactlyOnceWith(…
+       |                                       ^
+    256|   const receipt=writeText.mock.calls[0][0];
+    257|   expect(receipt).toContain('document | My edited executive audit | te…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../../products/folio-office/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../../products/folio-office/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with incomplete files
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with duplicate IDs files
+AssertionError: expected 'Files saved and receipt copied for So…' to match /unconfirmed/i
+
+- Expected:
+/unconfirmed/i
+
++ Received:
+"Files saved and receipt copied for Solo Founder ($300/yr · $1,500 / 5 yrs saved)."
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:273:30
+    271|
+    272|   const status=await screen.findByTestId('copy-four-in-one-sovereign-r…
+    273|   expect(status.textContent).toMatch(/unconfirmed/i);
+       |                              ^
+    274|   expect(status.textContent).not.toMatch(/copied/i);
+    275|   expect(writeText).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  10 failed | 16 passed (26)
+   Start at  00:47:30
+   Duration  8.61s (transform 371ms, setup 0ms, collect 2.34s, tests 3.11s, environment 2.38s, prepare 169ms)

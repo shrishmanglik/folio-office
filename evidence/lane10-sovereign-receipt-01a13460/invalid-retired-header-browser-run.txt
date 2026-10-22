@@ -1,0 +1,25 @@
+MEMORY_AVAILABLE_MB=5125
+Thu Oct 22 01:20:53 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 610.71                 KMD Version: 610.71        CUDA UMD Version: 13.3     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5060 ...  WDDM  |   00000000:01:00.0  On |                  N/A |
+| N/A   57C    P8              4W /   78W |     592MiB /   8151MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A           12920    C+G   ...s\Python\Python313\python.exe      N/A      |
+|    0   N/A  N/A           15668    C+G   ...s\Python\Python313\python.exe      N/A      |
+|    0   N/A  N/A           20500    C+G   ...1g1gvanyjgm\WhatsApp.Root.exe      N/A      |
+|    0   N/A  N/A           32900    C+G   C:\Windows\explorer.exe               N/A      |
++-----------------------------------------------------------------------------------------+
+{"status":"FAIL","views":0,"captures":0,"errors":0,"failure":"The input did not match the regular expression /^Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt/m. Input:\n\n'Folio Office 4-in-1 Sovereign Template Receipt\\n' +\n  'Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)\\n' +\n  'Illustrative annual cloud-seat fee comparison: $300/yr\\n' +\n  'Illustrative five-year comparison: $1,500 / 5 yrs saved\\n' +\n  'Cost boundary: Excludes future acquisition price and buyer hardware costs.\\n' +\n  'Storage: browser-preview\\n' +\n  'Created File IDs: b25dff2c-486d-4f79-96cb-fc699adec4a3 | 31a2eac6-e995-417c-8d83-e036497dec58 | aac9d5ee-0a77-4fc3-802e-119bdcc5e4a6 | 5a90c73f-3063-444a-a55e-68491a776ad9\\n' +\n  'Existing File IDs: none\\n' +\n  'Acknowledged Files:\\n' +\n  'document | Executive Client Audit Document | b25dff2c-486d-4f79-96cb-fc699adec4a3\\n' +\n  'spreadsheet | Live Formula & Margin Spreadsheet | 31a2eac6-e995-417c-8d83-e036497dec58\\n' +\n  'presentation | Board Pitch Presentation Deck | aac9d5ee-0a77-4fc3-802e-119bdcc5e4a6\\n' +\n  'notebook | Research & Engineering Notebook | 5a90c73f-3063-444a-a55e-68491a776ad9'\n","cleanup":{"browserClosed":true,"browserServerClosed":true,"serverExit":null,"serverSignal":"SIGTERM"}}

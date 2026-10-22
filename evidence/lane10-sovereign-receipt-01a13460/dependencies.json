@@ -1,0 +1,22 @@
+{
+  "react": {
+    "installed": "19.3.0",
+    "expected": "19.3.0"
+  },
+  "react-dom": {
+    "installed": "19.3.0",
+    "expected": "19.3.0"
+  },
+  "vitest": {
+    "installed": "3.2.7",
+    "expected": "3.2.7"
+  },
+  "vite": {
+    "installed": "6.4.3",
+    "expected": "6.4.3"
+  },
+  "typescript": {
+    "installed": "5.9.3",
+    "expected": "5.9.3"
+  }
+}

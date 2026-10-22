@@ -1,0 +1,427 @@
+{
+  "sourceHead": "9a178217b7d84c1fd50c5888defc4dded5d60b32",
+  "started": "2026-10-22T05:22:17.889Z",
+  "origin": "http://127.0.0.1:3503",
+  "fixture": "Owned local Vite production build. Main matrix proves real browser localStorage; isolated synthetic window.office cases are labelled adapter proof only. Clipboard is in-page only; no operating-system clipboard, desktop app, provider, preview or live URL.",
+  "views": [
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "theme": "paper",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "1920x1080-paper-sovereign-receipt.jpg"
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "theme": "void",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "theme": "contrast",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "theme": "daltonic",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "paper",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "1440x900-paper-sovereign-receipt.jpg"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "void",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "contrast",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "daltonic",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "theme": "paper",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "1280x800-paper-sovereign-receipt.jpg"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "theme": "void",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "theme": "contrast",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "theme": "daltonic",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "paper",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "390x844-paper-sovereign-receipt.jpg"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "void",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "390x844-void-sovereign-receipt.jpg"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "contrast",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "390x844-contrast-sovereign-receipt.jpg"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "daltonic",
+      "files": 4,
+      "browserStorage": true,
+      "storageWrites": 6,
+      "fallbackCases": 2,
+      "retryDeduplicated": true,
+      "personaStaleGuard": true,
+      "horizontalOverflowPx": 0,
+      "emDashes": 0,
+      "capture": "390x844-daltonic-sovereign-receipt.jpg"
+    }
+  ],
+  "captures": [
+    {
+      "name": "1920x1080-paper-sovereign-receipt.jpg",
+      "width": 1334,
+      "height": 389,
+      "paintedRange": 255
+    },
+    {
+      "name": "1440x900-paper-sovereign-receipt.jpg",
+      "width": 1088,
+      "height": 389,
+      "paintedRange": 255
+    },
+    {
+      "name": "1280x800-paper-sovereign-receipt.jpg",
+      "width": 928,
+      "height": 424,
+      "paintedRange": 255
+    },
+    {
+      "name": "390x844-paper-sovereign-receipt.jpg",
+      "width": 270,
+      "height": 877,
+      "paintedRange": 255
+    },
+    {
+      "name": "390x844-void-sovereign-receipt.jpg",
+      "width": 270,
+      "height": 877,
+      "paintedRange": 255
+    },
+    {
+      "name": "390x844-contrast-sovereign-receipt.jpg",
+      "width": 270,
+      "height": 877,
+      "paintedRange": 255
+    },
+    {
+      "name": "390x844-daltonic-sovereign-receipt.jpg",
+      "width": 270,
+      "height": 877,
+      "paintedRange": 255
+    }
+  ],
+  "adapterProofs": [
+    {
+      "proofClass": "synthetic desktop-local adapter acknowledgement only",
+      "outcome": "accepted",
+      "files": 4
+    },
+    {
+      "proofClass": "synthetic desktop-local adapter rejection only",
+      "outcome": "rejected",
+      "files": 0
+    }
+  ],
+  "errors": [],
+  "externalRequestsBlocked": [],
+  "memory": [
+    {
+      "stage": "server launch",
+      "availableMib": 4892
+    },
+    {
+      "stage": "browser launch",
+      "availableMib": 4666
+    },
+    {
+      "stage": "1920x1080/paper",
+      "availableMib": 4572
+    },
+    {
+      "stage": "1920x1080/void",
+      "availableMib": 4409
+    },
+    {
+      "stage": "1920x1080/contrast",
+      "availableMib": 5868
+    },
+    {
+      "stage": "1920x1080/daltonic",
+      "availableMib": 5891
+    },
+    {
+      "stage": "1440x900/paper",
+      "availableMib": 5822
+    },
+    {
+      "stage": "1440x900/void",
+      "availableMib": 5710
+    },
+    {
+      "stage": "1440x900/contrast",
+      "availableMib": 5781
+    },
+    {
+      "stage": "1440x900/daltonic",
+      "availableMib": 5740
+    },
+    {
+      "stage": "1280x800/paper",
+      "availableMib": 5543
+    },
+    {
+      "stage": "1280x800/void",
+      "availableMib": 5770
+    },
+    {
+      "stage": "1280x800/contrast",
+      "availableMib": 5642
+    },
+    {
+      "stage": "1280x800/daltonic",
+      "availableMib": 5482
+    },
+    {
+      "stage": "390x844/paper",
+      "availableMib": 5259
+    },
+    {
+      "stage": "390x844/void",
+      "availableMib": 5219
+    },
+    {
+      "stage": "390x844/contrast",
+      "availableMib": 5515
+    },
+    {
+      "stage": "390x844/daltonic",
+      "availableMib": 5527
+    }
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "browserServerClosed": true,
+    "serverExit": null,
+    "serverSignal": "SIGTERM"
+  },
+  "build": {
+    "indexSha256": "d08934996862d07910dd8160e257da5b66d926f07978e8f16ff7805bfa003cf0",
+    "componentSha256": "10c2253c1db4652458ef54d6d4e9e19fd940ff25e0e6179747495033e6a9431b",
+    "appSha256": "0ff31f98c21be582c17d46ca4cf4cfa9be0d891cf074c89c6822ebbec09375af",
+    "dependencies": {
+      "playwright": "1.63.0",
+      "sharp": "0.34.5",
+      "sharpModule": "C:\\AGI\\products\\thread-intelligence\\node_modules\\sharp"
+    }
+  },
+  "server": {
+    "pid": 25480,
+    "retainedProcessHandle": true,
+    "outputLimitBytes": 65536
+  },
+  "gpu": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Laptop GPU (0x00002D59) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.16.1071)",
+    "devices": [
+      {
+        "vendorString": "",
+        "deviceString": "NVIDIA GeForce RTX 5060 Laptop GPU"
+      },
+      {
+        "vendorString": "",
+        "deviceString": "AMD Radeon 780M Graphics"
+      },
+      {
+        "vendorString": "",
+        "deviceString": "Microsoft Basic Render Driver"
+      }
+    ]
+  },
+  "status": "PASS",
+  "finished": "2026-10-22T05:22:38.487Z"
+}

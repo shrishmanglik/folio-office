@@ -1,0 +1,69 @@
+{
+  "sourceHead": "9a178217b7d84c1fd50c5888defc4dded5d60b32",
+  "started": "2026-10-22T05:20:53.689Z",
+  "origin": "http://127.0.0.1:3503",
+  "fixture": "Owned local Vite production build. Main matrix proves real browser localStorage; isolated synthetic window.office cases are labelled adapter proof only. Clipboard is in-page only; no operating-system clipboard, desktop app, provider, preview or live URL.",
+  "views": [],
+  "captures": [],
+  "adapterProofs": [],
+  "errors": [],
+  "externalRequestsBlocked": [],
+  "memory": [
+    {
+      "stage": "server launch",
+      "availableMib": 4984
+    },
+    {
+      "stage": "browser launch",
+      "availableMib": 4958
+    },
+    {
+      "stage": "1920x1080/paper",
+      "availableMib": 5061
+    }
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "browserServerClosed": true,
+    "serverExit": null,
+    "serverSignal": "SIGTERM"
+  },
+  "build": {
+    "indexSha256": "d08934996862d07910dd8160e257da5b66d926f07978e8f16ff7805bfa003cf0",
+    "componentSha256": "10c2253c1db4652458ef54d6d4e9e19fd940ff25e0e6179747495033e6a9431b",
+    "appSha256": "0ff31f98c21be582c17d46ca4cf4cfa9be0d891cf074c89c6822ebbec09375af",
+    "dependencies": {
+      "playwright": "1.63.0",
+      "sharp": "0.34.5",
+      "sharpModule": "C:\\AGI\\products\\thread-intelligence\\node_modules\\sharp"
+    }
+  },
+  "server": {
+    "pid": 50932,
+    "retainedProcessHandle": true,
+    "outputLimitBytes": 65536
+  },
+  "gpu": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Laptop GPU (0x00002D59) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.16.1071)",
+    "devices": [
+      {
+        "vendorString": "",
+        "deviceString": "NVIDIA GeForce RTX 5060 Laptop GPU"
+      },
+      {
+        "vendorString": "",
+        "deviceString": "AMD Radeon 780M Graphics"
+      },
+      {
+        "vendorString": "",
+        "deviceString": "Microsoft Basic Render Driver"
+      }
+    ]
+  },
+  "status": "FAIL",
+  "failure": {
+    "message": "The input did not match the regular expression /^Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt/m. Input:\n\n'Folio Office 4-in-1 Sovereign Template Receipt\\n' +\n  'Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)\\n' +\n  'Illustrative annual cloud-seat fee comparison: $300/yr\\n' +\n  'Illustrative five-year comparison: $1,500 / 5 yrs saved\\n' +\n  'Cost boundary: Excludes future acquisition price and buyer hardware costs.\\n' +\n  'Storage: browser-preview\\n' +\n  'Created File IDs: b25dff2c-486d-4f79-96cb-fc699adec4a3 | 31a2eac6-e995-417c-8d83-e036497dec58 | aac9d5ee-0a77-4fc3-802e-119bdcc5e4a6 | 5a90c73f-3063-444a-a55e-68491a776ad9\\n' +\n  'Existing File IDs: none\\n' +\n  'Acknowledged Files:\\n' +\n  'document | Executive Client Audit Document | b25dff2c-486d-4f79-96cb-fc699adec4a3\\n' +\n  'spreadsheet | Live Formula & Margin Spreadsheet | 31a2eac6-e995-417c-8d83-e036497dec58\\n' +\n  'presentation | Board Pitch Presentation Deck | aac9d5ee-0a77-4fc3-802e-119bdcc5e4a6\\n' +\n  'notebook | Research & Engineering Notebook | 5a90c73f-3063-444a-a55e-68491a776ad9'\n",
+    "stack": "AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Folio Office 4-in-1 Sovereign Zero-Rent Audit Receipt/m. Input:\n\n'Folio Office 4-in-1 Sovereign Template Receipt\\n' +\n  'Persona: Solo Founder ($300/yr · $1,500 / 5 yrs saved)\\n' +\n  'Illustrative annual cloud-seat fee comparison: $300/yr\\n' +\n  'Illustrative five-year comparison: $1,500 / 5 yrs saved\\n' +\n  'Cost boundary: Excludes future acquisition price and buyer hardware costs.\\n' +\n  'Storage: browser-preview\\n' +\n  'Created File IDs: b25dff2c-486d-4f79-96cb-fc699adec4a3 | 31a2eac6-e995-417c-8d83-e036497dec58 | aac9d5ee-0a77-4fc3-802e-119bdcc5e4a6 | 5a90c73f-3063-444a-a55e-68491a776ad9\\n' +\n  'Existing File IDs: none\\n' +\n  'Acknowledged Files:\\n' +\n  'document | Executive Client Audit Document | b25dff2c-486d-4f79-96cb-fc699adec4a3\\n' +\n  'spreadsheet | Live Formula & Margin Spreadsheet | 31a2eac6-e995-417c-8d83-e036497dec58\\n' +\n  'presentation | Board Pitch Presentation Deck | aac9d5ee-0a77-4fc3-802e-119bdcc5e4a6\\n' +\n  'notebook | Research & Engineering Notebook | 5a90c73f-3063-444a-a55e-68491a776ad9'\n\n    at validateReceipt (file:///C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460/evidence/lane10-sovereign-receipt-01a13460/verify-browser.mjs:77:10)\n    at verifyBrowserStorage (file:///C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460/evidence/lane10-sovereign-receipt-01a13460/verify-browser.mjs:143:3)\n    at async file:///C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460/evidence/lane10-sovereign-receipt-01a13460/verify-browser.mjs:254:22"
+  },
+  "finished": "2026-10-22T05:20:55.907Z"
+}

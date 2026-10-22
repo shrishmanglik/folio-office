@@ -1,0 +1,1 @@
+Author-side mechanical pixel sanity: seven final captures are populated and readable. At 1920/1440/1280 paper and 390 paper/void/contrast/daltonic, the four cards, batch action and stale-persona status show no visible clipping, overlap or sticky obstruction. This is not independent approval or taste acceptance.

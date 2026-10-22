@@ -445,13 +445,16 @@ test('Folio Office exposes top-level App-Command Navbar, Role-Portal Switcher, a
     assert.ok(workspaceTsx.includes(portalLabel), `Expected role portal "${portalLabel}" in Workspace.tsx`);
   }
 
+  const catalogueTsx = fs.readFileSync(path.join(srcDir, 'FolioSovereignCommandSuite.tsx'), 'utf8');
+  assert.match(workspaceTsx, /FOLIO_FOUR_IN_ONE_PILLARS\.map/);
+  assert.match(workspaceTsx, /FOLIO_FOUR_IN_ONE_PILLARS\.find/);
   for (const templateLabel of [
     'Executive Client Audit Document',
     'Live Formula & Margin Spreadsheet',
     'Board Pitch Presentation Deck',
     'Research & Engineering Notebook',
-    'Microsoft 365 / Google Workspace Per-Seat Tax Savings & Local AI Vault',
   ]) {
-    assert.ok(workspaceTsx.includes(templateLabel), `Expected 1-click template "${templateLabel}" in Workspace.tsx`);
+    assert.ok(catalogueTsx.includes(templateLabel), `Expected shared 1-click template "${templateLabel}"`);
   }
+  assert.ok(workspaceTsx.includes('Microsoft 365 / Google Workspace Per-Seat Tax Savings & Local AI Vault'));
 });

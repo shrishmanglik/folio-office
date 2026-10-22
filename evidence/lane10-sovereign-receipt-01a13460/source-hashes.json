@@ -1,0 +1,13 @@
+{
+  "src/App.tsx": "0ff31f98c21be582c17d46ca4cf4cfa9be0d891cf074c89c6822ebbec09375af",
+  "src/FolioSovereignCommandSuite.tsx": "10c2253c1db4652458ef54d6d4e9e19fd940ff25e0e6179747495033e6a9431b",
+  "src/Workspace.tsx": "c87abb2ce10d154001713676988c28430c343f10b8a93ceaca30d03f13369c87",
+  "src/types.ts": "cc5bbc04c17580f05d6d9a1004a86cfc73c94d991b168e9627615ca568d6fe6c",
+  "src/FolioSovereignCommandSuite.test.tsx": "d3af4bc1345348cae627967a94be37c9fcc0e09cb9afec41ee4ad5155d1d2aae",
+  "src/App.four-in-one.test.tsx": "93346062c14f1f5d101ef761e6784322dc850925589fcc8fb352e48a10e70691",
+  "tests/four-in-one-persistence.test.cjs": "72870ea043c4518aa1039911b757e4bc6698227ba041b38f33d1767b05f24b4d",
+  "tests/theme-switcher-and-sovereign-copy.test.cjs": "92cae3cb3747fe844e44fbd4a486a415c9c2dff3c30382ca6e26f4381cd70f6b",
+  "vitest.config.ts": "b82d2e8ba943ae5fc90732a810acc41a299f08b7bd9b07f50ffc0137b62889f0",
+  "package.json": "79c7cc01a351481921ed9e95aedb77588f1ea2f13c3e0cdc0505d8293c1feafa",
+  ".github/workflows/ci.yml": "8748376e59797dbe99257e3e3861f2f8ffc152786dc3c3d91efc6ea5e2cd6ee4"
+}

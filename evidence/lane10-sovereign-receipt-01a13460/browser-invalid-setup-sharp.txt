@@ -1,0 +1,48 @@
+MEMORY_AVAILABLE_MB=5693
+Thu Oct 22 01:19:27 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 610.71                 KMD Version: 610.71        CUDA UMD Version: 13.3     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5060 ...  WDDM  |   00000000:01:00.0  On |                  N/A |
+| N/A   58C    P2             10W /   75W |     592MiB /   8151MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A           12920    C+G   ...s\Python\Python313\python.exe      N/A      |
+|    0   N/A  N/A           15668    C+G   ...s\Python\Python313\python.exe      N/A      |
+|    0   N/A  N/A           20500    C+G   ...1g1gvanyjgm\WhatsApp.Root.exe      N/A      |
+|    0   N/A  N/A           32900    C+G   C:\Windows\explorer.exe               N/A      |
++-----------------------------------------------------------------------------------------+
+node:internal/modules/cjs/loader:1500
+  const err = new Error(message);
+              ^
+
+Error: Cannot find module 'sharp'
+Require stack:
+- C:\AGI\worktrees\folio-office\lane10-sovereign-receipt-01a13460\evidence\lane10-sovereign-receipt-01a13460\verify-browser.mjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1500:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1116:12)
+    at Module._load (node:internal/modules/cjs/loader:1285:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1600:12)
+    at require (node:internal/modules/helpers:153:16)
+    at file:///C:/AGI/worktrees/folio-office/lane10-sovereign-receipt-01a13460/evidence/lane10-sovereign-receipt-01a13460/verify-browser.mjs:12:15
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\AGI\\worktrees\\folio-office\\lane10-sovereign-receipt-01a13460\\evidence\\lane10-sovereign-receipt-01a13460\\verify-browser.mjs'
+  ]
+}
+
+Node.js v24.16.0
