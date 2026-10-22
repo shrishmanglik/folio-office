@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (21 tests | 20 skipped) 580ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  579ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 20 skipped (21)
+   Start at  13:39:54
+   Duration  7.57s (transform 2.02s, setup 0ms, collect 4.54s, tests 580ms, environment 1.69s, prepare 173ms)

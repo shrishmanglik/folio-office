@@ -1,0 +1,439 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (21 tests | 5 failed) 10767ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 147ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 107ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 93ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 62ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  414ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 51ms
+   ✓ App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 125ms
+   ✓ App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 68ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 140ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 159ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 44ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 85ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 90ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 273ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 131ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save  339ms
+   × PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI 1570ms
+     → expected '<p>User typed F</p>' to be '<p>Agent wrote F</p>' // Object.is equality
+   × PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted 2132ms
+     → expected true to be false // Object.is equality
+   × PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted 1727ms
+     → expected 'Temporary name' to be 'Original name' // Object.is equality
+   × PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles 1861ms
+     → expected '<p>typo</p>' to be '<p>x</p>' // Object.is equality
+   × PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files 1144ms
+     → expected '4' to be 'Unsaved changes' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-theme[39m=[32m"paper"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"office-app"[39m
+        [33mdata-testid[39m=[32m"folio-full-suite-os"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"ags-theme-switcher"[39m
+          [33mdata-active-theme[39m=[32m"paper"[39m
+          [33mdata-slot[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-controls[39m=[32m"ags-theme-panel"[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"Theme: Warm Archival Paper. Choose reading atmosphere"[39m
+            [33mclass[39m=[32m"ags-theme-switcher__trigger"[39m
+            [33mdata-testid[39m=[32m"canvas-theme-switcher"[39m
+            [33mdata-theme-trigger[39m=[32m"paper"[39m
+            [33mstyle[39m=[32m"width: 44px; height: 44px; min-width: 44px; min-height: 44px;"[39m
+            [33mtitle[39m=[32m"Reading atmosphere: Warm Archival Paper"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-eye"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"16"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"16"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"12"[39m
+                [33mcy[39m=[32m"12"[39m
+                [33mr[39m=[32m"3"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<aside[39m
+          [33mclass[39m=[32m"sidebar"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"workspace-name"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"workspace-mark"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-layout-grid"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"22"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"22"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"3"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"14"[39m
+                  [33my[39m=[32m"3"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"14"[39m
+                  [33my[39m=[32m"14"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<span>[39m
+              [0mFolio Office[0m
+              [36m<small>[39m
+                [0m100% YOURS ON YOUR MACHINE[0m
+              [36m</small>[39m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"new-button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33mclass[39m=[32m"lucide lucide-plus"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"18"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"18"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M5 12h14"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M12 5v14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0mCreate new[0m
+          [36m</button>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"nav-label"[39m
+          [36m>[39m
+            [0mWORKSPACE[0m
+          [36m</div>[39m
+          [36m<nav>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"active"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-layout-grid"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"18"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"18"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"7"[39m
+                  [33mrx[39m=[32m"1"[39m
+                  [33mwidth[39m=[32m"7"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"3"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[3...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI
+AssertionError: expected '<p>User typed F</p>' to be '<p>Agent wrote F</p>' // Object.is equality
+
+Expected: "<p>Agent wrote F</p>"
+Received: "<p>User typed F</p>"
+
+ ❯ src/App.four-in-one.test.tsx:341:58
+    339|   await act(async()=>{await store.held.shift()!();await pause(20);});a…
+    340|   const final:OfficeFile[]=await store.engine.snapshot();
+    341|   expect(final.find(file=>file.id==='doc-f')?.data.html).toBe('<p>Agen…
+       |                                                          ^
+    342|   expect(screen.getByText('Save failed')).toBeTruthy();
+    343|   expect(screen.getByRole('button',{name:'Keep my edits as copies'})).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/App.four-in-one.test.tsx:352:50
+    350|   act(()=>capturedWorkspace().onRemove(created));fireEvent.keyDown(win…
+    351|   await act(async()=>{await store.held.shift()!();await pause(20);});a…
+    352|   expect(final.some(file=>file.id===created.id)).toBe(false);expect(ca…
+       |                                                  ^
+    353|  });
+    354|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted
+AssertionError: expected 'Temporary name' to be 'Original name' // Object.is equality
+
+Expected: "Original name"
+Received: "Temporary name"
+
+ ❯ src/App.four-in-one.test.tsx:359:80
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles
+AssertionError: expected '<p>typo</p>' to be '<p>x</p>' // Object.is equality
+
+Expected: "<p>x</p>"
+Received: "<p>typo</p>"
+
+ ❯ src/App.four-in-one.test.tsx:365:177
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files
+AssertionError: expected '4' to be 'Unsaved changes' // Object.is equality
+
+Ignored nodes: comments, script, style
+<html
+  data-theme="paper"
+>
+  <head />
+  <body>
+    <div>
+      <div
+        class="office-app"
+        data-testid="folio-full-suite-os"
+      >
+        <div
+          class="ags-theme-switcher"
+          data-active-theme="paper"
+          data-slot="root"
+        >
+          <button
+            aria-controls="ags-theme-panel"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            aria-label="Theme: Warm Archival Paper. Choose reading atmosphere"
+            class="ags-theme-switcher__trigger"
+            data-testid="canvas-theme-switcher"
+            data-theme-trigger="paper"
+            style="width: 44px; height: 44px; min-width: 44px; min-height: 44px;"
+            title="Reading atmosphere: Warm Archival Paper"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-eye"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
+            </svg>
+          </button>
+        </div>
+        <aside
+          class="sidebar"
+        >
+          <div
+            class="workspace-name"
+          >
+            <div
+              class="workspace-mark"
+            >
+              <svg
+                class="lucide lucide-layout-grid"
+                fill="none"
+                height="22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rec
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="3"
+                  y="3"
+                />
+                <rec
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="14"
+                  y="3"
+                />
+                <rec
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="14"
+                  y="14"
+                />
+                <rec
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="3"
+                  y="14"
+                />
+              </svg>
+            </div>
+            <span>
+              Folio Office
+              <small>
+                100% YOURS ON YOUR MACHINE
+              </small>
+            </span>
+          </div>
+          <button
+            class="new-button"
+          >
+            <svg
+              class="lucide lucide-plus"
+              fill="none"
+              height="18"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14"
+              />
+              <path
+                d="M12 5v14"
+              />
+            </svg>
+            Create new
+          </button>
+          <div
+            class="nav-label"
+          >
+            WORKSPACE
+          </div>
+          <nav>
+            <button
+              class="active"
+            >
+              <svg
+                class="lucide lucide-layout-grid"
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rec
+                  height="7"
+                  rx="1"
+                  width="7"
+                  x="3"
+                  y="3"
+                />
+                <rec
+                  height=[3...
+
+Expected: "Unsaved changes"
+Received: "4"
+
+ ❯ src/App.four-in-one.test.tsx:370:275
+
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 16 passed (21)
+   Start at  13:39:15
+   Duration  19.70s (transform 630ms, setup 0ms, collect 4.16s, tests 10.77s, environment 4.15s, prepare 208ms)

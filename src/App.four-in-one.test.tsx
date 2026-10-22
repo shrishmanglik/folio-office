@@ -4,17 +4,22 @@ import {afterEach,beforeEach,describe,expect,it,vi}from'vitest';
 import App from'./App';
 import {FOLIO_FOUR_IN_ONE_PILLARS}from'./FolioSovereignCommandSuite';
 import type{ComponentProps}from'react';
+import {createRequire}from'node:module';
+import fs from'node:fs';
+import os from'node:os';
+import path from'node:path';
 import type WorkspaceComponent from'./Workspace';
 import type{EditorProps,EnsureTemplatesResult,OfficeFile}from'./types';
 
 type CapturedWorkspaceProps=Pick<ComponentProps<typeof WorkspaceComponent>,'files'|'ready'|'onCreate'|'onEnsureTemplates'|'onOpen'|'onFavorite'|'onRemove'|'templateBatchBusy'>;
 const workspace=vi.hoisted(()=>({props:null as CapturedWorkspaceProps|null}));
 const documentEditor=vi.hoisted(()=>({props:null as EditorProps|null}));
+const require=createRequire(import.meta.url);const{createEngine}=require('../core/engine.cjs');const probeDirs:string[]=[];
 vi.mock('./Workspace',()=>({default:(props:CapturedWorkspaceProps)=>{workspace.props=props;const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];return <><button data-testid="launch-tagged-template" onClick={()=>props.onCreate(seed.kind,seed.name,seed.data,seed.templateId)}>Launch tagged template</button><output data-testid="workspace-file-count">{props.files.length}</output></>;}}));
 vi.mock('./editors/DocumentEditor',()=>({default:(props:EditorProps)=>{documentEditor.props=props;return null;}}));
 
 beforeEach(()=>{localStorage.clear();workspace.props=null;documentEditor.props=null;Object.defineProperty(window,'office',{configurable:true,writable:true,value:undefined});});
-afterEach(()=>{cleanup();vi.restoreAllMocks();});
+afterEach(()=>{cleanup();vi.restoreAllMocks();for(const dir of probeDirs.splice(0))fs.rmSync(dir,{recursive:true,force:true});});
 
 const capturedWorkspace=():CapturedWorkspaceProps=>{if(!workspace.props)throw Error('Expected App to render Workspace.');return workspace.props;};
 const capturedDocumentEditor=():EditorProps=>{if(!documentEditor.props)throw Error('Expected App to render DocumentEditor.');return documentEditor.props;};
@@ -24,6 +29,10 @@ type SaveResult=Awaited<ReturnType<SaveFunction>>;
 const ensure=():Promise<EnsureTemplatesResult>=>{const callback=capturedWorkspace().onEnsureTemplates;if(!callback)throw Error('Expected App to provide onEnsureTemplates.');return callback(FOLIO_FOUR_IN_ONE_PILLARS);};
 const requireSuccess=(result:EnsureTemplatesResult|undefined):Extract<EnsureTemplatesResult,{ok:true}>=>{if(!result||result.ok===false)throw Error('Expected a successful template acknowledgement.');return result;};
 const existingCatalogFiles=():OfficeFile[]=>FOLIO_FOUR_IN_ONE_PILLARS.map((seed,index)=>({id:`existing-${index+1}`,templateId:seed.templateId,kind:seed.kind,name:seed.name,updatedAt:'2026-10-22T00:00:00.000Z',data:structuredClone(seed.data)}));
+const probeFile=(id:string,name:string,html='<p>x</p>'):OfficeFile=>({id,kind:'document',name,updatedAt:'2026-10-22T00:00:00.000Z',data:{html}});
+const pause=(ms:number)=>new Promise(resolve=>setTimeout(resolve,ms));
+const realDeferredStore=async(initial:OfficeFile[])=>{const dir=fs.mkdtempSync(path.join(os.tmpdir(),'folio-pr14-author-red-'));probeDirs.push(dir);const engine=createEngine(dir);await engine.saveSnapshot(initial,[]);const held:Array<()=>Promise<void>>=[];const save=vi.fn<SaveFunction>((files,base)=>new Promise(resolve=>held.push(async()=>{try{resolve({ok:true,files:await engine.saveSnapshot(files,base)});}catch(error:any){resolve({ok:false,error:error.message,code:error.code});}})));Object.defineProperty(window,'office',{configurable:true,value:{load:()=>engine.snapshot(),save}});return{engine,save,held};};
+const settleProbe=async(store:{held:Array<()=>Promise<void>>})=>{for(let round=0;round<8;round++){await act(async()=>{await pause(260);});const pending=store.held.splice(0);if(!pending.length&&round>1)return;for(const finish of pending)await act(async()=>{await finish();await pause(10);});}};
 
 describe('App four-in-one persistence boundary',()=>{
  it('acknowledges one browser-preview batch only after all four files are stored',async()=>{
@@ -313,5 +322,62 @@ describe('App four-in-one persistence boundary',()=>{
   expect(nextBaseline.find(file=>file.id===existing[1].id)).toMatchObject({name:'Agent renamed financial grid',revision:'agent-revision'});
   expect(nextBaseline.some(file=>file.id===existing[2].id)).toBe(true);
   finishes[1]({ok:true,files:nextCandidate});
+ });
+});
+
+describe('PR14 storage conflict and queued-intent red controls',()=>{
+ it('preserves an agent same-file edit and exposes the existing conflict recovery UI',async()=>{
+  const store=await realDeferredStore([probeFile('doc-f','F doc','<p>F original</p>'),probeFile('doc-g','G doc','<p>G original</p>')]);
+  render(<App/>);await waitUntilReady();
+  act(()=>capturedWorkspace().onOpen('doc-g'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-g'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>G edited by user</p>'}));
+  await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});
+  const disk:OfficeFile[]=await store.engine.snapshot();const revision=disk.find(file=>file.id==='doc-f')?.revision;
+  await store.engine.execute({operation:'file.update',requestId:'agent-f',fileId:'doc-f',expectedRevision:revision,data:{html:'<p>Agent wrote F</p>'}});
+  act(()=>capturedWorkspace().onOpen('doc-f'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-f'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>User typed F</p>'}));
+  await act(async()=>{await store.held.shift()!();await pause(20);});await settleProbe(store);
+  const final:OfficeFile[]=await store.engine.snapshot();
+  expect(final.find(file=>file.id==='doc-f')?.data.html).toBe('<p>Agent wrote F</p>');
+  expect(screen.getByText('Save failed')).toBeTruthy();
+  expect(screen.getByRole('button',{name:'Keep my edits as copies'})).toBeTruthy();
+ });
+
+ it('preserves a remote deletion when the user edits that file after submission',async()=>{
+  const store=await realDeferredStore([probeFile('doc-f','F doc','<p>F original</p>'),probeFile('doc-g','G doc','<p>G original</p>')]);render(<App/>);await waitUntilReady();
+  act(()=>capturedWorkspace().onOpen('doc-g'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-g'));act(()=>capturedDocumentEditor().onChange({html:'<p>G edited</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});
+  const disk:OfficeFile[]=await store.engine.snapshot();await store.engine.saveSnapshot(disk.filter(file=>file.id!=='doc-f'),disk);
+  act(()=>capturedWorkspace().onOpen('doc-f'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-f'));act(()=>capturedDocumentEditor().onChange({html:'<p>User typed after remote delete</p>'}));
+  await act(async()=>{await store.held.shift()!();await pause(20);});await settleProbe(store);const final:OfficeFile[]=await store.engine.snapshot();
+  expect(final.some(file=>file.id==='doc-f')).toBe(false);expect(screen.getByText('Save failed')).toBeTruthy();expect(screen.getByRole('button',{name:'Keep my edits as copies'})).toBeTruthy();
+ });
+
+ it('keeps a file deleted while its creation save is in flight deleted',async()=>{
+  const store=await realDeferredStore([probeFile('keep','Kept')]);render(<App/>);await waitUntilReady();
+  act(()=>capturedWorkspace().onCreate('document','Short lived'));fireEvent.click(await screen.findByRole('button',{name:'Back to workspace'}));
+  await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});const created=capturedWorkspace().files.find(file=>file.name==='Short lived')!;
+  act(()=>capturedWorkspace().onRemove(created));fireEvent.keyDown(window,{key:'s',ctrlKey:true});
+  await act(async()=>{await store.held.shift()!();await pause(20);});await settleProbe(store);const final:OfficeFile[]=await store.engine.snapshot();
+  expect(final.some(file=>file.id===created.id)).toBe(false);expect(capturedWorkspace().files.some(file=>file.id===created.id)).toBe(false);
+ });
+
+ it('keeps a rename reverted while its save is in flight reverted',async()=>{
+  const store=await realDeferredStore([probeFile('doc-1','Original name')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-1'));
+  const input=await screen.findByRole('textbox',{name:'File name'})as HTMLInputElement;fireEvent.change(input,{target:{value:'Temporary name'}});await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});
+  fireEvent.change(input,{target:{value:'Original name'}});fireEvent.keyDown(window,{key:'s',ctrlKey:true});await act(async()=>{await store.held.shift()!();await pause(20);});await settleProbe(store);
+  const final:OfficeFile[]=await store.engine.snapshot();expect(final[0].name).toBe('Original name');expect(input.value).toBe('Original name');
+ });
+
+ it('keeps undone typing undone when its prior save settles',async()=>{
+  const store=await realDeferredStore([probeFile('doc-1','Doc')]);render(<App/>);await waitUntilReady();act(()=>capturedWorkspace().onOpen('doc-1'));await waitFor(()=>expect(capturedDocumentEditor().file.id).toBe('doc-1'));
+  act(()=>capturedDocumentEditor().onChange({html:'<p>typo</p>'}));await waitFor(()=>expect(store.save).toHaveBeenCalledOnce(),{timeout:2000});act(()=>capturedDocumentEditor().onChange({html:'<p>x</p>'}));fireEvent.keyDown(window,{key:'s',ctrlKey:true});
+  await act(async()=>{await store.held.shift()!();await pause(20);});await settleProbe(store);const final:OfficeFile[]=await store.engine.snapshot();expect(final[0].data.html).toBe('<p>x</p>');expect(capturedDocumentEditor().file.data.html).toBe('<p>x</p>');
+ });
+
+ it('shows meaningful unsaved status and rejects native success without stored files',async()=>{
+  const existing=existingCatalogFiles();let release!:(value:SaveResult)=>void;const save=vi.fn<SaveFunction>(()=>new Promise(resolve=>{release=resolve;}));Object.defineProperty(window,'office',{configurable:true,value:{load:vi.fn().mockResolvedValue(existing),save}});render(<App/>);await waitUntilReady();
+  act(()=>capturedWorkspace().onOpen(existing[0].id));await screen.findByRole('textbox',{name:'File name'});
+  fireEvent.keyDown(window,{key:'s',ctrlKey:true});await waitFor(()=>expect(save).toHaveBeenCalledOnce());act(()=>capturedWorkspace().onFavorite(existing[0].id));release({ok:true,files:save.mock.calls[0][0]});await waitFor(()=>expect(document.querySelector('.save-state')?.textContent).toBe('Unsaved changes'));
+  await waitFor(()=>expect(save.mock.calls.length).toBeGreaterThanOrEqual(2));release({ok:true});await waitFor(()=>expect(document.querySelector('.save-state')?.textContent).toBe('Save failed'));
  });
 });

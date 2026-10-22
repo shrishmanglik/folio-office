@@ -1,0 +1,19 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (22 tests) 9827ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  320ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1299ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1970ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1785ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  1247ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1275ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  332ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 3002ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  486ms
+   ✓ four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied  323ms
+
+ Test Files  2 passed (2)
+      Tests  43 passed (43)
+   Start at  13:45:15
+   Duration  22.20s (transform 1.58s, setup 0ms, collect 4.74s, tests 12.83s, environment 3.77s, prepare 258ms)
