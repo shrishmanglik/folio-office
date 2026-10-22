@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (15 tests) 1378ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 903ms
+
+ Test Files  2 passed (2)
+      Tests  36 passed (36)
+   Start at  12:06:05
+   Duration  7.61s (transform 439ms, setup 0ms, collect 2.00s, tests 2.28s, environment 2.60s, prepare 267ms)

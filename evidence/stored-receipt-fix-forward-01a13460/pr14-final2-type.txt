@@ -1,0 +1,1 @@
+src/App.four-in-one.test.tsx(368,115): error TS2339: Property 'value' does not exist on type 'HTMLElement'.

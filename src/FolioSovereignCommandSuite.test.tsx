@@ -3,6 +3,7 @@ import {afterEach,describe,expect,it,vi}from'vitest';
 import {cleanup,fireEvent,render,screen,waitFor,within}from'@testing-library/react';
 import {FormulaEngine}from'../shared/formulas.mjs';
 import FolioSovereignCommandSuite,{FOLIO_COMMAND_WORKSPACES,FOLIO_FOUR_IN_ONE_PILLARS,FOLIO_NATIVE_PRESETS}from'./FolioSovereignCommandSuite';
+import Workspace from'./Workspace';
 import type{EnsureTemplatesResult,FolioTemplateSeed,OfficeFile}from'./types';
 
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
@@ -140,6 +141,15 @@ describe('Folio interactive financial and seat-tax simulator',()=>{
 });
 
 describe('four-in-one persisted receipt',()=>{
+ it('launches a real Workspace template card with its provenance id',()=>{
+  const onCreate=vi.fn();const seed=FOLIO_FOUR_IN_ONE_PILLARS[0];
+  render(<Workspace files={[]} ready templateBatchBusy={false} filter="all" setFilter={vi.fn()} search="" setSearch={vi.fn()} onCreate={onCreate} onOpen={vi.fn()} onFavorite={vi.fn()} onDuplicate={vi.fn()} onRemove={vi.fn()} onImport={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} onAgents={vi.fn()}/>);
+
+  fireEvent.click(screen.getByTestId(`sovereign-template-${seed.templateId}`));
+
+  expect(onCreate).toHaveBeenCalledExactlyOnceWith(seed.kind,seed.name,seed.data,seed.templateId);
+ });
+
  it('without a persistence callback reports preview-only state and never claims files were saved or copied',async()=>{
   const writeText=vi.fn().mockResolvedValue(undefined);installClipboard(writeText);
   render(<FolioSovereignCommandSuite/>);

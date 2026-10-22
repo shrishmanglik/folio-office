@@ -1,0 +1,8 @@
+{
+  "helper": "/root/thread_ci_recovery_1053",
+  "createdUtc": "2026-10-22T19:44:41.6768903Z",
+  "deadlineUtc": "2026-10-22T20:09:41.6768903Z",
+  "phase": "author-qualified-awaiting-root-inspection",
+  "nextStep": "Root inspects the App/test diff and Round 3 receipts before any commit, push, provider mutation, CI, or rendered qualification.",
+  "head": "e11943403e812227cd163fd27ae578df009b5b1b"
+}

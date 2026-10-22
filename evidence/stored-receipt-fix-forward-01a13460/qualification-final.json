@@ -1,0 +1,32 @@
+[
+  {
+    "name": "focused-final-1",
+    "exit": 0,
+    "memoryMB": 8734.0
+  },
+  {
+    "name": "focused-final-2",
+    "exit": 0,
+    "memoryMB": 7491.0
+  },
+  {
+    "name": "mutants-final",
+    "exit": 0,
+    "memoryMB": 8129.0
+  },
+  {
+    "name": "engine-final",
+    "exit": 0,
+    "memoryMB": 6301.0
+  },
+  {
+    "name": "typecheck-final",
+    "exit": 0,
+    "memoryMB": 6976.0
+  },
+  {
+    "name": "build-final",
+    "exit": 0,
+    "memoryMB": 6775.0
+  }
+]

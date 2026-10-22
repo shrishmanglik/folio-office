@@ -1,0 +1,2 @@
+src/App.tsx(49,747): error TS2339: Property 'error' does not exist on type 'PersistResult'.
+  Property 'error' does not exist on type '{ ok: true; files: OfficeFile[]; }'.

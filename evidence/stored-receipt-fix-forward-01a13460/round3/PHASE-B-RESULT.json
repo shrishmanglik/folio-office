@@ -1,0 +1,42 @@
+{
+  "status": "AUTHOR_QUALIFIED_AWAITING_ROOT_INSPECTION",
+  "head": "e11943403e812227cd163fd27ae578df009b5b1b",
+  "phaseA": {
+    "tests": 30,
+    "passed": 25,
+    "failed": 5,
+    "correctedQueued": "lost A filename while B body persisted",
+    "perAcceptedQ": "PASS after each of first three writes",
+    "preexisting": 22,
+    "barrierRecovery": 2
+  },
+  "implementation": "Read last successfully accepted raw candidate at queued job execution; advance raw candidate only after valid storage acceptance; reset on authoritative load, refresh, history restore, and Keep copies.",
+  "final": {
+    "focused": "30/30",
+    "fullUi": "51/51",
+    "engine": "68/68",
+    "types": "PASS",
+    "build": "PASS"
+  },
+  "mutants": {
+    "wrongSaveCandidate": "1 failed, 29 passed",
+    "G02": "2 failed, 28 passed",
+    "G05": "1 failed, 29 passed",
+    "G06": "1 failed, 29 passed after one discriminative fixture correction",
+    "G07": "1 failed, 29 passed",
+    "restoredAppSha256": "0f3dea934da99abf12c7797f4d7bfb58e59ac2fa024ef69932ddaba1d6be5d49"
+  },
+  "sourceSha256": {
+    "src/App.tsx": "0f3dea934da99abf12c7797f4d7bfb58e59ac2fa024ef69932ddaba1d6be5d49",
+    "src/App.four-in-one.test.tsx": "58f55aefce1ebbe28a9f455e7f1b1087eee5c20c56cdb9cea157c449b301e4b3"
+  },
+  "diff": {
+    "insertions": 70,
+    "deletions": 7
+  },
+  "limits": [
+    "No commit, push, PR mutation, CI, GPU, approval, merge, or deploy.",
+    "Initial G06 mutant survived a masked call-count check; the corrected immediate call-count assertion killed it."
+  ],
+  "next": "Root author inspection before publication."
+}

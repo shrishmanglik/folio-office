@@ -1,0 +1,959 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (22 tests | 1 failed) 10349ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 171ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 72ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 79ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 47ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  402ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 68ms
+   ✓ App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 87ms
+   ✓ App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 52ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 186ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 196ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 57ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 127ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 109ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 221ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 148ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save  373ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1382ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1309ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1268ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  1361ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1309ms
+   × PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files 1321ms
+     → expected 'Saved on this device' to be 'Save failed' // Object.is equality
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-theme[39m=[32m"paper"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"office-app"[39m
+        [33mdata-testid[39m=[32m"folio-full-suite-os"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"ags-theme-switcher"[39m
+          [33mdata-active-theme[39m=[32m"paper"[39m
+          [33mdata-slot[39m=[32m"root"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-controls[39m=[32m"ags-theme-panel"[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"Theme: Warm Archival Paper. Choose reading atmosphere"[39m
+            [33mclass[39m=[32m"ags-theme-switcher__trigger"[39m
+            [33mdata-testid[39m=[32m"canvas-theme-switcher"[39m
+            [33mdata-theme-trigger[39m=[32m"paper"[39m
+            [33mstyle[39m=[32m"width: 44px; height: 44px; min-width: 44px; min-height: 44px;"[39m
+            [33mtitle[39m=[32m"Reading atmosphere: Warm Archival Paper"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-eye"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"16"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"16"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"12"[39m
+                [33mcy[39m=[32m"12"[39m
+                [33mr[39m=[32m"3"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+        [36m<aside[39m
+          [33maria-label[39m=[32m"Workspace navigation"[39m
+          [33mclass[39m=[32m"workspace-rail"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Workspace home"[39m
+            [33mclass[39m=[32m"rail-brand"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33mclass[39m=[32m"lucide lucide-layout-grid"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"23"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"23"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"7"[39m
+                [33mrx[39m=[32m"1"[39m
+                [33mwidth[39m=[32m"7"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"7"[39m
+                [33mrx[39m=[32m"1"[39m
+                [33mwidth[39m=[32m"7"[39m
+                [33mx[39m=[32m"14"[39m
+                [33my[39m=[32m"3"[39m
+              [36m/>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"7"[39m
+                [33mrx[39m=[32m"1"[39m
+                [33mwidth[39m=[32m"7"[39m
+                [33mx[39m=[32m"14"[39m
+                [33my[39m=[32m"14"[39m
+              [36m/>[39m
+              [36m<rect[39m
+                [33mheight[39m=[32m"7"[39m
+                [33mrx[39m=[32m"1"[39m
+                [33mwidth[39m=[32m"7"[39m
+                [33mx[39m=[32m"3"[39m
+                [33my[39m=[32m"14"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"rail-apps"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Open documents"[39m
+              [33mclass[39m=[32m"active"[39m
+              [33mtitle[39m=[32m"Documents"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-file-text"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"22"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"22"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M14 2v4a2 2 0 0 0 2 2h4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M10 9H8"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 13H8"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 17H8"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Open spreadsheets"[39m
+              [33mclass[39m=[32m""[39m
+              [33mtitle[39m=[32m"Spreadsheets"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-table2"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"22"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"22"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Open presentations"[39m
+              [33mclass[39m=[32m""[39m
+              [33mtitle[39m=[32m"Presentations"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-presentation"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"22"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"22"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M2 3h20"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m7 21 5-5 5 5"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Open notebooks"[39m
+              [33mclass[39m=[32m""[39m
+              [33mtitle[39m=[32m"Notebooks"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-book-open"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"22"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"22"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 7v14"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"rail-bottom"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Search workspace content"[39m
+              [33mtitle[39m=[32m"Search · Ctrl+K"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-search"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"11"[39m
+                  [33mcy[39m=[32m"11"[39m
+                  [33mr[39m=[32m"8"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m21 21-4.3-4.3"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Agent tools"[39m
+              [33mtitle[39m=[32m"Agent tools"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-hard-drive"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<line[39m
+                  [33mx1[39m=[32m"22"[39m
+                  [33mx2[39m=[32m"2"[39m
+                  [33my1[39m=[32m"12"[39m
+                  [33my2[39m=[32m"12"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"[39m
+                [36m/>[39m
+                [36m<line[39m
+                  [33mx1[39m=[32m"6"[39m
+                  [33mx2[39m=[32m"6.01"[39m
+                  [33my1[39m=[32m"16"[39m
+                  [33my2[39m=[32m"16"[39m
+                [36m/>[39m
+                [36m<line[39m
+                  [33mx1[39m=[32m"10"[39m
+                  [33mx2[39m=[32m"10.01"[39m
+                  [33my1[39m=[32m"16"[39m
+                  [33my2[39m=[32m"16"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</aside>[39m
+        [36m<main[39m
+          [33mclass[39m=[32m"editor-shell"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"editor-header"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Back to workspace"[39m
+              [33mclass[39m=[32m"icon-button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-arrow-left"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m12 19-7-7 7-7"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M19 12H5"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"file-icon blue"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-file-text"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"23"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"23"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M14 2v4a2 2 0 0 0 2 2h4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M10 9H8"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 13H8"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 17H8"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</div>[39m
+            [36m<input[39m
+              [33maria-label[39m=[32m"File name"[39m
+              [33mvalue[39m=[32m"Executive Client Audit Document"[39m
+            [36m/>[39m
+            [36m<select[39m
+              [33maria-label[39m=[32m"Switch file"[39m
+              [33mclass[39m=[32m"file-switcher"[39m
+            [36m>[39m
+              [36m<option[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mvalue[39m=[32m""[39m
+              [36m>[39m
+                [0mSwitch file[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"existing-1"[39m
+              [36m>[39m
+                [0mExecutive Client Audit Document[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"existing-2"[39m
+              [36m>[39m
+                [0mLive Formula & Margin Spreadsheet[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"existing-3"[39m
+              [36m>[39m
+                [0mBoard Pitch Presentation Deck[0m
+              [36m</option>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"existing-4"[39m
+              [36m>[39m
+                [0mResearch & Engineering Notebook[0m
+              [36m</option>[39m
+            [36m</select>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"subtle history-trigger"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-clock3"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"16"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"16"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"12"[39m
+                  [33mcy[39m=[32m"12"[39m
+                  [33mr[39m=[32m"10"[39m
+                [36m/>[39m
+                [36m<polyline[39m
+                  [33mpoints[39m=[32m"12 6 12 12 16.5 12"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0mVersion history[0m
+            [36m</button>[39m
+            [36m<span[39m
+              [33maria-live[39m=[32m"polite"[39m
+              [33mclass[39m=[32m"save-state "[39m
+              [33mrole[39m=[32m"status"[39m
+            [36m>[39m
+              [36m<i />[39m
+              [0mSaved on this device[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Favorite file"[39m
+              [33mclass[39m=[32m"icon-button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mclass[39m=[32m"lucide lucide-star"[39m
+                [33mfill[39m=[32m"#d6a32a"[39m
+                [33mheight[39m=[32m"19"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"19"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"editor-content"[39m
+          [36m/>[39m
+        [36m</main>[39m
+        [36m<input[39m
+          [33maccept[39m=[32m".json"[39m
+          [33mhidden[39m=[32m""[39m
+          [33mtype[39m=[32m"file"[39m
+        [36m/>[39m
+        [0m [0m
+        [0m [0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 1497ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  358ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files
+AssertionError: expected 'Saved on this device' to be 'Save failed' // Object.is equality
+
+Ignored nodes: comments, script, style
+<html
+  data-theme="paper"
+>
+  <head />
+  <body>
+    <div>
+      <div
+        class="office-app"
+        data-testid="folio-full-suite-os"
+      >
+        <div
+          class="ags-theme-switcher"
+          data-active-theme="paper"
+          data-slot="root"
+        >
+          <button
+            aria-controls="ags-theme-panel"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            aria-label="Theme: Warm Archival Paper. Choose reading atmosphere"
+            class="ags-theme-switcher__trigger"
+            data-testid="canvas-theme-switcher"
+            data-theme-trigger="paper"
+            style="width: 44px; height: 44px; min-width: 44px; min-height: 44px;"
+            title="Reading atmosphere: Warm Archival Paper"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-eye"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
+            </svg>
+          </button>
+        </div>
+        <aside
+          aria-label="Workspace navigation"
+          class="workspace-rail"
+        >
+          <button
+            aria-label="Workspace home"
+            class="rail-brand"
+          >
+            <svg
+              class="lucide lucide-layout-grid"
+              fill="none"
+              height="23"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="23"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rec
+                height="7"
+                rx="1"
+                width="7"
+                x="3"
+                y="3"
+              />
+              <rec
+                height="7"
+                rx="1"
+                width="7"
+                x="14"
+                y="3"
+              />
+              <rec
+                height="7"
+                rx="1"
+                width="7"
+                x="14"
+                y="14"
+              />
+              <rec
+                height="7"
+                rx="1"
+                width="7"
+                x="3"
+                y="14"
+              />
+            </svg>
+          </button>
+          <div
+            class="rail-apps"
+          >
+            <button
+              aria-label="Open documents"
+              class="active"
+              title="Documents"
+            >
+              <svg
+                class="lucide lucide-file-text"
+                fill="none"
+                height="22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+                />
+                <path
+                  d="M14 2v4a2 2 0 0 0 2 2h4"
+                />
+                <path
+                  d="M10 9H8"
+                />
+                <path
+                  d="M16 13H8"
+                />
+                <path
+                  d="M16 17H8"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Open spreadsheets"
+              class=""
+              title="Spreadsheets"
+            >
+              <svg
+                class="lucide lucide-table2"
+                fill="none"
+                height="22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Open presentations"
+              class=""
+              title="Presentations"
+            >
+              <svg
+                class="lucide lucide-presentation"
+                fill="none"
+                height="22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2 3h20"
+                />
+                <path
+                  d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"
+                />
+                <path
+                  d="m7 21 5-5 5 5"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Open notebooks"
+              class=""
+              title="Notebooks"
+            >
+              <svg
+                class="lucide lucide-book-open"
+                fill="none"
+                height="22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 7v14"
+                />
+                <path
+                  d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="rail-bottom"
+          >
+            <button
+              aria-label="Search workspace content"
+              title="Search · Ctrl+K"
+            >
+              <svg
+                class="lucide lucide-search"
+                fill="none"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="8"
+                />
+                <path
+                  d="m21 21-4.3-4.3"
+                />
+              </svg>
+            </button>
+            <button
+              aria-label="Agent tools"
+              title="Agent tools"
+            >
+              <svg
+                class="lucide lucide-hard-drive"
+                fill="none"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line
+                  x1="22"
+                  x2="2"
+                  y1="12"
+                  y2="12"
+                />
+                <path
+                  d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                />
+                <line
+                  x1="6"
+                  x2="6.01"
+                  y1="16"
+                  y2="16"
+                />
+                <line
+                  x1="10"
+                  x2="10.01"
+                  y1="16"
+                  y2="16"
+                />
+              </svg>
+            </button>
+          </div>
+        </aside>
+        <main
+          class="editor-shell"
+        >
+          <header
+            class="editor-header"
+          >
+            <button
+              aria-label="Back to workspace"
+              class="icon-button"
+            >
+              <svg
+                class="lucide lucide-arrow-left"
+                fill="none"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m12 19-7-7 7-7"
+                />
+                <path
+                  d="M19 12H5"
+                />
+              </svg>
+            </button>
+            <div
+              class="file-icon blue"
+            >
+              <svg
+                class="lucide lucide-file-text"
+                fill="none"
+                height="23"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="23"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+                />
+                <path
+                  d="M14 2v4a2 2 0 0 0 2 2h4"
+                />
+                <path
+                  d="M10 9H8"
+                />
+                <path
+                  d="M16 13H8"
+                />
+                <path
+                  d="M16 17H8"
+                />
+              </svg>
+            </div>
+            <inpu
+              aria-label="File name"
+              value="Executive Client Audit Document"
+            />
+            <selec
+              aria-label="Switch file"
+              class="file-switcher"
+            >
+              <option
+                disabled=""
+                value=""
+              >
+                Switch file
+              </option>
+              <option
+                value="existing-1"
+              >
+                Executive Client Audit Documen
+              </option>
+              <option
+                value="existing-2"
+              >
+                Live Formula & Margin Spreadshee
+              </option>
+              <option
+                value="existing-3"
+              >
+                Board Pitch Presentation Deck
+              </option>
+              <option
+                value="existing-4"
+              >
+                Research & Engineering Notebook
+              </option>
+            </select>
+            <button
+              class="subtle history-trigger"
+            >
+              <svg
+                class="lucide lucide-clock3"
+                fill="none"
+                height="16"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <polyline
+                  points="12 6 12 12 16.5 12"
+                />
+              </svg>
+              Version history
+            </button>
+            <span
+              aria-live="polite"
+              class="save-state "
+              role="status"
+            >
+              <i />
+              Saved on this device
+            </span>
+            <button
+              aria-label="Favorite file"
+              class="icon-button"
+            >
+              <svg
+                class="lucide lucide-star"
+                fill="#d6a32a"
+                height="19"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="19"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"
+                />
+              </svg>
+            </button>
+          </header>
+          <div
+            class="editor-content"
+          />
+        </main>
+        <inpu
+          accept=".json"
+          hidden=""
+          type="file"
+        />
+
+
+      </div>
+    </div>
+  </body>
+</html>
+
+Expected: "Save failed"
+Received: "Saved on this device"
+
+ ❯ src/App.four-in-one.test.tsx:381:175
+
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 42 passed (43)
+   Start at  13:48:46
+   Duration  18.51s (transform 726ms, setup 0ms, collect 2.95s, tests 11.85s, environment 2.86s, prepare 310ms)

@@ -1,0 +1,49 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (22 tests | 1 failed) 8259ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 112ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 37ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 53ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 29ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  307ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 50ms
+   ✓ App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 46ms
+   × App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 53ms
+     → Cannot read properties of undefined (reading 'id')
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 153ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 128ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 42ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 99ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 73ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 181ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 114ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save 236ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1261ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1231ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1218ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  1263ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1261ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  309ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 1045ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish
+TypeError: Cannot read properties of undefined (reading 'id')
+ ❯ src/App.four-in-one.test.tsx:158:39
+    156|   const success=requireSuccess(result);
+    157|   const stored=save.mock.results[0].value.then(response=>response.file…
+    158|   expect(success.files.map(file=>file.id)).toEqual((await stored).map(…
+       |                                       ^
+    159|   expect(success.createdIds).toEqual(success.files.map(file=>file.id));
+    160|  });
+ ❯ src/App.four-in-one.test.tsx:158:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 42 passed (43)
+   Start at  13:49:29
+   Duration  15.96s (transform 662ms, setup 0ms, collect 2.58s, tests 9.30s, environment 3.23s, prepare 373ms)

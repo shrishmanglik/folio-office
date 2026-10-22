@@ -1,0 +1,3 @@
+fix: retain edits across failed queued saves
+
+Advance queue intent only after storage accepts the raw submitted candidate, preserving failed local edits and unseen remote files across later queued writes.

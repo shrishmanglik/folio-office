@@ -1,0 +1,88 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (22 tests) 8688ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  343ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1321ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1243ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1265ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  1326ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1309ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  319ms
+ ❯ src/FolioSovereignCommandSuite.test.tsx (21 tests | 1 failed) 2142ms
+   ✓ Folio interactive financial and seat-tax simulator > starts inside the workspace panel with the default scenario and preserves existing controls  654ms
+   ✓ Folio interactive financial and seat-tax simulator > updates cash flow and rounded margin as revenue and burn change 85ms
+   ✓ Folio interactive financial and seat-tax simulator > reports a loss and handles zero or cleared revenue without a non-finite margin 105ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 5 seats 123ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for 0 seats 79ms
+   ✓ Folio interactive financial and seat-tax simulator > updates annual seat savings for -2 seats 54ms
+   ✓ Folio interactive financial and seat-tax simulator > opens an editable spreadsheet with the current inputs and a working cash-flow formula 150ms
+   ✓ Folio interactive financial and seat-tax simulator > uses the same one-seat savings floor in the generated grid 28ms
+   ✓ Folio interactive financial and seat-tax simulator > keeps the simulated sheet action disabled until the workspace is ready 105ms
+   ✓ Folio interactive financial and seat-tax simulator > renders the zero-rent strip, preserves individual template launch, and keeps the local AI workbench 56ms
+   × four-in-one persisted receipt > launches a real Workspace template card with its provenance id 175ms
+     → expected "spy" to be called once with arguments: [ 'document', …(3) ]
+
+Received:
+
+  1st spy call:
+
+@@ -2,7 +2,6 @@
+    "document",
+    "Executive Client Audit Document",
+    {
+      "html": "<h1>Executive Client Audit Document</h1><p><strong>100% Yours on Your Machine:</strong> Prepared locally with zero cloud telemetry or recurring seat fees.</p><h2>1. Where Margin Is Leaking Today</h2><ul><li><p>Third-party platform commissions, manual spreadsheet reconciliations, and recurring SaaS seat overhead.</p></li></ul><h2>2. 30-Day Sovereign Recovery Plan</h2><p>Consolidate documents, spreadsheets, presentations, and notebooks inside a single local device vault.</p>",
+    },
+-   "executive-audit-doc",
+  ]
+
+
+Number of calls: 1
+
+   ✓ four-in-one persisted receipt > without a persistence callback reports preview-only state and never claims files were saved or copied 32ms
+   ✓ four-in-one persisted receipt > disables duplicate launches while persistence is pending and waits for clipboard before claiming copied 127ms
+   ✓ four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is rejected 46ms
+   ✓ four-in-one persisted receipt > exposes the exact receipt for manual copy when clipboard is missing 59ms
+   ✓ four-in-one persisted receipt > never claims saved or copied when persistence fails 30ms
+   ✓ four-in-one persisted receipt > binds a pending write to the persona selected when it began 52ms
+   ✓ four-in-one persisted receipt > revalidates storage on clipboard retry and reports zero new files for the existing acknowledgement 78ms
+   ✓ four-in-one persisted receipt > serializes the actual acknowledged IDs, kinds, and renamed files with illustrative cost boundaries 47ms
+   ✓ four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with incomplete files 30ms
+   ✓ four-in-one persisted receipt > refuses an unconfirmed ok acknowledgement with duplicate IDs files 24ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/FolioSovereignCommandSuite.test.tsx > four-in-one persisted receipt > launches a real Workspace template card with its provenance id
+AssertionError: expected "spy" to be called once with arguments: [ 'document', …(3) ]
+
+Received:
+
+  1st spy call:
+
+@@ -2,7 +2,6 @@
+    "document",
+    "Executive Client Audit Document",
+    {
+      "html": "<h1>Executive Client Audit Document</h1><p><strong>100% Yours on Your Machine:</strong> Prepared locally with zero cloud telemetry or recurring seat fees.</p><h2>1. Where Margin Is Leaking Today</h2><ul><li><p>Third-party platform commissions, manual spreadsheet reconciliations, and recurring SaaS seat overhead.</p></li></ul><h2>2. 30-Day Sovereign Recovery Plan</h2><p>Consolidate documents, spreadsheets, presentations, and notebooks inside a single local device vault.</p>",
+    },
+-   "executive-audit-doc",
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/FolioSovereignCommandSuite.test.tsx:150:20
+    148|   fireEvent.click(screen.getByTestId(`sovereign-template-${seed.templa…
+    149|
+    150|   expect(onCreate).toHaveBeenCalledExactlyOnceWith(seed.kind,seed.name…
+       |                    ^
+    151|  });
+    152|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 42 passed (43)
+   Start at  13:49:48
+   Duration  16.65s (transform 639ms, setup 0ms, collect 2.48s, tests 10.83s, environment 2.58s, prepare 232ms)

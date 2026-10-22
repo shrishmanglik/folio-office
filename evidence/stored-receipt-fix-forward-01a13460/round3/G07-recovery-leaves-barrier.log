@@ -1,0 +1,57 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ❯ src/App.four-in-one.test.tsx (30 tests | 1 failed) 41105ms
+   ✓ App four-in-one persistence boundary > acknowledges one browser-preview batch only after all four files are stored 119ms
+   ✓ App four-in-one persistence boundary > deduplicates by templateId and preserves a renamed, edited existing file byte-for-byte 41ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds 78ms
+   ✓ App four-in-one persistence boundary > returns a failure acknowledgement and leaves the visible workspace unchanged when desktop persistence fails 32ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  645ms
+   ✓ App four-in-one persistence boundary > does not acknowledge an all-existing batch when its required persistence attempt fails 83ms
+   ✓ App four-in-one persistence boundary > acknowledges native storage names instead of the stale submitted candidate 125ms
+   ✓ App four-in-one persistence boundary > never acknowledges a candidate file that native storage did not publish 116ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch 155ms
+   ✓ App four-in-one persistence boundary > reuses an individually launched template after a real filename edit and stamps every batch file 181ms
+   ✓ App four-in-one persistence boundary > reuses an exact legacy kind and name match without a template id 57ms
+   ✓ App four-in-one persistence boundary > deep clones supplied tagged data and refuses ensureTemplates before load completes 116ms
+   ✓ App four-in-one persistence boundary > blocks tagged creation during a queued batch while ordinary creation remains available 253ms
+   ✓ App four-in-one persistence boundary > awaits a prior ordinary write and keeps busy true until two queued batches finish 266ms
+   ✓ App four-in-one persistence boundary > acknowledges the saved candidate while retaining a rename and favorite made during persistence 168ms
+   ✓ App four-in-one persistence boundary > rebases concurrent UI edits, additions, and removal onto stored agent changes for the next save  414ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1339ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1320ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1747ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  1945ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1400ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  337ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > carries failed A into an already queued cumulative B save  4718ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retains a failed edit on a plain Ctrl+S retry  4555ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retains failed doc A content when a later edit to doc B saves  4424ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retries a newly created file after its first save fails  4596ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > does not finish close until a failed edit is stored by the close retry  4577ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps an unseen remote Q across three queued user saves  2998ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > blocks every later storage call after an engine revision conflict  714ms
+   × PR14 round 3 failed-save intent and conflict barriers > keeps the two-sided barrier until Keep copies, then saves recovery edits 3583ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.four-in-one.test.tsx > PR14 round 3 failed-save intent and conflict barriers > keeps the two-sided barrier until Keep copies, then saves recovery edits
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/App.four-in-one.test.tsx:444:144
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 29 passed (30)
+   Start at  15:54:36
+   Duration  44.61s (transform 471ms, setup 0ms, collect 1.76s, tests 41.10s, environment 1.26s, prepare 143ms)

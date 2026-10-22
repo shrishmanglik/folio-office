@@ -1,0 +1,30 @@
+{
+  "status": "BOUND_TRIPPED_PHASE_A_INCOMPLETE",
+  "head": "e11943403e812227cd163fd27ae578df009b5b1b",
+  "appSourceSha256": "634d895b8c6a5c18f797605c300a124126ce789e6e9ca31f6b6ac43d3345edf5",
+  "testPath": "src/App.four-in-one.test.tsx",
+  "firstFocusedRun": {
+    "testsPassed": 26,
+    "testsFailed": 4,
+    "testsTotal": 30,
+    "validProductFailures": [
+      "Ctrl+S retry stored and rendered <p>x</p> instead of <p>important edit</p> while reporting Saved on this device.",
+      "Editing doc B after doc A failed left doc A on disk as <p>a</p> instead of <p>A edited</p>.",
+      "Retrying a failed creation left the new file absent from disk and UI.",
+      "The close retry finished with disk <p>x</p> instead of <p>close keeps me</p>."
+    ],
+    "matchedGreenControls": [
+      "All 22 previously committed App tests passed.",
+      "The unseen remote Q survived three queued saves with Y, A, and B user edits.",
+      "An engine revision conflict blocked every later storage call.",
+      "The two-sided barrier blocked writes until Keep copies, then recovery and a later edit saved."
+    ],
+    "weakFixtureExcluded": "The original cumulative A+B case changed the same body field twice, so B's replacement accidentally carried A and passed. It was corrected to independent A rename and B body deltas."
+  },
+  "correctedFixtureRun": {
+    "classification": "INVALID_SETUP",
+    "reason": "The one newly authorized admission stopped before heavy-slot acquisition because available memory was 1,336 MB, below the 2,048 MB floor. No test process started; no further admission loop was authorized.",
+    "availableMemoryMbAtAdmission": 1336
+  },
+  "nextStep": "Phase A remains incomplete: corrected independent-field queued A/B and per-write Q history have not executed. Root must issue a new bounded run; App.tsx must remain untouched until both are classified."
+}

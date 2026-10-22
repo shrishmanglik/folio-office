@@ -1,0 +1,26 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (30 tests) 47885ms
+   ✓ App four-in-one persistence boundary > does not expose the four files or resolve success before deferred desktop persistence succeeds  450ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  852ms
+   ✓ App four-in-one persistence boundary > persists the current unsaved edit before acknowledging an all-existing batch  320ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves an agent same-file edit and exposes the existing conflict recovery UI  1766ms
+   ✓ PR14 storage conflict and queued-intent red controls > preserves a remote deletion when the user edits that file after submission  1694ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a file deleted while its creation save is in flight deleted  1607ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps a rename reverted while its save is in flight reverted  2222ms
+   ✓ PR14 storage conflict and queued-intent red controls > keeps undone typing undone when its prior save settles  1691ms
+   ✓ PR14 storage conflict and queued-intent red controls > shows meaningful unsaved status and rejects native success without stored files  409ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > carries failed A into an already queued cumulative B save  5480ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retains a failed edit on a plain Ctrl+S retry  5019ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retains failed doc A content when a later edit to doc B saves  5639ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > retries a newly created file after its first save fails  5132ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > does not finish close until a failed edit is stored by the close retry  5132ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps an unseen remote Q across three queued user saves  3476ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > blocks every later storage call after an engine revision conflict  941ms
+   ✓ PR14 round 3 failed-save intent and conflict barriers > keeps the two-sided barrier until Keep copies, then saves recovery edits  3942ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  15:52:29
+   Duration  61.91s (transform 2.11s, setup 0ms, collect 8.55s, tests 47.88s, environment 4.74s, prepare 218ms)

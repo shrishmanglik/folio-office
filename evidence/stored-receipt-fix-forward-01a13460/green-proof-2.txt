@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 C:/AGI/worktrees/folio-office/stored-receipt-fix-forward-01a13460
+
+ ✓ src/App.four-in-one.test.tsx (16 tests) 2037ms
+   ✓ App four-in-one persistence boundary > keeps close and history blocked when the discriminated persistence result is a failure  374ms
+ ✓ src/FolioSovereignCommandSuite.test.tsx (21 tests) 1190ms
+
+ Test Files  2 passed (2)
+      Tests  37 passed (37)
+   Start at  12:10:51
+   Duration  9.64s (transform 600ms, setup 0ms, collect 2.55s, tests 3.23s, environment 3.05s, prepare 260ms)
